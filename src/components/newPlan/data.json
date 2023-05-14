@@ -1,0 +1,46 @@
+{
+    "features" : [{
+        "name" : "FICO score",
+        "valueBefore": 600,
+        "valueAfter": 800,
+        "valueDiff": 200,
+        "valueInc": true,
+        "type": "numeric"
+       },
+       {
+       "name" : "Credit utilisation",
+       "valueBefore": 90.1,
+       "valueAfter": 63.5,
+       "valueDiff": 26,
+       "valueInc": false,
+       "type": "numeric"
+       },
+       {
+       "name" : "Loan amount",
+       "valueBefore": "25K",
+       "valueAfter": "40K",
+       "valueDiff": "15K",
+       "valueInc": true,
+       "type": "string"
+       }],
+
+    "numberOffeatures": 3,
+    "overalSatisfication": 3,
+    "newConfig" : [{
+        "name" :"FICO score",
+        "newvalue" : 700,
+        "levelOfDifficulty": 2
+    },
+    {
+        "name" :"Credit utilisation",
+        "newvalue" : 80.5,
+        "levelOfDifficulty": 1
+    },{
+        "name" :"Loan amount",
+        "newvalue" : "30K",
+        "levelOfDifficulty": 3
+    }]
+
+     
+     
+}

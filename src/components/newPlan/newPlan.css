@@ -1,0 +1,169 @@
+.layout {
+    margin: 20px 80px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.innerLayout {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.returnButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #106FDF
+}
+.PlanData {
+    width: 360px;
+    height: 70px; 
+    /* box-shadow: 0px 0px 3px rgba(32, 38, 46, 0.3); */
+    box-shadow: 0px 0px 6px rgba(32, 38, 46, 0.2);
+    background-color: #ffffff;
+    margin: 16px 8px;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column !important;
+    text-align: left;
+    /* margin-top: 20px; */
+}
+
+.innerDisplayNewPlan {
+    display: flex;
+    align-items: center;
+}
+
+.dataTitle {
+    color: rgba(32, 38, 46, 0.7);
+    font-size: 16px;
+}
+.dataAmount {
+    color: #20262E;
+    font-size: 32px;
+}
+
+.upwardArrow {
+    color: #198754;
+}
+.downward {
+    color: #DC3545;
+    transform: rotateZ(180deg);
+}
+
+.planTitle {
+    display: flex;
+}
+.moodScalerQuestion {
+    display: flex;
+    margin-top: 20px;
+}
+
+/* Loan approval text  */
+.planGoal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 80px;
+    margin-left: 80px;
+    margin-top: 60px;
+}
+
+/* Style of button that suppose to Keep the plan */
+
+.MainButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0px 20px 0px;
+    background-color: none;
+}
+
+.ButtonForKeepPlan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 177px;
+    height: 44px;
+    border: 2px solid #106FDF;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 36px;
+    color: #106FDF;
+    background-color: #ffffff;
+}
+
+.DisabledButtonForKeepPlan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 177px;
+    height: 44px;
+    border: 2px solid #BCC8D6;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 36px;
+    color: #BCC8D6;
+    background-color: #ffffff;
+}
+
+/* Style of button that suppose to Propose or generate a new plan located outside of layout */
+.SecondButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 40px 100px 0px 20px ;
+}
+
+.ButtonForProposeNewPlan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 196px;
+    height: 44px;
+    background: #106FDF;
+    border-radius: 24px;
+    color: #ffffff;
+    border: 1px #ffffff solid;
+}
+
+.ButtonForProposeNewPlan:hover {
+    background: #5286c0;
+    cursor: pointer;
+}
+
+.CloseFullscreenIcon {
+    color: #20262E;
+}
+.CloseFullscreenIcon:hover {
+    cursor: pointer;
+}
+
+.discardedPlansText {
+    display: flex;
+    margin-left: 80px;
+}
+.emptyMessage {
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    justify-content: left;
+    color: #BCC8D6;
+    margin: 0px 80px 40px 80px;
+    border-radius: 8px;
+}
+
+.disabledButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 196px;
+    height: 44px;
+    background: #BCC8D6;
+    border-radius: 24px;
+    color: #ffffff;
+    border: 1px #ffffff solid;
+}

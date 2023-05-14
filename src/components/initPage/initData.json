@@ -1,0 +1,50 @@
+{
+    "userId" : "#user name",
+    "features" : [
+        {
+            "name" : "Age",
+            "value" : "30",
+            "actionable" : false
+        },
+        {
+            "name" : "Gender",
+            "value" : "Male",
+            "actionable" : false
+        },
+        {
+            "name" : "Married status",
+            "value" : "married",
+            "actionable" : false
+        },
+        {
+            "name" : "Education",
+            "value" : "University-master",
+            "actionable" : false
+        },
+        {
+            "name" : "Annual income",
+            "value" : 61000,
+            "actionable" : true
+        },
+        {
+            "name" : "Credit utilization",
+            "value" : 57,
+            "actionable" : true
+        },
+        {
+            "name" : "FICO score",
+            "value" : 600,
+            "actionable" : true
+        },
+        {
+            "name" : "Revolving Balance",
+            "value" : 11000,
+            "actionable" : true
+        },
+        {
+            "name" : "Number of bankrupcy",
+            "value" : 0,
+            "actionable" : true
+        }
+    ]
+}

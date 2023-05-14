@@ -1,0 +1,21 @@
+.layoutDiscard {
+    margin: 40px 80px 20px 80px;    
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.discardedPlansTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.discardedPlansStatus {
+    background: rgba(243, 243, 243, 0.3);
+    border: 1px solid rgba(178, 178, 178, 0.2);
+    border-radius: 16px;
+    padding: 5px;
+    width: 100px;
+}
