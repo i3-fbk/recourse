@@ -15,7 +15,11 @@ app.get('/', (req, res) => {
 
 
 // Route to handle JSON data
-  app.post('/submit-form', (req, res) => {
+  app.post('/submit-form',async (req, res) => {
+
+  // Simulate a 5-second delay
+  await delay(3000);
+
   // res.send('Data received!');
   const feedback = {
     planName: 'Plan B',
@@ -69,7 +73,9 @@ app.get('/', (req, res) => {
 });
 
 
- 
+ // Utility function to delay execution
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
  
  
 // Start the server

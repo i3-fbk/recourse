@@ -26,23 +26,9 @@ function InitPage() {
     
 
     return <Grid>
-         <p className="MainTitle">Personal information</p>
-         
-            <Grid className="layout">
-                <Grid className="userInfo" constainer spacing={2} xs={4}>
-                    <Grid item className="userName">
-                        <div className="GeneralTitle">user id</div>
-                        <div className="GeneralSubTitle">{username}</div>
-                    </Grid>
-                    <Grid item className="MessageContainer">
-                        <div className="GeneralTitle">Message</div>
-                        <div className="messageGeneralSubTitle">Your application is rejected, go to the recourse page to get new plan! </div>
-                        {/* <Link  to="/recourse">Go to recourse Page</Link> */}
-                    </Grid>
-                </Grid>
-            </Grid>
-
-      <p className="MainTitle">General information</p>
+       
+        
+      {/* <p className="MainTitle">General information</p>
       <Grid className="layout">
             <Grid className="NonActionableContainer" constainer spacing={2} xs={4}>
               
@@ -55,13 +41,15 @@ function InitPage() {
                
                 
             </Grid>
-      </Grid>
+      </Grid> */}
 
-      <p className="MainTitle">Configuration</p>
+      <p className="MainTitle">Initial information</p>
+      <h5 className="subtitleForMaintitle">Fill the below form with your information</h5>
       <Grid className="layout">
             <Grid className="ActionableFeatures" >
-              {actionable && actionable.map((item,index) => (
+              {data && data.features.map((item,index) => (
                 <TextField
+                className="initiPageTextField"
                 id="outlined-required"
                 label={item.name}
                 defaultValue={item.value}

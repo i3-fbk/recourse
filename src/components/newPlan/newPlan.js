@@ -51,7 +51,8 @@ function PlanData(value,befor,after,increment) {
         const [activeButton, setActiveButton] = useState(false);
         const [featureList,setFeatureList] = useState(data.features)
         const [discardedPlans,setDiscardedPlans] = useState(data.features)
-        
+          const [isLoading, setIsLoading] = useState(false);
+
      
         // const [feedbackData,setFeedbackData] = useState({
         //     title : 0,
@@ -99,14 +100,17 @@ function PlanData(value,befor,after,increment) {
        
 
         function sendJsonToServer() {
-        
+        setIsLoading(true);
+
           axios.post('http://localhost:5001/submit-form', data)
             .then(res => {
+              setIsLoading(false);
               setFeedback(res.data);
               console.log(`Server responded with status code ${res.status}`);
             })
             .catch(err => {
-              console.error("Error:",err);
+               
+                console.error("Error:",err);
             });
 
             setActiveDiscardedPlan(true)
@@ -116,11 +120,26 @@ function PlanData(value,befor,after,increment) {
         }
         
 
-        return <Grid >
-                <div className="planGoal">
+        return <Grid>
+            <div className="planGoal">
                     <p className="returnButton"><ArrowBackIosIcon />  <Link style={{color: "#106FDF", textDecoration: 'none'}} to="/">Return to initial Page</Link></p>
                     <p>Plan for: Loan Approaval</p>
                 </div>
+                <div className="topMessage">
+                    {/* <Grid  item className="userName">
+                        <div className="GeneralTitle">Username</div>
+                        <div className="GeneralSubTitle">joe </div>
+                    </Grid> */}
+
+                    <Grid  item className="userName">
+                        <div className="GeneralTitle">Message</div>
+                        <div className="GeneralSubTitle">Oops! your loan approva has been rejected, check recourses. </div>
+                    </Grid>
+                </div>
+
+                
+                    {isLoading ?  <div className="overlay">
+                    <span className='loader'></span></div> : null}
                     <Grid className="layout">
                     <div className="planTitle">{planName}</div>
                     <Grid container spacing={1} className="innerLayout">

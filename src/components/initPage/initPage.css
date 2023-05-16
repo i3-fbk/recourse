@@ -22,12 +22,30 @@
     justify-content: space-between;
 }
 
-.ActionableFeatures {
+.subtitleForMaintitle {
     display: flex;
+    justify-content: flex-start;
+    color: #BCC8D6;
+    margin-left: 80px;
+    text-decoration: none;
+    font-weight: 200;
+}
+
+.ActionableFeatures {
+    margin-top: 20px;
+    /* display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 10px;
     align-items: flex-start;
+    overflow: hidden; */
+}
+
+.initiPageTextField {
+   width: 320px !important;
+   margin-right: 20px !important;
+   margin-bottom: 40px !important; 
+
 }
 
 .userName {
@@ -84,6 +102,7 @@
     font-size: 21px;
     justify-content: flex-start;
     margin-left: 80px;
+    margin-bottom: -10px
 }
 
 .initButtonContainer {

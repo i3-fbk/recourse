@@ -2,6 +2,11 @@
     "userId" : "#user name",
     "features" : [
         {
+            "name" : "Username",
+            "value" : "joe",
+            "actionable" : false
+        },
+        {
             "name" : "Age",
             "value" : "30",
             "actionable" : false

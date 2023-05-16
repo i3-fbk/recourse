@@ -4,12 +4,31 @@
     background-color: #ffffff;
     padding: 20px;
 }
-
+.topMessage {
+    background-color: #ffffff;
+    margin: 20px 80px;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 .innerLayout {
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
+
+}
+
+.userName2 {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: flex-start !important;
+    margin-top: 20px !important;
 }
 .returnButton {
     display: flex;
@@ -167,3 +186,45 @@
     color: #ffffff;
     border: 1px #ffffff solid;
 }
+
+/* loader designing */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    /* background-color: #BCC8D6; */
+    opacity: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color:#106FDF #0000 #fff #0000;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: 1s rotate linear infinite;
+ }
+ .loader:before , .loader:after{
+    content: '';
+    top: 0;
+    left: 0;
+    position: absolute;
+    border: 10px solid transparent;
+    border-bottom-color:#fff;
+    transform: translate(-10px, 19px) rotate(-35deg);
+  }
+ .loader:after {
+    border-color: #106FDF #0000 #0000 #0000 ;
+    transform: translate(32px, 3px) rotate(-35deg);
+  }
+   @keyframes rotate {
+    100%{    transform: rotate(360deg)}
+  }
