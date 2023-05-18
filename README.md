@@ -7,7 +7,7 @@ The initData.json file encompasses an array of objects, where each object serves
 
 Actionable features encompass the information that users can modify, such as details pertaining to their bank account. These features provide the flexibility for users to update and alter the values as needed.
 
-On the other hand, Non-Actionable features consist of attributes that remain unchangeable by the user, including their name, age, and gender. These features are inherently fixed and cannot be modified through user interaction.
+On the other hand, Non-Actionable features consist of attributes that remain unchangeable by the user, including their age. These features are inherently fixed and cannot be modified through user interaction.
 
 The presence of both Actionable and Non-Actionable features within the initData.json file allows for the management of dynamic and static user data, providing a comprehensive representation of the dataset.
 
