@@ -28,20 +28,7 @@ function InitPage() {
     return <Grid>
        
         
-      {/* <p className="MainTitle">General information</p>
-      <Grid className="layout">
-            <Grid className="NonActionableContainer" constainer spacing={2} xs={4}>
-              
-                 {nonActionable && nonActionable.map((item,index) => (
-                    <Grid  item className="userName">
-                        <div className="GeneralTitle">{item.name}</div>
-                        <div className="GeneralSubTitle">{item.value}</div>
-                    </Grid>
-                 ))}
-               
-                
-            </Grid>
-      </Grid> */}
+    
 
       <p className="MainTitle">Initial information</p>
       <h5 className="subtitleForMaintitle">Fill the below form with your information</h5>
