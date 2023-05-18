@@ -32,16 +32,3 @@ Here's an example of the file structure:
    }
 ]
 
-
-
-### File structure: `initData.json`
-
-The Json file can easily accommodate different data format and types. And additional fields can added as needed without affecting compatibility with existing datasets.
-
-The following fields are used in the initData.json file:
-
-Name (string): represents a name of the entry feature.
-Value (number or string): stores the value of the feature.
-Actionable (boolean) : represent this fact that this feature is flexible to modify by user or not.
-
-Actionable features are denoted by the attribute "actionable": true. These features serve as essential inputs for the AI algorithm to propose a customized plan tailored to the user's specific needs and requirements. Users have the capability to modify the values associated with these features, allowing for dynamic adjustments to be incorporated into the plan.
