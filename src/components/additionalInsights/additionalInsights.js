@@ -6,7 +6,7 @@ import statusesData from '../../components/statuses.json'
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import data from '../newPlan/data.json';
+import data from '../newPlan/RecoursePlan.json';
 
 
 

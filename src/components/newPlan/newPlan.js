@@ -11,7 +11,7 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import AdditionalInsight from '../additionalInsights/additionalInsights';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import axios, * as others from 'axios';
-import data from './data.json';
+import data from './RecoursePlan.json';
 import DiscardedPlans from '../discardedPlans/discardedPlans.js';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
