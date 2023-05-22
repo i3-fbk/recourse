@@ -11,17 +11,19 @@ margin-bottom: 10px;
 
 .AiLayout {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between; 
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .AiBox {
-    width: 360px;
-    height: 290px;
+    width: 350px;
+    /* height: 290px; */
     border-radius: 16px;
     box-shadow: 0px 0px 6px rgba(32, 38, 46, 0.2);
-    margin: 10px 0px;
-    padding: 20px;
+    /* margin-right: 10px; */
+    padding: 20px; 
+    margin: 16px 8px;
 }
 
 .AiTitleOfBox {
@@ -110,6 +112,50 @@ margin-bottom: 10px;
   }
   
   
+  /* classes for each status */
+
+  .very-difficult {
+    color: #DC3545;
+    border: 1px solid #FFDBE3;
+    background-color: #FFF9FA;
+    border-radius: 20px;
+    padding: 5px 20px;
+  }
+  
+  .difficult {
+    color: #FF8F00;
+    border: 1px solid #FFCB89;
+    background-color: #FFEDD7;
+    border-radius: 20px;
+    padding: 5px 20px;
+  }
+  
+  .moderate {
+    color: #106FDF;
+    border: 1px solid #abcbf1;
+    background-color: #dbe8f8;
+    border-radius: 20px;
+    padding: 5px 20px;
+  }
+  
+  .easy {
+    color: #198754;
+    border: 1px solid #CDEADF;
+    background-color: #F2FCF4;
+    border-radius: 20px;
+    padding: 5px 20px;
+    
+   
+  }
+  
+  .very-easy {
+    color: #198754;
+    border: 1px solid #CDEADF;
+    background-color: #F2FCF4;
+    border-radius: 20px;
+    padding: 5px 20px;
+   
+  }
   
 
   

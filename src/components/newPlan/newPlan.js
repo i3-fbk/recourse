@@ -51,23 +51,9 @@ function PlanData(value,befor,after,increment) {
         const [activeButton, setActiveButton] = useState(false);
         const [featureList,setFeatureList] = useState(data.features)
         const [discardedPlans,setDiscardedPlans] = useState(data.features)
-          const [isLoading, setIsLoading] = useState(false);
+        const [isLoading, setIsLoading] = useState(false);
 
      
-        // const [feedbackData,setFeedbackData] = useState({
-        //     title : 0,
-        //     numberOfFeatures: 3,
-        //     features : {
-        //         features1Before: 600,
-        //         features1After: '800',
-        //         features2Before: 90.1,
-        //         features2After: '63.5',
-        //         features3Before: '25K',
-        //         features3After: '40K',
-        //     },
-
-        // })
-
 
         const handleClick = (divId) => {
             setSelectedDiv(divId);
@@ -126,14 +112,9 @@ function PlanData(value,befor,after,increment) {
                     <p>Plan for: Loan Approaval</p>
                 </div>
                 <div className="topMessage">
-                    {/* <Grid  item className="userName">
-                        <div className="GeneralTitle">Username</div>
-                        <div className="GeneralSubTitle">joe </div>
-                    </Grid> */}
-
                     <Grid  item className="userName">
                         <div className="GeneralTitle">Message</div>
-                        <div className="GeneralSubTitle">Oops! your loan approva has been rejected, check recourses. </div>
+                        <div className="GeneralSubTitle">Oops! your loan approaval has been rejected, check recourses. </div>
                     </Grid>
                 </div>
 
@@ -157,7 +138,6 @@ function PlanData(value,befor,after,increment) {
                     </Grid>
 
                         <p className="moodScalerQuestion">What do you think about this suggested plan?</p>
-                        {/* <MoodScaler isdefault={value}  /> */}
 
                         <div className="moodScalerLayout">
                             <div 
@@ -201,7 +181,7 @@ function PlanData(value,befor,after,increment) {
                             ><p>Great</p><p>😍</p></div>
                         </div>
 
-                        <AdditionalInsight isdefault={isdefault} />
+                        <AdditionalInsight isdefault={isdefault} featureList={featureList} feedback={feedback} />
                         <div className="MainButtonContainer">
                             <CloseFullscreenIcon 
                                 className="CloseFullscreenIcon"

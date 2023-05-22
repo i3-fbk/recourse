@@ -22,6 +22,8 @@ app.get('/', (req, res) => {
 
   // res.send('Data received!');
   const feedback = {
+    planId : "#02",
+    userId : "#",
     planName: 'Plan B',
     features: [
       {
