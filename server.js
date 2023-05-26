@@ -1,16 +1,20 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 5001;
+app.use(express.static(path.join(__dirname, 'build')));
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('Server is runnig on port 5001!');
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+
+  // res.send('Server is runnig on port 5001!');
 });
 
 

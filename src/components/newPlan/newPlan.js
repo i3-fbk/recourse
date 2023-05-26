@@ -1,12 +1,10 @@
 import React,{useState, useEffect} from "react";
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import '../newPlan/newPlan.css'
+import '../newPlan/newPlan.css';
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
-import MoodScaler from './moodScaler/moodScaler';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import AdditionalInsight from '../additionalInsights/additionalInsights';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
@@ -25,19 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 
-function PlanData(value,befor,after,increment) {
- 
-        return <div className="PlanData">
-            <span className="dataTitle">feature {value}</span>
-            <div className="innerDisplayNewPlan">
-                <span><ArrowUpwardRoundedIcon fontSize="large" className={increment ? "upwardArrow" : "downward"} /></span> 
-                <span className="dataAmount">{befor}</span>
-                <span><ArrowRightAltIcon /></span>
-                <span className="dataAmount">{after}</span>
-            </div>
-          
-        </div>
-}  
+
 
 
     function Welcome() {
@@ -144,8 +130,8 @@ function PlanData(value,befor,after,increment) {
                             className={selectedDiv === 1 ? 'withBorder' : 'innerMoodScalerLayout'}
                             onClick={() => handleClick(1)}
                             style={{
-                             cursor: 'pointer',
-                             border: selectedDiv === 1 ? '2px solid #106FDF' : ''
+                                cursor: 'pointer',
+                                border: selectedDiv === 1 ? '2px solid #106FDF' : ''
                            }}><p>Terrible</p><p>😣</p></div>
                             <div 
                             className={selectedDiv === 2 ? 'withBorder' : 'innerMoodScalerLayout'}
@@ -195,7 +181,7 @@ function PlanData(value,befor,after,increment) {
                     <p className="discardedPlansText">Discarded plans</p>
                    {activeDiscardedPlan ? <DiscardedPlans discardedPlans={discardedPlans} /> : <p className="emptyMessage">The history list is empty!</p> }
          </Grid>
-  }
+    }
 
 
 export default Welcome;

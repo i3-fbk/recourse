@@ -16,7 +16,7 @@ render() {
         <Route path="/" exact Component={InitPage} />
         <Route path="success" Component={SuccessPage} />
       </Routes>
-    </Router>
+     </Router>
       <header className="App-header">
       </header>
     </div>
