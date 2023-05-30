@@ -2,8 +2,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-
+var cors = require('cors')
 const app = express();
+app.use(cors())
+
 const port = process.env.PORT || 5001;
 app.use(express.static(path.join(__dirname, 'build')));
 

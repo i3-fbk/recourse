@@ -12,13 +12,35 @@ import "./discardedPlans.css"
 
 function DiscardedPlans(props) {
 
-  
+    const statusGenerator = () => {
+        if(props && props.overalSatisfication) {
+            switch (props.overalSatisfication) {
+                case 1:
+                return '😣 Terrible'
+
+                case 2:
+                return '🙁 Bad'
+
+                case 3:
+                return '😶 Neutral'
+
+                case 4:
+                return '😃 Good'
+
+                case 5:
+                return '😍 Great'
+                    
+                default:
+                    break;
+            }
+        }
+    }
 
     return(
         <Grid className="layoutDiscard">
             <div className="discardedPlansTitle">
                 <div className="planTitle">Plan A</div>
-                <div className="discardedPlansStatus">😃 Good</div>
+                <div className="discardedPlansStatus">{statusGenerator()}</div>
             </div>
            
             <Grid  item xs={4} className="innerLayout">

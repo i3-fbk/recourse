@@ -12,7 +12,7 @@ import axios, * as others from 'axios';
 import data from './RecoursePlan.json';
 import DiscardedPlans from '../discardedPlans/discardedPlans.js';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-
+import { useSelector } from 'react-redux';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -38,16 +38,86 @@ const Item = styled(Paper)(({ theme }) => ({
         const [featureList,setFeatureList] = useState(data.features)
         const [discardedPlans,setDiscardedPlans] = useState(data.features)
         const [isLoading, setIsLoading] = useState(false);
-
+        const [overalSatisfication, setOveralSatisfication] = useState(null)
+        const [NewValue, setNewValue] = useState([]);
+        const inputValue = useSelector((state) => state.rootReducer.inputValue);
+        const scalerValue = useSelector((state) => state.rootReducer.scalerValue);
+        const [recoursesData, setRecourseData] = useState({
+            "userId" : "#",
+            "planId" : "01", 
+            "overalSatisfication": overalSatisfication,
+            "newConfig" : [{
+                "name" :"FICO score",
+                "newValue" : 700,
+                "levelOfDifficulty": 2
+            },
+            {
+                "name" :"Credit utilisation",
+                "newValue" : 80.5,
+                "levelOfDifficulty": 1
+            },{
+                "name" :"Loan amount",
+                "newValue" : 30,
+                "levelOfDifficulty": 3
+            }]
+                })
      
+
+        const updateUserPrefrences = () => {
+           // This function will update user prefrences with new values othervise will sent default values.
+          
+           // update prefrence value based on inputes.
+           inputValue && inputValue.map((newValue,index) => {
+                  setRecourseData((prevData) => {
+                const updatedConfig = [...prevData.newConfig];
+                updatedConfig[index].newValue = newValue;
+            
+                return {
+                  ...prevData,
+                  newConfig: updatedConfig,
+                };
+              }); 
+            })
+
+          // update level of difficulty based on scaler.  
+          scalerValue && scalerValue.map((value,index) => {
+            setRecourseData((prevData) => {
+                const updatedConfig = [...prevData.newConfig];
+                updatedConfig[index].levelOfDifficulty = value;
+            
+                return {
+                  ...prevData,
+                  newConfig: updatedConfig,
+                };
+              }); 
+          })  
+        }     
 
         const handleClick = (divId) => {
             setSelectedDiv(divId);
             setValue(true)
             setActiveButton(true)
+            setOveralSatisfication(divId)
           };
 
+
+          useEffect(() => {
+            // everytime that user changes the overalsatisfication, the value of OS will be updated in recourse json.
+            setRecourseData(prevData => ({ 
+                ...prevData,
+                 "overalSatisfication": overalSatisfication,
+                }))
+            //this function can update user prefrences    
+            updateUserPrefrences()
+
+        }, [overalSatisfication,inputValue])
+          
+      
+        
+      
+
         useEffect(() => {
+        // Handling the drop down for additional insights
             if(value){
                 setIsdefault(true)
             }
@@ -56,8 +126,8 @@ const Item = styled(Paper)(({ theme }) => ({
             }
         }, [value])
         
-
         useEffect(() => {
+            //receiving new recourse plan (feedback) from server and save it in FeatureList
             if (feedback != null && feedback.feedback?.planName) {
                 setPlanName(feedback.feedback.planName)
                 setFeatureList(feedback.feedback.features)
@@ -72,9 +142,11 @@ const Item = styled(Paper)(({ theme }) => ({
        
 
         function sendJsonToServer() {
+        // This function send json including recourse information and use prefrences to the server after clicking on Propose new plan button
+        
         setIsLoading(true);
 
-          axios.post('http://localhost:5001/submit-form', data)
+          axios.post('http://localhost:5001/submit-form', recoursesData)
             .then(res => {
               setIsLoading(false);
               setFeedback(res.data);
@@ -89,9 +161,10 @@ const Item = styled(Paper)(({ theme }) => ({
             setActiveButton(false)
             setValue(false)
             setSelectedDiv(null)
+           
         }
         
-
+       
         return <Grid>
             <div className="planGoal">
                     <p className="returnButton"><ArrowBackIosIcon />  <Link style={{color: "#106FDF", textDecoration: 'none'}} to="/">Return to initial Page</Link></p>
@@ -167,7 +240,13 @@ const Item = styled(Paper)(({ theme }) => ({
                             ><p>Great</p><p>😍</p></div>
                         </div>
 
-                        <AdditionalInsight isdefault={isdefault} featureList={featureList} feedback={feedback} />
+                        <AdditionalInsight 
+                            isdefault={isdefault} 
+                            featureList={featureList} 
+                            feedback={feedback}
+                            NewValue={NewValue}
+                            />
+
                         <div className="MainButtonContainer">
                             <CloseFullscreenIcon 
                                 className="CloseFullscreenIcon"
@@ -179,7 +258,9 @@ const Item = styled(Paper)(({ theme }) => ({
                         <button className={activeButton ? "ButtonForProposeNewPlan" : "disabledButton"} onClick={sendJsonToServer}>PROPOSE NEW PLAN</button>
                     </div>
                     <p className="discardedPlansText">Discarded plans</p>
-                   {activeDiscardedPlan ? <DiscardedPlans discardedPlans={discardedPlans} /> : <p className="emptyMessage">The history list is empty!</p> }
+                   {activeDiscardedPlan ? 
+                   <DiscardedPlans overalSatisfication={overalSatisfication} discardedPlans={discardedPlans} /> : 
+                   <p className="emptyMessage">The history list is empty!</p> }
          </Grid>
     }
 

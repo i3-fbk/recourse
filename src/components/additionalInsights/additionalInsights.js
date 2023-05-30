@@ -7,56 +7,21 @@ import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import data from '../newPlan/RecoursePlan.json';
-
-
-
-
-
-// let StatusManager = (props) => {
-//     const { statusId } = props;
-//     const statusObj = statusesData.statuses.find(s => s.id === statusId);
-
-
-//     switch (statusObj?.value) {
-//       case 'Very difficult':
-//         return <div>this is Very difficult</div>
-
-//       case 'Difficult':
-//         return <div>this is  Difficult</div>
-
-//       case 'Default':
-//         return <div className="defaultStatus">
-//             <DoDisturbOnIcon fontSize="small" className="defaultIcon" color="#FF8F00"/>
-//             <p class="defaultText">DEFAULT</p> 
-//             </div>
-
-//       case 'Easy':
-//             return <div>this is  Easy</div>
-
-//       case 'Very easy':
-//         return <div>this is Very Easy</div>
-        
-//       default:
-//         return <div>oops</div>
-        
-//     }
-  
-//   }
-
-
-
+import { useDispatch } from 'react-redux';
+import { updateInputValue } from '../../action/action';
+import { updateScalerValue } from '../../action/action';
 
 function AdditionalInsight (props) {
     const initialScalers = [3, 3, 3]; // Initial scalers array
     const [scalers, setScalers] = useState(initialScalers);
     const [statuses, setStatuses] = useState(Array(initialScalers.length).fill('moderate'));
+    const [inputValues, setInputValues] = useState(Array(data.length).fill(''));
+    const [featureList, setFeatureList] = useState(data.features)
+   
+    const dispatch = useDispatch();
 
-
-    
-    const [featureList,setFeatureList] = useState(data.features)
-    
     // Function to handle scaler change for a specific index
-  const handleScalerChange = (event, index) => {
+    const handleScalerChange = (event, index) => {
     const newScaler = parseInt(event.target.value);
 
     // Create a new copy of the scalers array and update the scaler at the given index
@@ -123,9 +88,20 @@ function AdditionalInsight (props) {
 
   }, [props?.feedback])
   
+  const handleInputChange = (index,event) => {
+    const newValues = [...inputValues];
+    newValues[index] = event.target.value;
+    setInputValues(newValues);
+    
+  };
 
-        return <div className="AiOuterLayout">
-            
+  useEffect(() => {
+    dispatch(updateInputValue(inputValues));
+    dispatch(updateScalerValue(scalers))
+  }, [inputValues?.length,scalers])
+  
+
+    return <div className="AiOuterLayout">        
         {props?.isdefault ? <div className="AiTittle">Additional Insights (optional)</div> : null}
           {props?.isdefault ?   <div className="AiLayout">
               {featureList && featureList.map((item,index) => (
@@ -163,7 +139,13 @@ function AdditionalInsight (props) {
 
                     <p className="bodyTextSecondQuestion">The maximum affordable increment: 
                         <div className="input-container">
-                            <input type="number" className="custom-input" value="800"  />
+                            <input 
+                                key={index}
+                                type="number" 
+                                className="custom-input" 
+                                value={inputValues[index]}
+                                onChange={(event) => handleInputChange(index,event)}
+                                />
                         </div>
                     </p>
                 </div>
