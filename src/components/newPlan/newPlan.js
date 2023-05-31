@@ -173,7 +173,7 @@ const Item = styled(Paper)(({ theme }) => ({
                 <div className="topMessage">
                     <Grid  item className="userName">
                         <div className="GeneralTitle">Message</div>
-                        <div className="GeneralSubTitle">Oops! your loan approaval has been rejected, check recourses. </div>
+                        <div className="GeneralSubTitle">Oops! your loan approaval has been rejected, check recourses below. </div>
                     </Grid>
                 </div>
 
@@ -250,7 +250,7 @@ const Item = styled(Paper)(({ theme }) => ({
                         <div className="MainButtonContainer">
                             <CloseFullscreenIcon 
                                 className="CloseFullscreenIcon"
-                                onClick={e => setValue(false)}  />
+                                onClick={e => setValue(false)} /> 
                             <button className={activeButton ? "ButtonForKeepPlan" : "DisabledButtonForKeepPlan"}>KEEP THE PLAN</button>
                         </div>
                      </Grid>

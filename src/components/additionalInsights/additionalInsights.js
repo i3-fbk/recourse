@@ -10,15 +10,16 @@ import data from '../newPlan/RecoursePlan.json';
 import { useDispatch } from 'react-redux';
 import { updateInputValue } from '../../action/action';
 import { updateScalerValue } from '../../action/action';
+import TextField from '@mui/material/TextField';
 
 function AdditionalInsight (props) {
     const initialScalers = [3, 3, 3]; // Initial scalers array
     const [scalers, setScalers] = useState(initialScalers);
     const [statuses, setStatuses] = useState(Array(initialScalers.length).fill('moderate'));
-    const [inputValues, setInputValues] = useState(Array(data.length).fill(''));
+    const [inputValues, setInputValues] = useState(Array(data.length).fill(`${data.features[0].valueAfter}`));
     const [featureList, setFeatureList] = useState(data.features)
-   
-    const dispatch = useDispatch();
+
+    const dispatch = useDispatch(); // to save values in redux store
 
     // Function to handle scaler change for a specific index
     const handleScalerChange = (event, index) => {
@@ -96,6 +97,7 @@ function AdditionalInsight (props) {
   };
 
   useEffect(() => {
+    // saving prefrences values and level of difficulty values in redux store  
     dispatch(updateInputValue(inputValues));
     dispatch(updateScalerValue(scalers))
   }, [inputValues?.length,scalers])
@@ -116,7 +118,7 @@ function AdditionalInsight (props) {
                     </div>
                     <hr className="seperateLine" />
 
-                    <p className="bodyText">How much is it achievable for you?  </p>
+                    <p className="bodyText">1) How much is it achievable for you?  </p>
                     <div className="sclaerContainer">
                         <small>very difficult</small>
                         <Box sx={{ width: 300 }}>
@@ -137,15 +139,25 @@ function AdditionalInsight (props) {
                         <small>very easy</small>
                     </div>
 
-                    <p className="bodyTextSecondQuestion">The maximum affordable increment: 
+                    <p className="bodyTextSecondQuestion">2) The maximum affordable increment: 
                         <div className="input-container">
-                            <input 
+                            {/* <input 
                                 key={index}
                                 type="number" 
                                 className="custom-input" 
                                 value={inputValues[index]}
                                 onChange={(event) => handleInputChange(index,event)}
-                                />
+                                /> */}
+                                <TextField
+                                    key={index}
+                                    label="Pref Value"
+                                    variant="outlined"
+                                    value={inputValues[index]}
+                                    onChange={(event) => handleInputChange(index,event)}
+                                    fullWidth
+                                    margin="normal"
+                                    className=''
+                                    />
                         </div>
                     </p>
                 </div>
