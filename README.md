@@ -1,6 +1,13 @@
 # Recourse
 This is a financial planning system that generates custom plans to help users achieve their financial goals, such as getting a loan approval from a bank. It uses data analysis and machine learning techniques to provide tailored solutions.
 
+# Description `Short Instruction - Running the App`
+To run the code, you can follow these instructions:
+
+1. clone the repository by command: ``` git clone https://github.com/delaramesfahani/Recourse.git ```
+2. n the root directory of the application you can serve the app with the following commands:
+- For installing the node package: ``` npm i ```
+- To serve the application on port http://localhost:5001: ``` node server.js ```
 ## JSON File: `initData.json`
 
 The initData.json file encompasses an array of objects, where each object serves as a data entry. Within the file, there are two distinct types of objects: Actionable and Non-Actionable features. These types categorize the nature of the features and define the user's ability to modify their values.
