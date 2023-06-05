@@ -16,9 +16,8 @@ function AdditionalInsight (props) {
     const initialScalers = [3, 3, 3]; // Initial scalers array
     const [scalers, setScalers] = useState(initialScalers);
     const [statuses, setStatuses] = useState(Array(initialScalers.length).fill('moderate'));
-    const [inputValues, setInputValues] = useState(Array(data.length).fill(`${data.features[0].valueAfter}`));
+    const [inputValues, setInputValues] = useState(Array(data.features.length).fill(''));
     const [featureList, setFeatureList] = useState(data.features)
-
     const dispatch = useDispatch(); // to save values in redux store
 
     // Function to handle scaler change for a specific index
@@ -33,7 +32,6 @@ function AdditionalInsight (props) {
     // Update the status for the given index
     updateStatus(newScaler, index);
   };
-
 
   // Function to update the status based on the scaler value for a specific index
   const updateStatus = (scalerValue, index) => {
@@ -95,12 +93,12 @@ function AdditionalInsight (props) {
     setInputValues(newValues);
     
   };
-
+  
   useEffect(() => {
     // saving prefrences values and level of difficulty values in redux store  
     dispatch(updateInputValue(inputValues));
     dispatch(updateScalerValue(scalers))
-  }, [inputValues?.length,scalers])
+  }, [inputValues,scalers])
   
 
     return <div className="AiOuterLayout">        
@@ -141,13 +139,6 @@ function AdditionalInsight (props) {
 
                     <p className="bodyTextSecondQuestion">2) The maximum affordable increment: 
                         <div className="input-container">
-                            {/* <input 
-                                key={index}
-                                type="number" 
-                                className="custom-input" 
-                                value={inputValues[index]}
-                                onChange={(event) => handleInputChange(index,event)}
-                                /> */}
                                 <TextField
                                     key={index}
                                     label="Pref Value"
@@ -156,7 +147,6 @@ function AdditionalInsight (props) {
                                     onChange={(event) => handleInputChange(index,event)}
                                     fullWidth
                                     margin="normal"
-                                    className=''
                                     />
                         </div>
                     </p>

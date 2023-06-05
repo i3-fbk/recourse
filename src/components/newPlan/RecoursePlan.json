@@ -1,6 +1,7 @@
 {
     "userId" : "#",
     "planId" : "01",
+    "planName": "Plan A",
     "features" : [{
         "name" : "FICO score",
         "valueBefore": 600,
@@ -24,22 +25,5 @@
        "valueDiff": "15K",
        "valueInc": true,
        "type": "string"
-       }],
-       
-    "overalSatisfication": 3,
-    "newConfig" : [{
-        "name" :"FICO score",
-        "newvalue" : 700,
-        "levelOfDifficulty": 2
-    },
-    {
-        "name" :"Credit utilisation",
-        "newvalue" : 80.5,
-        "levelOfDifficulty": 1
-    },{
-        "name" :"Loan amount",
-        "newvalue" : "30K",
-        "levelOfDifficulty": 3
-    }]
-     
+       }]
 }

@@ -9,6 +9,8 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import AdditionalInsight from '../additionalInsights/additionalInsights';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import axios, * as others from 'axios';
+// the "data" that has imported below is a sample json named "RecoursePlan.json", and you can replace it with desired json.
+// and this json is to show the first plan (Plan A)
 import data from './RecoursePlan.json';
 import DiscardedPlans from '../discardedPlans/discardedPlans.js';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -39,9 +41,10 @@ const Item = styled(Paper)(({ theme }) => ({
         const [discardedPlans,setDiscardedPlans] = useState(data.features)
         const [isLoading, setIsLoading] = useState(false);
         const [overalSatisfication, setOveralSatisfication] = useState(null)
-        const [NewValue, setNewValue] = useState([]);
         const inputValue = useSelector((state) => state.rootReducer.inputValue);
         const scalerValue = useSelector((state) => state.rootReducer.scalerValue);
+
+        // This recourse data below is a static sample and it should be change with dinamic information from dataset
         const [recoursesData, setRecourseData] = useState({
             "userId" : "#",
             "planId" : "01", 
@@ -68,7 +71,7 @@ const Item = styled(Paper)(({ theme }) => ({
           
            // update prefrence value based on inputes.
            inputValue && inputValue.map((newValue,index) => {
-                  setRecourseData((prevData) => {
+                setRecourseData((prevData) => {
                 const updatedConfig = [...prevData.newConfig];
                 updatedConfig[index].newValue = newValue;
             
@@ -161,7 +164,6 @@ const Item = styled(Paper)(({ theme }) => ({
             setActiveButton(false)
             setValue(false)
             setSelectedDiv(null)
-           
         }
         
        
@@ -244,8 +246,7 @@ const Item = styled(Paper)(({ theme }) => ({
                             isdefault={isdefault} 
                             featureList={featureList} 
                             feedback={feedback}
-                            NewValue={NewValue}
-                            />
+                        />
 
                         <div className="MainButtonContainer">
                             <CloseFullscreenIcon 

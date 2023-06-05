@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   // Simulate a 5-second delay
   await delay(3000);
 
-  // res.send('Data received!');
+  // This sample json is just a static data that server send back to the interface as a feedback.
   const feedback = {
     planId : "#02",
     userId : "#",
@@ -90,18 +90,3 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-
-// const express = require('express');
-
-// const app = express();
-// const port = process.env.PORT || 5001;
-
-// app.get('/', (req, res) => {
-//   res.send('Hello, world!!!');
-// });
-
-// app.listen(port, () => {
- 
-//   console.log(`Server running on port ${port}`);
-// });
