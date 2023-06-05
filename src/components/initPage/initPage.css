@@ -4,6 +4,16 @@
     background-color: #ffffff;
     padding: 20px;
 }
+.layout-1 {
+    margin: 20px 80px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
 .generalInformation {
     display: flex;
     justify-content: flex-start;
@@ -125,4 +135,7 @@ margin-top: 40px;
     color: #ffffff;
     border: 1px #ffffff solid;
     text-decoration: none;
+}
+.loanApproavalDropDown {
+    width: 300px;
 }

@@ -15,6 +15,8 @@ import data from './RecoursePlan.json';
 import DiscardedPlans from '../discardedPlans/discardedPlans.js';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useSelector } from 'react-redux';
+import {useLocation} from 'react-router-dom';
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -28,8 +30,9 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 
-    function Welcome() {
+    function Welcome(props) {
 
+        const location = useLocation();
         const [value, setValue] = useState(false);
         const [isdefault, setIsdefault] = useState(false);
         const [selectedDiv, setSelectedDiv] = useState(null);
@@ -43,7 +46,7 @@ const Item = styled(Paper)(({ theme }) => ({
         const [overalSatisfication, setOveralSatisfication] = useState(null)
         const inputValue = useSelector((state) => state.rootReducer.inputValue);
         const scalerValue = useSelector((state) => state.rootReducer.scalerValue);
-
+     
         // This recourse data below is a static sample and it should be change with dinamic information from dataset
         const [recoursesData, setRecourseData] = useState({
             "userId" : "#",
@@ -64,7 +67,7 @@ const Item = styled(Paper)(({ theme }) => ({
                 "levelOfDifficulty": 3
             }]
                 })
-     
+    
 
         const updateUserPrefrences = () => {
            // This function will update user prefrences with new values othervise will sent default values.
@@ -170,7 +173,7 @@ const Item = styled(Paper)(({ theme }) => ({
         return <Grid>
             <div className="planGoal">
                     <p className="returnButton"><ArrowBackIosIcon />  <Link style={{color: "#106FDF", textDecoration: 'none'}} to="/">Return to initial Page</Link></p>
-                    <p>Plan for: Loan Approaval</p>
+                    <p>Loan Approaval for {location.state}</p>
                 </div>
                 <div className="topMessage">
                     <Grid  item className="userName">
