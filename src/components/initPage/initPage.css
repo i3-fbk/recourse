@@ -139,3 +139,18 @@ margin-top: 40px;
 .loanApproavalDropDown {
     width: 300px;
 }
+.featureDescription {
+    height: 40px;
+    
+    display: flex;
+    text-align: left;
+    align-items: center;
+  
+    color: #106FDF;
+}
+.innerFeatureDescription {
+      background-color: #F8F9FD;
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 14px;
+}

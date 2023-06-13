@@ -17,7 +17,8 @@ function InitPage() {
     const [actionable, setActionable] = useState([]);
     const [nonActionable, setNonActionable] = useState([]);
     const [username, setUsername] = useState('-')
-    const [dropDownValue, setDropDownValue] = useState('');
+    const [isHovered, setIsHovered] = useState(false);
+    const [labelDescription, setLabelDescription] = useState('');  
     const features = data.features;
     const actionableFeatures = features.filter(feature => feature.actionable);
     const nonActionableFeatures = features.filter(feature => !feature.actionable);
@@ -29,49 +30,39 @@ function InitPage() {
         setUsername(data?.userId)
     }, [])
     
-    
-
-    const handleChange = (event) => {
-      setDropDownValue(event.target.value);
-    };
 
     const GotoRecourseHandler = () => {
-      // directing to recourse page, and also passing the the loan approaval purpose (dropDownValue) to recourse page.
-      navigate('/recourse',{state:dropDownValue});
+      // directing to recourse page.
+      navigate('/recourse');
     };
+    
+    const handleMouseEnter = (description,index) => {
+      console.log('1111',description,index)
+      setIsHovered(true);
+      setLabelDescription(description);
+    };
+  
+    const handleMouseLeave = () => {
+      setIsHovered(false);
+      setLabelDescription('');
+    };
+
     
     return <Grid>
       <p className="MainTitle">Initial information</p>
       <h5 className="subtitleForMaintitle">Fill the below form with your information</h5>
-      <Grid className="layout-1">
-      <p>To better assist you, what is the purpose of this loan approval</p>
-      <div>
-      <FormControl sx={{ m: 1, minWidth: 80 }}>
-        <InputLabel id="demo-simple-select-autowidth-label">Loan approaval for</InputLabel>
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          value={dropDownValue}
-          onChange={handleChange}
-          autoWidth
-          label="Loan approaval for"
-          className="loanApproavalDropDown"
-        >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value='House'>House</MenuItem>
-            <MenuItem value='Car'>Car</MenuItem>
-            <MenuItem value='Land'>Land</MenuItem>
-          </Select>
-        </FormControl>
-      </div>
-      </Grid>
+     
       <Grid className="layout">
+     <div className="featureDescription"> {
+      isHovered && 
+       <div className="innerFeatureDescription">{labelDescription}</div>}
+      </div>
             <Grid className="ActionableFeatures" >
               {data && data.features.map((item,index) => (
                 <TextField
                 className="initiPageTextField"
+                onMouseEnter={() => handleMouseEnter(item.description,index)}
+                onMouseLeave={handleMouseLeave}
                 id="outlined-required"
                 label={item.name}
                 defaultValue={item.value}
