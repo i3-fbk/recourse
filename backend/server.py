@@ -58,9 +58,9 @@ dataset = JointDataset(
 # - User costraints;
 # We would save as cookie the user weights, such to retrieve them
 # each time they enter the system.
-# 
+#
 # It would then return a JSON object representing the proposed
-# recourse plan, which would be rendered by the app. 
+# recourse plan, which would be rendered by the app.
 
 @app.route("/")
 def hello_world():
@@ -73,7 +73,7 @@ def hello_world():
 def get_user():
     x = dataset.sample()
     x = {k: v.to_dict("records")[0] for k,v in x.items()}
-    return f"<p>{str(x)}</p>"
+    return x
 
 @app.route("/ask", methods=['POST', 'GET'])
 def return_recourse():
