@@ -27,6 +27,7 @@ ensemble_names = []
 ensemble_models = []
 ensemble_preprocessors = []
 
+# Load all the models weights
 for dataset, model, feat_size in dataset_models:
 
     # Load the neural network
@@ -41,10 +42,12 @@ for dataset, model, feat_size in dataset_models:
     ensemble_preprocessors.append(mdl_preprocessors)
 
 
+# Build the ensemble
 ensemble = EnsembleBlackBox(
     ensemble_names, ensemble_models, ensemble_preprocessors
 )
 
+# Build the dataset
 dataset = JointDataset(
     ["adult", "lendingclub"], dataset_paths
 )
@@ -65,6 +68,12 @@ def hello_world():
     result = ensemble.predict(x)
 
     return f"<p>{str(x)}</p><br /><p>{result}</p>"
+
+@app.route("/get_user", methods=['GET'])
+def get_user():
+    x = dataset.sample()
+    x = {k: v.to_dict("records")[0] for k,v in x.items()}
+    return f"<p>{str(x)}</p>"
 
 @app.route("/ask", methods=['POST', 'GET'])
 def return_recourse():
