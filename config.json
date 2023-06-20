@@ -1,0 +1,17 @@
+{
+    "loan_approval_task": {   
+        "features": {
+            "education": {
+                "description": "Level of education of the user (e.g., Bachelor)",
+                "type": "categorical",
+                "values": ["bachelor", "master", "phd", "uneducated"]
+            },
+            "income": {
+                "description": "Self-reported yearly income",
+                "type": "continuous",
+                "min-value": 0,
+                "max-value": 10000
+            }
+        }
+    }
+}
