@@ -1,2 +1,0 @@
-Flask>=2.2.5
-recourse-fare @ git+https://github.com/unitn-sml/recourse-fare.git@feature/add-w-fare

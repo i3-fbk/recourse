@@ -10,6 +10,22 @@ To run the code, you can follow these instructions:
 - For installing the node package: ``` npm i ```
 - To serve the application on port http://localhost:5001: ``` node server.js ```
 
+# Install the backend
+```bash
+conda create --name recourse python=3.7
+pip install -r requirements.txt
+git clone https://github.com/unitn-sml/recourse-fare.git
+cd recourse-fare
+git checkout feature/add-w-fare 
+pip install -e .
+cd ..
+```
+The backend can then be run as:
+```bash
+export PYTHONPATH=.
+flask --app backend/server.py run
+```
+
 ### JSON File: `initData.json`
 
 The initData.json file encompasses an array of objects, where each object serves as a data entry. Within the file, there are two distinct types of objects: Actionable and Non-Actionable features. These types categorize the nature of the features and define the user's ability to modify their values.
