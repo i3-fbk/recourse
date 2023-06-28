@@ -10,16 +10,23 @@ from models.dataset import JointDataset
 
 import torch
 
+import numpy as np
+import pandas as pd 
+
 app = Flask(__name__)
 
 dataset_models = [
-    ["lendingclub", "nn", 157],
+    #["lendingclub", "nn", 157],
     ["adult", "nn", 102]
 ]
 
 dataset_paths = [
     "backend/models/adult/test_data_adult.csv",
-    "backend/models/lendingclub/test_data_lendingclub.csv"
+    #"backend/models/lendingclub/test_data_lendingclub.csv"
+]
+
+recourse_paths = [
+    ["adult", "backend/models/adult/wfare_recourse_nn_adult.pth"]
 ]
 
 # Load the models for the ensemble
@@ -49,8 +56,14 @@ ensemble = EnsembleBlackBox(
 
 # Build the dataset
 dataset = JointDataset(
-    ["adult", "lendingclub"], dataset_paths
+    ["adult"], dataset_paths
+    #["adult", "lendingclub"], dataset_paths
 )
+
+# Load the recourse method
+recourse_method = {}
+for t, r_path in recourse_paths:
+    recourse_method[t] = pickle.load(open(r_path, "rb"))
 
 # /ask
 # The route should accept a JSON object which comprises:
@@ -74,6 +87,28 @@ def get_user():
     x = dataset.sample()
     x = {k: v.to_dict("records")[0] for k,v in x.items()}
     return x
+
+@app.route("/get_recourse", methods=['GET', 'POST'])
+def get_recourse():
+
+    # We extract the user preferences, data and weigths from the cookies
+    # If those values are none, we will set a default value
+    user_data_and_preferences = request.get_json(force=True, silent=True)
+    user_current_weights = request.cookies.get("RecourseInteractiveWeights23", None)
+
+    if user_data_and_preferences is None:
+        x = dataset.sample()
+    else:
+        # Convert the user  
+        user_data_and_preferences = {k: pd.DataFrame(v) for k,v in user_data_and_preferences.items()}
+    
+    if user_current_weights is None:
+        user_current_weights = {k: pd.DataFrame([np.random.randint(1,100, size=len(x.get(k).columns))], columns=x.get(k).columns) for k,v in x.items()}
+
+    for k, v in x.items():
+        df_cfs, Y_full, competitor_traces, costs_efare, _ = recourse_method.get(k).predict(v, user_current_weights.get(k), full_output=True, verbose=False)
+
+    return f"Intervention: {competitor_traces}<br /> New Features: {df_cfs.to_records('dict')[0]} <br /> Has Recourse? (1 = Yes) {Y_full} <br /> Total cost: {costs_efare}"
 
 @app.route("/ask", methods=['POST', 'GET'])
 def return_recourse():

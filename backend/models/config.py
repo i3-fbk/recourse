@@ -52,8 +52,8 @@ MIXTURE_MEAN_LIST = {
 
 WFARE_CONFIG = {
     "adult": {
-        "environment": "blackbox.adult.mock_adult_env.AdultEnvironment",
-        "training_steps": 500,
+        "environment": "backend.models.adult.environment.AdultEnvironment",
+        "training_steps": 100,
         "batch_size": 50,
         "buffer_size": 200,
         "expectation": True,
