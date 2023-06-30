@@ -94,19 +94,27 @@ def get_recourse():
     # We extract the user preferences, data and weigths from the cookies
     # If those values are none, we will set a default value
     user_data_and_preferences = request.get_json(force=True, silent=True)
-    user_current_weights = request.cookies.get("RecourseInteractiveWeights23", None)
+
+    # TODO: VERY DANGEROUS!!!! We need a way to sanitize the cookie to prevent code execution.
+    # Once everything is dockerized, it should not be an issue (they would destroy only the docker).
+    # We are restricting the usage to only __builtins__ but it could still be dangerous.
+    user_current_weights = None
+    if request.cookies.get("RecourseInteractiveWeights23", None):
+        user_current_weights = eval(request.cookies.get("RecourseInteractiveWeights23", None), {})
 
     if user_data_and_preferences is None:
-        x = dataset.sample()
+        user_data_and_preferences = dataset.sample()
     else:
         # Convert the user  
-        user_data_and_preferences = {k: pd.DataFrame(v) for k,v in user_data_and_preferences.items()}
+        user_data_and_preferences = {"adult": pd.DataFrame.from_records([{v.get("name"):v.get("value") for v in user_data_and_preferences.get("features")}])}
     
     if user_current_weights is None:
-        user_current_weights = {k: pd.DataFrame([np.random.randint(1,100, size=len(x.get(k).columns))], columns=x.get(k).columns) for k,v in x.items()}
+        user_current_weights = {k: np.random.randint(1,100, size=len(user_data_and_preferences.get(k).columns)) for k,v in user_data_and_preferences.items()}
+    
+    user_current_weights = {k: pd.DataFrame([user_current_weights.get(k)], columns=user_data_and_preferences.get(k).columns) for k,v in user_data_and_preferences.items()}
 
-    for k, v in x.items():
-        df_cfs, Y_full, competitor_traces, costs_efare, _ = recourse_method.get(k).predict(v, user_current_weights.get(k), full_output=True, verbose=False)
+    for k, v in user_data_and_preferences.items():
+        df_cfs, Y_full, competitor_traces, costs_efare, root_node = recourse_method.get(k).predict(v, user_current_weights.get(k), full_output=True, verbose=False)
 
     return f"Intervention: {competitor_traces}<br /> New Features: {df_cfs.to_records('dict')[0]} <br /> Has Recourse? (1 = Yes) {Y_full} <br /> Total cost: {costs_efare}"
 
