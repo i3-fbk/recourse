@@ -5,6 +5,42 @@ import pandas as pd
 from pandas.api.types import is_categorical_dtype, is_numeric_dtype, is_object_dtype
 
 
+def convert_plans_into_json(plans: list, current_state: dict):
+    
+    json_response = {
+        "userId": "#",
+        "plans": [],
+        "overalSatisfication": None,
+        "UserPreferences": {}
+    }
+
+    for k,p in enumerate(plans): 
+
+        new_plan = {
+            "planId": k,
+            "features": []
+        }
+
+        for feature, new_value in p.items():
+
+            if current_state.get(feature) != new_value:
+                new_plan["features"].append(
+                    {
+                        "name": feature,
+                        "valueBefore": current_state.get(feature),
+                        "valueAfter": new_value,
+                        "valueDiff": (current_state.get(feature)-new_value) if isinstance(new_value, int) or isinstance(new_value, float) else new_value,
+                        "type": "numeric" if isinstance(new_value, int) or isinstance(new_value, float) else "categorical"
+                    }
+                )
+        
+        json_response["plans"].append(
+            new_plan
+        )
+    
+    return json_response
+
+
 def fare_actions_factory(
     df: pd.DataFrame, immutables: List[str], bins: int = 50
 ) -> Tuple[Dict[Any, Any], Dict[Any, Any]]:
