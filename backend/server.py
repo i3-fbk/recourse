@@ -107,10 +107,12 @@ def get_recourse():
 
     if user_data_and_preferences is None:
         user_data_and_preferences = dataset.sample()
+        user_preferences = {}
     else:
-        # Convert the user  
+        # Convert the user and get its preferences
+        user_preferences = user_data_and_preferences.get("preferences", {})
         user_data_and_preferences = {"adult": pd.DataFrame.from_records([{v.get("name"):v.get("value") for v in user_data_and_preferences.get("features")}])}
-    
+
     if user_current_weights is None:
         user_current_weights = {k: np.random.randint(1,100, size=len(user_data_and_preferences.get(k).columns)) for k,v in user_data_and_preferences.items()}
     
@@ -129,7 +131,8 @@ def get_recourse():
                                                                                                     verbose=False,
                                                                                                     mcts_steps=25,
                                                                                                     noise=0.3,
-                                                                                                    previous_solutions=previous_solutions)
+                                                                                                    previous_solutions=previous_solutions,
+                                                                                                    user_constraints=user_preferences)
             if Y_full[0] == 1:
                 trace_tuple = "---".join([f"{p}_{a}" for p,a in competitor_traces[0]])
                 if trace_tuple not in current_traces:

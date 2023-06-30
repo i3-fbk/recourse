@@ -16,7 +16,8 @@ class WFAREMul(WFARE):
                 verbose :bool=True, agent_only :bool=False,
                 mcts_only :bool=False, skip_expectation_step:bool=False,
                 mcts_steps: int=5, noise: float=0.2,
-                previous_solutions: list=[]):
+                previous_solutions: list=[],
+                user_constraints: dict={}):
         """Generate counterfactual interventions given FARE.
 
         :param X: the dataset
@@ -52,7 +53,8 @@ class WFAREMul(WFARE):
                 X_dict[i].copy(),
                 W_dict[i].copy(),
                 self.model,
-                **self.environment_config.get("additional_parameters"))
+                **self.environment_config.get("additional_parameters"),
+                user_constraints=user_constraints)
             
             # If we have the graph structure, override the preset one. 
             if G is not None:
