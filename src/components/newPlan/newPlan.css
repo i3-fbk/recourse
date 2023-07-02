@@ -146,11 +146,15 @@
     height: 44px;
     border: 2px solid #106FDF;
     border-radius: 24px;
-    font-weight: 600;
     font-size: 14px;
     line-height: 36px;
     color: #106FDF;
     background-color: #ffffff;
+}
+.ButtonForKeepPlan:hover {
+    color: #ffffff;
+    background-color: #106FDF;
+    cursor: pointer;
 }
 
 .DisabledButtonForKeepPlan {
@@ -166,6 +170,9 @@
     line-height: 36px;
     color: #BCC8D6;
     background-color: #ffffff;
+}
+.hidden {
+    display: none;
 }
 
 /* Style of button that suppose to Propose or generate a new plan located outside of layout */
@@ -187,13 +194,44 @@
     border: 1px #ffffff solid;
 }
 
+.confirmToExit {
+    width: 196px;
+    height: 44px;
+    background: #ffffff;
+    border-radius: 24px;
+    color: #106FDF;
+    border: 1px #106FDF solid;
+}
+.confirmToExit:hover {
+    background: #106FDF;
+    color: #ffffff;
+    cursor: pointer;
+}
+.rejectToExit {
+    width: 196px;
+    height: 44px;
+    background: #ffffff;
+    border-radius: 24px;
+    color: #106FDF;
+    border: 1px #106FDF solid;
+    margin-top: 20px;
+}
+.rejectToExit:hover {
+    background: #106FDF;
+    color: #ffffff;
+    cursor: pointer;
+}
+
 .ButtonForProposeNewPlan:hover {
     background: #5286c0;
     cursor: pointer;
 }
 
 .CloseFullscreenIcon {
-    color: #20262E;
+    color: #5286c0;
+    display: flex !important;
+    justify-content: flex-start;
+
 }
 .CloseFullscreenIcon:hover {
     cursor: pointer;
@@ -212,7 +250,36 @@
     margin: 0px 80px 40px 80px;
     border-radius: 8px;
 }
+.RejectingButtonContainer{
 
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 80px;
+    margin-bottom: 100px;
+
+}
+.RejectingButton {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: auto;
+    padding: 0 20px;
+    height: 44px;
+    border: 2px solid #106FDF;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 36px;
+    color: #106FDF;
+    background-color: transparent; 
+   
+}
+.RejectingButton:hover {
+    color: #ffffff;
+    background-color: #106FDF;
+    cursor: pointer; 
+
+}
 .disabledButton {
     display: flex;
     justify-content: center;
@@ -223,6 +290,10 @@
     border-radius: 24px;
     color: #ffffff;
     border: 1px #ffffff solid;
+}
+.button-container-keep {
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* loader designing */

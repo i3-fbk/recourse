@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from "react";
 import { styled } from '@mui/material/styles';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import '../newPlan/newPlan.css';
@@ -16,6 +17,9 @@ import DiscardedPlans from '../discardedPlans/discardedPlans.js';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useSelector } from 'react-redux';
 import {useLocation} from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
+import Modal from 'react-modal';
+
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -27,12 +31,30 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 
-
+  const modalStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    content: {
+      width: '600px',
+      height: '400px',
+      margin: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      borderRadius: '16px'
+    },
+  };
 
 
     function Welcome(props) {
 
         const location = useLocation();
+        const navigate = useNavigate();
         const [value, setValue] = useState(false);
         const [isdefault, setIsdefault] = useState(false);
         const [selectedDiv, setSelectedDiv] = useState(null);
@@ -46,6 +68,7 @@ const Item = styled(Paper)(({ theme }) => ({
         const [overalSatisfication, setOveralSatisfication] = useState(null)
         const inputValue = useSelector((state) => state.rootReducer.inputValue);
         const scalerValue = useSelector((state) => state.rootReducer.scalerValue);
+        const [isModalOpen, setIsModalOpen] = useState(false);
      
         // This recourse data below is a static sample and it should be change with dinamic information from dataset
         const [recoursesData, setRecourseData] = useState({
@@ -169,11 +192,25 @@ const Item = styled(Paper)(({ theme }) => ({
             setSelectedDiv(null)
         }
         
+        const handleOpenModal = () => {
+            setIsModalOpen(true);
+          };
+          
+          const handleConfirm = () => {
+            // Perform actions when "Yes" button is clicked
+            setIsModalOpen(false);
+            navigate('/quit')
+          };
+          
+          const handleCancel = () => {
+            // Perform actions when "No" button is clicked
+            setIsModalOpen(false);
+          };
        
         return <Grid>
             <div className="planGoal">
-                    <p className="returnButton"><ArrowBackIosIcon />  <Link style={{color: "#106FDF", textDecoration: 'none'}} to="/">Return to initial Page</Link></p>
-                    <p>Loan Approaval for {location.state}</p>
+                    <h2 className="">Recourse Page</h2>
+                  
                 </div>
                 <div className="topMessage">
                     <Grid  item className="userName">
@@ -251,12 +288,16 @@ const Item = styled(Paper)(({ theme }) => ({
                             feedback={feedback}
                         />
 
-                        <div className="MainButtonContainer">
-                            <CloseFullscreenIcon 
+                       
+                            {value && <Tooltip title='close additional insights'>
+                                <CloseFullscreenIcon 
                                 className="CloseFullscreenIcon"
                                 onClick={e => setValue(false)} /> 
-                            <button className={activeButton ? "ButtonForKeepPlan" : "DisabledButtonForKeepPlan"}>KEEP THE PLAN</button>
-                        </div>
+                                </Tooltip>}
+                            <div className="button-container-keep">
+                                <button className={activeButton ? "ButtonForKeepPlan" : "DisabledButtonForKeepPlan"}>KEEP THE PLAN</button>
+                            </div>    
+                        
                      </Grid>
                     <div className="SecondButtonContainer">
                         <button className={activeButton ? "ButtonForProposeNewPlan" : "disabledButton"} onClick={sendJsonToServer}>PROPOSE NEW PLAN</button>
@@ -265,6 +306,15 @@ const Item = styled(Paper)(({ theme }) => ({
                    {activeDiscardedPlan ? 
                    <DiscardedPlans overalSatisfication={overalSatisfication} discardedPlans={discardedPlans} /> : 
                    <p className="emptyMessage">The history list is empty!</p> }
+
+                    <div className="RejectingButtonContainer">
+                        <button className="RejectingButton" onClick={handleOpenModal}> Quit Recourse Page</button>
+                        <Modal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)} style={modalStyles}>
+                        <h2>Are you sure you want to leave?</h2>
+                        <button className="confirmToExit" onClick={handleConfirm}>Yes</button>
+                        <button className="rejectToExit" onClick={handleCancel}>No</button>
+                        </Modal>
+                    </div>  
          </Grid>
     }
 

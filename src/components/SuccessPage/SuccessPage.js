@@ -8,7 +8,7 @@ function SuccessPage(params) {
     return <Grid className="layout">
         <Grid>
             <p className="blueTitle">Congratulations!!!</p>
-            <p>Your "Loan Approaval" for x is accepted</p>
+            <p>Your "Loan Approaval" is accepted 🎉 </p>
         </Grid>
         <div className="okButtonContainer">
           {/* <button className='okButton'>OK and return</button> */}

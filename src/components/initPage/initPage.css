@@ -43,18 +43,14 @@
 
 .ActionableFeatures {
     margin-top: 20px;
-    /* display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 10px;
-    align-items: flex-start;
-    overflow: hidden; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .initiPageTextField {
-   width: 320px !important;
-   margin-right: 20px !important;
-   margin-bottom: 40px !important; 
+  width: 320px !important;
+   margin-bottom: 20px !important;
 
 }
 
@@ -135,6 +131,11 @@ margin-top: 40px;
     color: #ffffff;
     border: 1px #ffffff solid;
     text-decoration: none;
+    margin-bottom: 40px;
+}
+.GotoRecourseButton:hover {
+    cursor: pointer;
+    background: #3384e1;
 }
 .loanApproavalDropDown {
     width: 300px;
@@ -153,4 +154,14 @@ margin-top: 40px;
       border-radius: 20px;
       padding: 10px 20px;
       font-size: 14px;
+}
+.descriptionIconAndInput {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+   
+}
+.HelpIcon {
+    color: #61a2ec;
+    margin-left: 10px;
 }

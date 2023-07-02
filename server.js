@@ -1,10 +1,13 @@
 
+
 const express = require('express');
+const initJson = require('./initData.json');
 const bodyParser = require('body-parser');
 const path = require('path');
 var cors = require('cors')
 const app = express();
 app.use(cors())
+
 
 const port = process.env.PORT || 5001;
 app.use(express.static(path.join(__dirname, 'build')));
@@ -16,11 +19,24 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 
-  // res.send('Server is runnig on port 5001!');
+  // res.send('Server is runnig on port 5002!');
 });
 
 
 // Route to handle JSON data
+
+  app.post('/login',async (req, res) => {
+
+    const feedback = initJson
+    res.json({ feedback });
+  })
+
+  app.post('/receivingInitialData',async (req, res) => {
+
+    const feedback = initJson
+    res.json({ feedback });
+  })
+
   app.post('/submit-form',async (req, res) => {
 
   // Simulate a 5-second delay
@@ -84,7 +100,7 @@ app.get('/', (req, res) => {
  // Utility function to delay execution
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
- 
+
  
 // Start the server
 app.listen(port, () => {

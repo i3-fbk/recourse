@@ -5,6 +5,7 @@ import InitPage from './components/initPage/initPage';
 import Welcome from './components/newPlan/newPlan';
 import SuccessPage from './components/SuccessPage/SuccessPage';
 import LoginPage from './components/loginPage/login';
+import ExitPage from './components/exitPage/exitPage';
 
 class App extends Component {
 render() {
@@ -15,8 +16,9 @@ render() {
       <Routes>
         <Route path="/recourse" Component={Welcome} />
         <Route path="/" exact Component={LoginPage} />
-        <Route path="/form" exact Component={InitPage} />
-        <Route path="success" Component={SuccessPage} />
+        <Route path="/form" Component={InitPage} />
+        <Route path="/success" Component={SuccessPage} />
+        <Route path="/quit" Component={ExitPage} />
       </Routes>
      </Router>
       <header className="App-header">
