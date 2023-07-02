@@ -1,9 +1,6 @@
 """Train the FARE model by using the given python class instead of the script."""
 
-from recourse_fare.models.WFARE import WFARE
-from recourse_fare.models.WEFARE import WEFARE
-from recourse_fare.utils.preprocess.fast_preprocessor import FastPreprocessor, StandardPreprocessor
-from recourse_fare.utils.Mixture import MixtureModel
+from backend.models.WFAREMul import WFAREMul
 
 from backend.models.utils.net import Net
 from backend.models.utils.functions import fare_actions_factory
@@ -126,7 +123,7 @@ if __name__ == "__main__":
     mcts_config = WFARE_CONFIG.get(args.dataset).get("mcts_config")
     policy_config = WFARE_CONFIG.get(args.dataset).get("policy_config")
 
-    model = WFARE(blackbox_model, policy_config, environment_config, mcts_config,
+    model = WFAREMul(blackbox_model, policy_config, environment_config, mcts_config,
                   batch_size=WFARE_CONFIG.get(args.dataset).get("batch_size", 50),
                   training_buffer_size=WFARE_CONFIG.get(args.dataset).get("buffer_size", 200),
                   expectation=None)

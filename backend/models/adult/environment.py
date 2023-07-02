@@ -18,10 +18,12 @@ class AdultEnvironment(EnvironmentWeights):
                  preprocessor: Any,
                  remove_edges: list=None,
                  agnostic: bool=False,
-                 model_type="svc"):
+                 model_type="svc",
+                 user_constraints: dict={}):
         
         self.model_type = model_type
         self.agnostic = agnostic
+        self.user_constraints = user_constraints
 
         # Preprocessor element. Please have a look below to understand how it is called.
         self.preprocessor = preprocessor
@@ -149,13 +151,16 @@ class AdultEnvironment(EnvironmentWeights):
         return self.arguments["OCC"].index(arguments) != self.arguments["OCC"].index(self.features.get("occupation"))
 
     def _change_hours_p(self, arguments=None):
-        return self.features.get("hours_per_week")+arguments >= 0
+        return self._check_user_constraints("hours_per_week", arguments)
+        #return self.features.get("hours_per_week")+arguments >= 0
     
     def _change_capital_gain_p(self, arguments=None):
-        return self.features["capital_gain"]+arguments >= 0
+        return self._check_user_constraints("capital_gain", arguments)
+        #return self.features["capital_gain"]+arguments >= 0
 
     def _change_capital_loss_p(self, arguments=None):
-        return self.features["capital_loss"]+arguments >= 0
+        return self._check_user_constraints("capital_loss", arguments)
+        #return self.features["capital_loss"]+arguments >= 0
 
     ### POSTCONDITIONS
 
@@ -225,3 +230,11 @@ class AdultEnvironment(EnvironmentWeights):
         self.features = prev_state
 
         return action_cost
+    
+    # USER CONSTRAINTS
+    def _check_user_constraints(self, feature_name: str, argument: str):
+
+        max_value = self.user_constraints.get(feature_name, {}).get("max_value", np.inf)
+        min_value = self.user_constraints.get(feature_name, {}).get("min_value", 0)
+
+        return min_value <= self.features.get(feature_name)+argument <= max_value

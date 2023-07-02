@@ -5,6 +5,7 @@ import dill as pickle
 
 from models.config import NN_CONFIG
 from models.utils.net import Net
+from models.utils.functions import convert_plans_into_json
 from models.ensemble import EnsembleBlackBox
 from models.dataset import JointDataset
 
@@ -12,6 +13,8 @@ import torch
 
 import numpy as np
 import pandas as pd 
+
+MAX_RECOURSE_PLANS = 5
 
 app = Flask(__name__)
 
@@ -56,7 +59,7 @@ ensemble = EnsembleBlackBox(
 
 # Build the dataset
 dataset = JointDataset(
-    ["adult"], dataset_paths
+    ["adult"], dataset_paths, ensemble_models, ensemble_preprocessors
     #["adult", "lendingclub"], dataset_paths
 )
 
@@ -94,21 +97,56 @@ def get_recourse():
     # We extract the user preferences, data and weigths from the cookies
     # If those values are none, we will set a default value
     user_data_and_preferences = request.get_json(force=True, silent=True)
-    user_current_weights = request.cookies.get("RecourseInteractiveWeights23", None)
+
+    # TODO: VERY DANGEROUS!!!! We need a way to sanitize the cookie to prevent code execution.
+    # Once everything is dockerized, it should not be an issue (they would destroy only the docker).
+    # We are restricting the usage to only __builtins__ but it could still be dangerous.
+    user_current_weights = None
+    if request.cookies.get("RecourseInteractiveWeights23", None):
+        user_current_weights = eval(request.cookies.get("RecourseInteractiveWeights23", None), {})
 
     if user_data_and_preferences is None:
-        x = dataset.sample()
+        user_data_and_preferences = dataset.sample()
+        user_preferences = {}
     else:
-        # Convert the user  
-        user_data_and_preferences = {k: pd.DataFrame(v) for k,v in user_data_and_preferences.items()}
-    
+        # Convert the user and get its preferences
+        user_preferences = user_data_and_preferences.get("preferences", {})
+        user_data_and_preferences = {"adult": pd.DataFrame.from_records([{v.get("name"):v.get("value") for v in user_data_and_preferences.get("features")}])}
+
     if user_current_weights is None:
-        user_current_weights = {k: pd.DataFrame([np.random.randint(1,100, size=len(x.get(k).columns))], columns=x.get(k).columns) for k,v in x.items()}
+        user_current_weights = {k: np.random.randint(1,100, size=len(user_data_and_preferences.get(k).columns)) for k,v in user_data_and_preferences.items()}
+    
+    user_current_weights = {k: pd.DataFrame([user_current_weights.get(k)], columns=user_data_and_preferences.get(k).columns) for k,v in user_data_and_preferences.items()}
 
-    for k, v in x.items():
-        df_cfs, Y_full, competitor_traces, costs_efare, _ = recourse_method.get(k).predict(v, user_current_weights.get(k), full_output=True, verbose=False)
+    # Potential interventions
+    potential_interventions = []
+    previous_solutions = []
+    current_traces = []
 
-    return f"Intervention: {competitor_traces}<br /> New Features: {df_cfs.to_records('dict')[0]} <br /> Has Recourse? (1 = Yes) {Y_full} <br /> Total cost: {costs_efare}"
+    for k in range(0,10):
+        for k, v in user_data_and_preferences.items():
+            df_cfs, Y_full, competitor_traces, costs_efare, root_node = recourse_method.get(k).predict(v,
+                                                                                                    user_current_weights.get(k),
+                                                                                                    full_output=True,
+                                                                                                    verbose=False,
+                                                                                                    mcts_steps=25,
+                                                                                                    noise=0.3,
+                                                                                                    previous_solutions=previous_solutions,
+                                                                                                    user_constraints=user_preferences)
+            if Y_full[0] == 1:
+                trace_tuple = "---".join([f"{p}_{a}" for p,a in competitor_traces[0]])
+                if trace_tuple not in current_traces:
+                    potential_interventions.append((competitor_traces[0], costs_efare[0], df_cfs.to_dict('records')[0]))
+                    current_traces.append(trace_tuple)
+                    previous_solutions.append(
+                        df_cfs.to_dict('records')[0]
+                    )
+
+    # Pick only the MAX_RECOURSE_PLANS plans with the lowest cost
+    potential_interventions = sorted(potential_interventions, key=lambda x: x[1])
+    potential_interventions = [x[2] for x in potential_interventions[0:MAX_RECOURSE_PLANS]]
+    
+    return convert_plans_into_json(potential_interventions, v.to_dict('records')[0])
 
 @app.route("/ask", methods=['POST', 'GET'])
 def return_recourse():
