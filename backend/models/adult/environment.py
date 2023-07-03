@@ -142,24 +142,27 @@ class AdultEnvironment(EnvironmentWeights):
         return True
 
     def _change_workclass_p(self, arguments=None):
-        return self.arguments["WORK"].index(arguments) != self.arguments["WORK"].index(self.features.get("workclass"))
+        return self._check_user_categorical_constraints("workclass", arguments, "WORK")
+        #return self.arguments["WORK"].index(arguments) != self.arguments["WORK"].index(self.features.get("workclass"))
 
     def _change_education_p(self, arguments=None):
-        return self.features.get("education") != arguments
+        return self._check_user_categorical_constraints("education", arguments, "EDU")
+        #return self.features.get("education") != arguments
 
     def _change_occupation_p(self, arguments=None):
-        return self.arguments["OCC"].index(arguments) != self.arguments["OCC"].index(self.features.get("occupation"))
+        return self._check_user_categorical_constraints("occupation", arguments, "OCC")
+        #return self.arguments["OCC"].index(arguments) != self.arguments["OCC"].index(self.features.get("occupation"))
 
     def _change_hours_p(self, arguments=None):
-        return self._check_user_constraints("hours_per_week", arguments)
+        return self._check_user_continuous_constraints("hours_per_week", arguments)
         #return self.features.get("hours_per_week")+arguments >= 0
     
     def _change_capital_gain_p(self, arguments=None):
-        return self._check_user_constraints("capital_gain", arguments)
+        return self._check_user_continuous_constraints("capital_gain", arguments)
         #return self.features["capital_gain"]+arguments >= 0
 
     def _change_capital_loss_p(self, arguments=None):
-        return self._check_user_constraints("capital_loss", arguments)
+        return self._check_user_continuous_constraints("capital_loss", arguments)
         #return self.features["capital_loss"]+arguments >= 0
 
     ### POSTCONDITIONS
@@ -232,7 +235,14 @@ class AdultEnvironment(EnvironmentWeights):
         return action_cost
     
     # USER CONSTRAINTS
-    def _check_user_constraints(self, feature_name: str, argument: str):
+    def _check_user_categorical_constraints(self, feature_name: str, argument: str, argument_type: str):
+
+        default_values = self.arguments.get(argument_type)
+        preferred_list = self.user_constraints.get(feature_name, {}).get("acceptable_values", default_values)
+
+        return self.features.get(feature_name) != argument and argument in preferred_list
+
+    def _check_user_continuous_constraints(self, feature_name: str, argument: str):
 
         max_value = self.user_constraints.get(feature_name, {}).get("max_value", np.inf)
         min_value = self.user_constraints.get(feature_name, {}).get("min_value", 0)

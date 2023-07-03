@@ -5,13 +5,13 @@ import pandas as pd
 from pandas.api.types import is_categorical_dtype, is_numeric_dtype, is_object_dtype
 
 
-def convert_plans_into_json(plans: list, current_state: dict):
+def convert_plans_into_json(plans: list, current_state: dict, user_preferences: dict={}):
     
     json_response = {
         "userId": "#",
         "plans": [],
         "overalSatisfication": None,
-        "UserPreferences": {}
+        "UserPreferences": user_preferences
     }
 
     for k,p in enumerate(plans): 

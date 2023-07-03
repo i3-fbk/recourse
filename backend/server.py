@@ -146,7 +146,7 @@ def get_recourse():
     potential_interventions = sorted(potential_interventions, key=lambda x: x[1])
     potential_interventions = [x[2] for x in potential_interventions[0:MAX_RECOURSE_PLANS]]
     
-    return convert_plans_into_json(potential_interventions, v.to_dict('records')[0])
+    return convert_plans_into_json(potential_interventions, v.to_dict('records')[0], user_preferences)
 
 @app.route("/ask", methods=['POST', 'GET'])
 def return_recourse():
