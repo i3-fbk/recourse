@@ -29,7 +29,7 @@ def convert_plans_into_json(plans: list, current_state: dict, user_preferences: 
                         "name": feature,
                         "valueBefore": current_state.get(feature),
                         "valueAfter": new_value,
-                        "valueDiff": (current_state.get(feature)-new_value) if isinstance(new_value, int) or isinstance(new_value, float) else new_value,
+                        "valueDiff": (new_value-current_state.get(feature)) if isinstance(new_value, int) or isinstance(new_value, float) else new_value,
                         "type": "numeric" if isinstance(new_value, int) or isinstance(new_value, float) else "categorical"
                     }
                 )
