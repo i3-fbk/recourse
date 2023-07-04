@@ -61,8 +61,8 @@ if __name__ == "__main__":
     # For testing, we sample the weights from the mixture.
     #mixture = MixtureModel(mixture_means=MIXTURE_MEAN_LIST.get(args.dataset))
     #W_expectation = np.mean(mixture.sample(1000), axis=0)
-    W_train = np.random.randint(1,100, size=(len(X_train), len(keys_weights)))
-    W_test = np.random.randint(1,100, size=(len(X_test), len(keys_weights)))
+    W_train = np.random.randint(1,10, size=(len(X_train), len(keys_weights)))
+    W_test = np.random.randint(1,10, size=(len(X_test), len(keys_weights)))
 
     # Transform the weights into dataframes.
     W_train = pd.DataFrame(W_train, columns=keys_weights)

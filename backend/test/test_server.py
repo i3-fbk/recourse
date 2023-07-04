@@ -35,7 +35,7 @@ myobj = [{
 } for k,v in myobj.items()]
 
 cookies = {'RecourseInteractiveWeights23': 
-           str({'adult': {'age': 38, 'workclass': 32, 'education': 9, 'marital_status': 86, 'occupation': 53, 'relationship': 70, 'race': 82, 'sex': 88, 'capital_gain': 71, 'capital_loss': 94, 'hours_per_week': 46, 'native_country': 96}})
+           str({'adult': {'age': 1, 'workclass': 1, 'education': 1, 'marital_status': 1, 'occupation': 1, 'relationship': 1, 'race': 1, 'sex': 1, 'capital_gain': 1, 'capital_loss': 1, 'hours_per_week': 1, 'native_country': 1}})
 }
 
 preferences = {"hour_per_week": {"max_value": 41, "min_value": 0},

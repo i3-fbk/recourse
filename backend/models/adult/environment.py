@@ -71,7 +71,7 @@ class AdultEnvironment(EnvironmentWeights):
                                                     'CHANGE_OCCUPATION': {'index': 3, 'level': 0, 'args': 'OCC'},
                                                     'CHANGE_HOURS': {'index': 4, 'level': 0, 'args': 'HOUR'},
                                                     'CHANGE_CAP_GAIN': {'index': 5, 'level': 0, 'args': 'CAP'},
-                                                    'CHANGE_CAP_LOSS': {'index': 6, 'level': 0, 'args': 'CAP'},
+                                                    'CHANGE_CAP_LOSS': {'index': 6, 'level': 0, 'args': 'CAP_LOSS'},
                                                     'INTERVENE': {'index': 7, 'level': 1, 'args': 'NONE'}}.items()))
 
         # The available arguments. For each type, we need to specify a list of potential values. Each action will be
@@ -82,7 +82,8 @@ class AdultEnvironment(EnvironmentWeights):
                                                 "EDU": ['Preschool', '1st-4th', '5th-6th', '7th-8th', '9th', '10th', '11th', '12th', 'HS-grad', 'Some-college', 'Bachelors', 'Masters', 'Doctorate', 'Assoc-acdm', 'Assoc-voc', 'Prof-school'],
                                                 "OCC": ["Tech-support", "Craft-repair", "Other-service", "Sales", "Exec-managerial", "Prof-specialty", "Handlers-cleaners", "Machine-op-inspct", "Adm-clerical", "Farming-fishing", "Transport-moving", "Priv-house-serv", "Protective-serv", "Armed-Forces"],
                                                 "HOUR": list(range(1,25))+list(range(-1,-25)),
-                                                "CAP": np.linspace(1,5000, num=5).tolist()+np.linspace(-5000, -1, num=5).tolist(),
+                                                "CAP": np.linspace(1,5000, num=200).tolist(),
+                                                "CAP_LOSS": np.linspace(-5000, -1, num=200).tolist(),
                                                 "NONE": [0]
                                             }.items()))
 

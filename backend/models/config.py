@@ -53,7 +53,7 @@ MIXTURE_MEAN_LIST = {
 WFARE_CONFIG = {
     "adult": {
         "environment": "backend.models.adult.environment.AdultEnvironment",
-        "training_steps": 100,
+        "training_steps": 500,
         "batch_size": 50,
         "buffer_size": 200,
         "expectation": True,
@@ -64,7 +64,7 @@ WFARE_CONFIG = {
         },
         "mcts_config": {
             "exploration": True,
-            "number_of_simulations": 25,
+            "number_of_simulations": 50,
             "dir_epsilon": 0.3,
             "dir_noise": 0.3
         }

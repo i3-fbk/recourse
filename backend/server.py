@@ -129,7 +129,7 @@ def get_recourse():
                                                                                                     user_current_weights.get(k),
                                                                                                     full_output=True,
                                                                                                     verbose=False,
-                                                                                                    mcts_steps=25,
+                                                                                                    mcts_steps=5,
                                                                                                     noise=0.3,
                                                                                                     previous_solutions=previous_solutions,
                                                                                                     user_constraints=user_preferences)
