@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS, cross_origin
 from flask import request
 
 import dill as pickle
@@ -17,6 +18,7 @@ import pandas as pd
 MAX_RECOURSE_PLANS = 5
 
 app = Flask(__name__)
+CORS(app, support_credentials=True)
 
 dataset_models = [
     #["lendingclub", "nn", 157],
@@ -86,12 +88,14 @@ def hello_world():
     return f"<p>{str(x)}</p><br /><p>{result}</p>"
 
 @app.route("/get_user", methods=['GET'])
+@cross_origin(supports_credentials=True)
 def get_user():
     x = dataset.sample()
     x = {k: v.to_dict("records")[0] for k,v in x.items()}
     return x
 
 @app.route("/get_recourse", methods=['GET', 'POST'])
+@cross_origin(supports_credentials=True)
 def get_recourse():
 
     # We extract the user preferences, data and weigths from the cookies
