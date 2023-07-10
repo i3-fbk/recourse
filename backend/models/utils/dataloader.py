@@ -23,6 +23,7 @@ def fix_lendingclub(data, y):
     # Fix revol util
     X["revol_util"] = X["revol_util"].apply(lambda x: float(x.replace("%", "")))
     X["int_rate"] = X["int_rate"].apply(lambda x: float(x.replace("%", "")))
+    X['term'] = X['term'].apply(lambda x: x.strip())
 
     # Change 
     # X = X[X.loan_status.isin([

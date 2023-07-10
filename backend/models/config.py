@@ -36,7 +36,7 @@ NN_CONFIG = {
     },
     "lendingclub": {
         'nn': {
-            "iterations": 3,
+            "iterations": 1,
             "layers": 3,
             "batch_size": 1024
         }
@@ -76,7 +76,7 @@ WFARE_CONFIG = {
         "buffer_size": 200,
         "expectation": True,
         "policy_config": {
-            "observation_dim": 180,
+            "observation_dim": 182,
             "encoding_dim": 90,
             "hidden_size": 90
         },

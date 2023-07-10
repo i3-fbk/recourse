@@ -89,7 +89,9 @@ class LendingClubEnvironment(EnvironmentWeights):
                                                 'pub_rec_bankruptcies': self._pub_rec_bankruptcies,
                                                 'hardship_flag': self._hardship_flag,
                                                 #'hardship_status': self._hardship_status,
-                                                'debt_settlement_flag': self._debt_settlement_flag
+                                                'debt_settlement_flag': self._debt_settlement_flag,
+                                                'last_fico_range_high': self._last_fico_range_high,
+                                                'last_fico_range_low': self._last_fico_range_low
                                                 }.items()))
         
         # Dictionary specifying, for each action, the corresponding precondition which needs 
@@ -134,7 +136,9 @@ class LendingClubEnvironment(EnvironmentWeights):
                                                     'hardship_flag': {'index': 22, 'level': 0, 'args': 'hardship_flag'},
                                                     #'hardship_status': {'index': 25, 'level': 0, 'args': 'LOAN'},
                                                     'debt_settlement_flag': {'index': 23, 'level': 0, 'args': 'debt_settlement_flag'},
-                                                    'INTERVENE': {'index': 24, 'level': 1, 'args': 'NONE'}}.items()))
+                                                    'last_fico_range_high': {'index': 24, 'level': 0, 'args': 'last_fico_range_high'},
+                                                    'last_fico_range_low': {'index': 25, 'level': 0, 'args': 'last_fico_range_low'},
+                                                    'INTERVENE': {'index': 26, 'level': 1, 'args': 'NONE'}}.items()))
 
         # The available arguments. For each type, we need to specify a list of potential values. Each action will be
         # tied to the correspoding type. 
@@ -145,17 +149,16 @@ class LendingClubEnvironment(EnvironmentWeights):
                     "NONE": [0],
                     "annual_inc": list(np.linspace(0.0, 300622.49678082764, num=100)),
                     "loan_amnt": list(np.arange(1000, 40000, step=780.0)) + list(np.arange(-1000, -40000, step=-780.0)),
-                    "term": [' 60 months', ' 36 months'],
+                    "term": ['60 months', '36 months'],
                     "installment": list(np.linspace(30.12, 1719.83, num=50)) + list(np.linspace(-30.12, -1719.83, num=50)),
                     "emp_length": ['< 1 year', '10+ years', '8 years', '6 years', '5 years', '9 years', '3 years', '2 years', '7 years', '4 years', '1 year'],
                     "home_ownership": ['RENT', 'MORTGAGE', 'OWN', 'ANY'],
-                    #"pymnt_plan": ['n'],
                     "verification_status": ['Not Verified', 'Source Verified', 'Verified'],
                     "purpose": ['debt_consolidation', 'credit_card', 'car', 'major_purchase', 'other', 'home_improvement', 'medical', 'house', 'small_business', 'moving', 'vacation', 'renewable_energy', 'wedding'],
                     "open_acc": list(np.arange(1, 93, step=2.0)) + list(np.arange(-1, -93, step=-2.0)),
                     "total_acc": list(np.arange(2, 165, step=4.0)) + list(np.arange(-2, -165, step=-4.0)),
                     "application_type": ['Joint App', 'Individual'],
-                    "acc_now_delinq": list(np.arange(0, 3, step=1.0)) + list(np.arange(-1, -3, step=-1.0)),
+                    "acc_now_delinq": list(np.arange(1, 3, step=1.0)) + list(np.arange(-1, -3, step=-1.0)),
                     "tot_cur_bal": list(np.arange(1, 4348538, step=86971.0)) + list(np.arange(-1, -4348538, step=-86971.0)),
                     "total_cu_tl": list(np.arange(1, 65, step=2.0)) + list(np.arange(-1, -65, step=-2.0)),
                     "mort_acc": list(np.arange(1, 41, step=1.0)) + list(np.arange(-1, -41, step=-1.0)),
@@ -163,8 +166,10 @@ class LendingClubEnvironment(EnvironmentWeights):
                     "num_actv_rev_tl": list(np.arange(1, 60, step=2.0)) + list(np.arange(-1, -60, step=-2.0)),
                     "num_op_rev_tl": list(np.arange(1, 91, step=2.0)) + list(np.arange(-1, -91, step=-2.0)),
                     "num_rev_accts": list(np.arange(2, 151, step=3.0)) + list(np.arange(-2, -151, step=-3.0)),
-                    "percent_bc_gt_75": list(np.linspace(1.0, 100.0, num=50)) + list(np.linspace(-1.0, -100.0, num=50)),
+                    "percent_bc_gt_75": list(np.linspace(1, 100.0, num=50)) + list(np.linspace(-1, -100.0, num=50)),
                     "pub_rec_bankruptcies": list(np.arange(1, 7, step=1.0)) + list(np.arange(-1, -7, step=-1.0)),
+                    "last_fico_range_low": list(np.arange(1, 845, step=17.0)) + list(np.arange(-1, -845, step=-17.0)),
+                    "last_fico_range_high": list(np.arange(1, 850, step=17.0)) + list(np.arange(-1, -850, step=-17.0)),
                     "hardship_flag": ['Y', 'N'],
                     "debt_settlement_flag": ['N', 'Y'],
                 }.items()
@@ -212,14 +217,20 @@ class LendingClubEnvironment(EnvironmentWeights):
 
     ### ACTIONS
 
+    def _last_fico_range_high(self, arguments=None):
+        self.features["last_fico_range_high"] += arguments
+    
+    def _last_fico_range_low(self, arguments=None):
+        self.features["last_fico_range_low"] += arguments
+
     def _hardship_flag(self, arguments=None):
-        self.features["hardship_flag"] += arguments
+        self.features["hardship_flag"] = arguments
     
     def _hardship_status(self, arguments=None):
         self.features["hardship_status"] += arguments
     
     def _debt_settlement_flag(self, arguments=None):
-        self.features["debt_settlement_flag"] += arguments
+        self.features["debt_settlement_flag"] = arguments
 
     def _num_actv_bc_tl(self, arguments=None):
         self.features["num_actv_bc_tl"] += arguments
@@ -261,16 +272,16 @@ class LendingClubEnvironment(EnvironmentWeights):
         self.features["loan_amnt"] += arguments
     
     def _term(self, arguments=None):
-        self.features["term"] += arguments
+        self.features["term"] = arguments
     
     def _installment(self, arguments=None):
         self.features["installment"] += arguments
     
     def _emp_length(self, arguments=None):
-        self.features["emp_length"] += arguments
+        self.features["emp_length"] = arguments
     
     def _home_ownership(self, arguments=None):
-        self.features["home_ownership"] += arguments
+        self.features["home_ownership"] = arguments
     
     def _annual_inc(self, arguments=None):
         self.features["annual_inc"] += arguments
@@ -279,10 +290,10 @@ class LendingClubEnvironment(EnvironmentWeights):
         self.features["pymnt_plan"] += arguments
     
     def _verification_status(self, arguments=None):
-        self.features["verification_status"] += arguments
+        self.features["verification_status"] = arguments
 
     def _purpose(self, arguments=None):
-        self.features["purpose"] += arguments
+        self.features["purpose"] = arguments
     
     def _open_acc(self, arguments=None):
         self.features["open_acc"] += arguments
@@ -292,8 +303,6 @@ class LendingClubEnvironment(EnvironmentWeights):
 
     def _stop(self, arguments=None):
         return True
-        
-
 
 
     ### POSTCONDITIONS
