@@ -69,6 +69,24 @@ WFARE_CONFIG = {
             "dir_noise": 0.3
         }
     },
+    "lendingclub": {
+        "environment": "backend.models.lendingclub.environment.LendingClubEnvironment",
+        "training_steps": 500,
+        "batch_size": 50,
+        "buffer_size": 200,
+        "expectation": True,
+        "policy_config": {
+            "observation_dim": 180,
+            "encoding_dim": 90,
+            "hidden_size": 90
+        },
+        "mcts_config": {
+            "exploration": True,
+            "number_of_simulations": 25,
+            "dir_epsilon": 0.3,
+            "dir_noise": 0.3
+        }
+    },
     "givemecredit": {
         "environment": "blackbox.givemecredit.givemecredit_env.GiveMeCreditEnv",
         "training_steps": 600, #1500,
