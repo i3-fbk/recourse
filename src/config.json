@@ -1,0 +1,377 @@
+{
+    "loan_approval_task": {   
+        "features": {
+            "education": {
+                "dataset": "adult",
+                "display_name": "Education",
+                "description": "Level of education of the user (e.g., Bachelor)",
+                "type": "categorical",
+                "actionable": true,
+                "values": ["Preschool", "1st-4th", "5th-6th", "7th-8th", "9th", "10th", "11th", "12th", "HS-grad", "Some-college", "Bachelors", "Masters", "Doctorate", "Assoc-acdm", "Assoc-voc", "Prof-school"]
+            },
+            "capital_gain": {
+                "dataset": "adult",
+                "display_name": "Income",
+                "description": "Self-reported yearly income",
+                "type": "numerical",
+                "actionable": true,
+                "min_value": 0,
+                "max_value": 10000
+            },
+            "workclass": {
+                "dataset": "adult",
+                "display_name": "Workclass",
+                "description": "Job category (e.g. Self-employed, Government officer)",
+                "type": "categorical",
+                "actionable": true,
+                "values": ["Never-worked", "Without-pay", "Self-emp-not-inc", "Self-emp-inc","Private", "Local-gov", "State-gov", "Federal-gov"]
+            },
+            "occupation": {
+                "dataset": "adult",
+                "display_name": "Job",
+                "description": "Job type (e.g. Tech-support, Craft-repair)",
+                "type": "categorical",
+                "actionable": true,
+                "values": ["Tech-support", "Craft-repair", "Other-service", "Sales", "Exec-managerial", "Prof-specialty", "Handlers-cleaners", "Machine-op-inspct", "Adm-clerical", "Farming-fishing", "Transport-moving", "Priv-house-serv", "Protective-serv", "Armed-Forces"]
+            },
+            "capital_loss": {
+                "dataset": "adult",
+                "display_name": "Captital Loss",
+                "description": "Monthly expenditure",
+                "type": "numerical",
+                "actionable": true,
+                "min_value": 0,
+                "max_value": 10000
+            },
+            "native_country": {
+                "dataset": "adult",
+                "display_name": "Native Country",
+                "description": "Country where you were born.",
+                "type": "categorical",
+                "actionable": false
+            },
+            "relationship": {
+                "dataset": "adult",
+                "display_name": "Relationship",
+                "description": "Status of your current relationship.",
+                "type": "categorical",
+                "actionable": false
+            },
+            "martial-status": {
+                "dataset": "adult",
+                "display_name": "Marital Status",
+                "description": "If you are married or not.",
+                "type": "categorical",
+                "actionable": false
+            },
+            "sex": {
+                "dataset": "adult",
+                "display_name": "Gender",
+                "description": "Your Gender",
+                "type": "categorical",
+                "actionable": false
+            },
+            "race": {
+                "dataset": "adult",
+                "display_name": "Race",
+                "description": "Race",
+                "type": "categorical",
+                "actionable": false
+            },
+            "age": {
+                "dataset": "adult",
+                "display_name": "Age",
+                "description": "Your current age.",
+                "type": "numerical",
+                "actionable": false
+            },
+            "hours_per_week": {
+                "dataset": "adult",
+                "display_name": "Hours per week",
+                "description": "how many hours you work per week",
+                "type": "numerical",
+                "actionable": true,
+                "min_value": 0,
+                "max_value": 100
+               
+            },
+            "acc_now_delinq": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The number of accounts on which the borrower is now delinquent.",
+                "display_name": "ACC_NOW_DELINQ",
+                "max_value": 3,
+                "min_value": 0,
+                "type": "numerical"
+            },
+            "annual_inc": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The self-reported annual income provided by the borrower during registration.",
+                "display_name": "ANNUAL_INC",
+                "max_value": 8000000,
+                "min_value": 0,
+                "type": "numerical"
+            },
+            "application_type": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Indicates whether the loan is an individual application or a joint application with two co-borrowers",
+                "display_name": "APPLICATION_TYPE",
+                "type": "categorical",
+                "values": ["Joint App", "Individual"]
+            },
+            "debt_settlement_flag": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Flags whether or not the borrower, who has charged-off, is working with a debt-settlement company.",
+                "display_name": "DEBT_SETTLEMENT_FLAG",
+                "type": "categorical",
+                "values": ["Y", "N"]
+            },
+            "emp_length": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Employment length in years. Possible values are between 0 and 10 where 0 means less than one year and 10 means ten or more years.",
+                "display_name": "EMP_LENGTH",
+                "type": "categorical",
+                "values": ["< 1 year", "10+ years", "8 years", "6 years", "5 years", "9 years", "3 years", "2 years", "7 years", "4 years", "1 year"]
+            },
+            "hardship_flag": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Flags whether or not the borrower is on a hardship plan",
+                "display_name": "HARDSHIP_FLAG",
+                "type": "categorical",
+                "values": ["Y", "N"]
+            },
+            "home_ownership": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The home ownership status provided by the borrower during registration or obtained from the credit report. Our values are: RENT, OWN, MORTGAGE, OTHER",
+                "display_name": "HOME_OWNERSHIP",
+                "type": "categorical",
+                "values": ["RENT", "MORTGAGE", "OWN", "ANY"]
+            },
+            "installment": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The monthly payment owed by the borrower if the loan originates.",
+                "display_name": "INSTALLMENT",
+                "max_value": 1719.83,
+                "min_value": 30.12,
+                "type": "numerical"
+            },
+            "last_fico_range_high": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The upper boundary range the borrower's last FICO pulled belongs to.",
+                "display_name": "LAST_FICO_RANGE_HIGH",
+                "max_value": 850,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "last_fico_range_low": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The lower boundary range the borrower's last FICO pulled belongs to.",
+                "display_name": "LAST_FICO_RANGE_LOW",
+                "max_value": 845,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "loan_amnt": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The listed amount of the loan applied for by the borrower. If at some point in time, the credit department reduces the loan amount, then it will be reflected in this value.",
+                "display_name": "LOAN_AMNT",
+                "max_value": 40000,
+                "min_value": 1000,
+                "type": "numerical"
+            },
+            "mort_acc": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Number of mortgage accounts.",
+                "display_name": "MORT_ACC",
+                "max_value": 41,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "num_actv_bc_tl": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Number of currently active bankcard accounts",
+                "display_name": "NUM_ACTV_BC_TL",
+                "max_value": 33,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "num_actv_rev_tl": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Number of currently active revolving trades",
+                "display_name": "NUM_ACTV_REV_TL",
+                "max_value": 60,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "num_op_rev_tl": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Number of open revolving accounts",
+                "display_name": "NUM_OP_REV_TL",
+                "max_value": 91,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "num_rev_accts": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Number of revolving accounts",
+                "display_name": "NUM_REV_ACCTS",
+                "max_value": 151,
+                "min_value": 2,
+                "type": "numerical"
+            },
+            "open_acc": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The number of open credit lines in the borrower's credit file.",
+                "display_name": "OPEN_ACC",
+                "max_value": 93,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "percent_bc_gt_75": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Percentage of all bankcard accounts > 75% of limit.",
+                "display_name": "PERCENT_BC_GT_75",
+                "max_value": 100,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "pub_rec_bankruptcies": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Number of public record bankruptcies",
+                "display_name": "PUB_REC_BANKRUPTCIES",
+                "max_value": 7,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "purpose": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "A category provided by the borrower for the loan request.",
+                "display_name": "PURPOSE",
+                "type": "categorical",
+                "values": ["debt_consolidation", "credit_card", "car", "major_purchase", "other", "home_improvement", "medical", "house", "small_business", "moving", "vacation", "renewable_energy", "wedding"],
+            },
+            "term": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The number of payments on the loan. Values are in months and can be either 36 or 60.",
+                "display_name": "TERM",
+                "type": "categorical",
+                "values": ["60 months", "36 months"]
+            },
+            "tot_cur_bal": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Total current balance of all accounts",
+                "display_name": "TOT_CUR_BAL",
+                "max_value": 4348538,
+                "min_value": 1,
+                "type": "numerical"
+            },
+            "total_acc": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "The total number of credit lines currently in the borrower's credit file",
+                "display_name": "TOTAL_ACC",
+                "max_value": 1000,
+                "min_value": 0,
+                "type": "numerical"
+            },
+            "total_cu_tl": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Number of finance trades",
+                "display_name": "TOTAL_CU_TL",
+                "max_value": 65,
+                "min_value": 1,
+                "type": "numerical"
+                },
+            "verification_status": {
+                "actionable": true,
+                "dataset": "lendingclub",
+                "description": "Indicates if income was verified by LC, not verified, or if the income source was verified",
+                "display_name": "VERIFICATION_STATUS",
+                "type": "categorical",
+                "values": ["Not Verified", "Source Verified", "Verified"]
+            },
+            "grade": { "actionable": false, "dataset": "lendingclub", "type": "categorical"},
+            "int_rate": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "fico_range_high": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "fico_range_low": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "acc_open_past_24mths": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "all_util": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "avg_cur_bal": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "bc_open_to_buy": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "bc_util": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "chargeoff_within_12_mths": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "collections_12_mths_ex_med": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "delinq_2yrs": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "delinq_amnt": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "dti": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "il_util": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "initial_list_status": {"actionable": false, "dataset": "lendingclub", "type": "categorical"},
+            "inq_fi": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "inq_last_12m": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "inq_last_6mths": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "max_bal_bc": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mo_sin_old_il_acct": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mo_sin_old_rev_tl_op": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mo_sin_rcnt_rev_tl_op": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mo_sin_rcnt_tl": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mths_since_last_delinq": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mths_since_rcnt_il": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mths_since_recent_bc": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mths_since_recent_inq": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_bc_sats": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_bc_tl": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_il_tl": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mths_since_last_major_derog": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "mths_since_recent_revol_delinq": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_accts_ever_120_pd": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_rev_tl_bal_gt_0": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_sats": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_tl_120dpd_2m": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_tl_30dpd": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_tl_90g_dpd_24m": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "num_tl_op_past_12m": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "open_acc_6m": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "open_act_il": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "open_il_12m": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "open_il_24m": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "open_rv_12m": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "open_rv_24m": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "pct_tl_nvr_dlq": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "policy_code": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "pub_rec": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "pymnt_plan": {"actionable": false, "dataset": "lendingclub", "type": "categorical"},
+            "revol_bal": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "revol_util": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "sub_grade": {"actionable": false, "dataset": "lendingclub", "type": "categorical"},
+            "tax_liens": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "tot_coll_amt": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "tot_hi_cred_lim": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "total_bal_ex_mort": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "total_bal_il": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "total_bc_limit": {"actionable": false, "dataset": "lendingclub", "type": "numerical"},
+            "total_il_high_credit_limit": {"actionable": false, "dataset": "lendingclub", "type": "numerical"}
+        }
+    }
+}
