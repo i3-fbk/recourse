@@ -59,7 +59,7 @@ class LendingClubEnvironment(EnvironmentWeights):
 
         # The maximum length of an intervention. It considers also the STOP action.
         # It should be min(n_of_actions, feature/2).
-        self.max_intervention_depth = 12
+        self.max_intervention_depth = 10
 
         # Dictionary specifying, for each action, the corresponding implementation of
         # such action in the environment.

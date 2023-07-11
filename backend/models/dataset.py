@@ -5,19 +5,19 @@ import torch
 
 class JointDataset:
 
-    def __init__(self, dataset_names: List, files_paths: List, blackbox, preprocessor) -> None:
+    def __init__(self, dataset_names: List, files_paths: List, blackboxes, preprocessors) -> None:
         self.datasets = {}
-        self.blackbox = blackbox[0]
-        self.preprocessor = preprocessor[0]
-        for d, f in zip(dataset_names, files_paths):
+        self.blackboxes = blackboxes
+        self.preprocessors = preprocessors
+        for d, f, b, p in zip(dataset_names, files_paths, blackboxes, preprocessors):
             self.datasets[d] = pd.read_csv(f)
-            self._filter_dataset(d)
+            self._filter_dataset(d,b,p)
         
-    def _filter_dataset(self, dataset_name):
+    def _filter_dataset(self, dataset_name, classifier, preprocessor):
 
         # Filter the training dataset by picking only the examples which are classified negatively by the model
         with torch.no_grad():
-            output = self.blackbox(torch.FloatTensor(self.preprocessor.transform(self.datasets[dataset_name]))).numpy()
+            output = classifier(torch.FloatTensor(preprocessor.transform(self.datasets[dataset_name]))).numpy()
         
         self.datasets[dataset_name]["predicted"] = output
         self.datasets[dataset_name] = self.datasets[dataset_name][self.datasets[dataset_name].predicted <= 0.5]

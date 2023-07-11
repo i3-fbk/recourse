@@ -4,8 +4,10 @@ import numpy as np
 import pandas as pd
 from pandas.api.types import is_categorical_dtype, is_numeric_dtype, is_object_dtype
 
+from itertools import product
 
-def convert_plans_into_json(plans: list, current_state: dict, user_preferences: dict={}):
+
+def convert_plans_into_json(plans: dict, current_state: dict, user_preferences: dict={}, max_recourse_plans: int=5):
     
     json_response = {
         "userId": "#",
@@ -14,25 +16,36 @@ def convert_plans_into_json(plans: list, current_state: dict, user_preferences: 
         "UserPreferences": user_preferences
     }
 
-    for k,p in enumerate(plans): 
+    # We want to generate the cartesian product between plans
+    plans_datasets = [k for k,v in plans.items()]
+    all_plans = product(*[v for k,v in plans.items()])
 
+    for k,plan in enumerate(all_plans):
+
+        # TODO: check that with this way, we are really returning the cheapest plans
+        # If we have generated too many recourse plans, return
+        if k+1 > max_recourse_plans:
+            break
+        
         new_plan = {
-            "planId": k,
-            "features": []
+            "planId": k+1,
+            "features": {d:[] for d in plans_datasets}
         }
 
-        for feature, new_value in p.items():
+        for dataset, subplan in zip(plans_datasets, plan):
 
-            if current_state.get(feature) != new_value:
-                new_plan["features"].append(
-                    {
-                        "name": feature,
-                        "valueBefore": current_state.get(feature),
-                        "valueAfter": new_value,
-                        "valueDiff": (new_value-current_state.get(feature)) if isinstance(new_value, int) or isinstance(new_value, float) else new_value,
-                        "type": "numeric" if isinstance(new_value, int) or isinstance(new_value, float) else "categorical"
-                    }
-                )
+            for feature, new_value in subplan.items():
+
+                if current_state.get(dataset).get(feature) != new_value:
+                    new_plan["features"][dataset].append(
+                        {
+                            "name": feature,
+                            "valueBefore": current_state.get(dataset).get(feature),
+                            "valueAfter": new_value,
+                            "valueDiff": (new_value-current_state.get(dataset).get(feature)) if isinstance(new_value, int) or isinstance(new_value, float) else new_value,
+                            "type": "numeric" if isinstance(new_value, int) or isinstance(new_value, float) else "categorical"
+                        }
+                    )
         
         json_response["plans"].append(
             new_plan

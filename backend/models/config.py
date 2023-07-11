@@ -71,7 +71,7 @@ WFARE_CONFIG = {
     },
     "lendingclub": {
         "environment": "backend.models.lendingclub.environment.LendingClubEnvironment",
-        "training_steps": 500,
+        "training_steps": 200,
         "batch_size": 50,
         "buffer_size": 200,
         "expectation": True,
