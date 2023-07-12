@@ -47,14 +47,14 @@ cookies = {'RecourseInteractiveWeights23':
 preferences = {"hour_per_week": {"max_value": 41, "min_value": 0},
                "education": {"acceptable_values": ['Doctorate', 'Assoc-acdm', 'Assoc-voc', 'Prof-school']}}
 
-# Send the request to the API
-x = requests.post(url, json = {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences}, cookies=cookies)
-
 print("[*] POST REQUEST")
 print(pprint.pformat(
-    {"features": myobj, "preferences": preferences}
+    {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences}
 ))
 print()
+
+# Send the request to the API
+x = requests.post(url, json = {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences}, cookies=cookies)
 
 # Print the answer
 print("[*] POST ANSWER")
