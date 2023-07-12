@@ -267,7 +267,7 @@
                 "description": "A category provided by the borrower for the loan request.",
                 "display_name": "PURPOSE",
                 "type": "categorical",
-                "values": ["debt_consolidation", "credit_card", "car", "major_purchase", "other", "home_improvement", "medical", "house", "small_business", "moving", "vacation", "renewable_energy", "wedding"],
+                "values": ["debt_consolidation", "credit_card", "car", "major_purchase", "other", "home_improvement", "medical", "house", "small_business", "moving", "vacation", "renewable_energy", "wedding"]
             },
             "term": {
                 "actionable": true,
