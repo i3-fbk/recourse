@@ -134,8 +134,10 @@ margin-top: 40px;
     margin-bottom: 40px;
 }
 .GotoRecourseButton:hover {
+    color: #106FDF;
+    background-color: #ffffff;
+    border: 2px solid #106FDF;
     cursor: pointer;
-    background: #3384e1;
 }
 .loanApproavalDropDown {
     width: 300px;

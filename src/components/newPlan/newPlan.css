@@ -75,7 +75,7 @@
 }
 
 .PlanData {
-    width: 360px;
+    width: 320px;
     height: 70px; 
     /* box-shadow: 0px 0px 3px rgba(32, 38, 46, 0.3); */
     box-shadow: 0px 0px 6px rgba(32, 38, 46, 0.2);
@@ -100,7 +100,7 @@
 }
 .dataAmount {
     color: #20262E;
-    font-size: 32px;
+    font-size: 21px;
 }
 
 .upwardArrow {
@@ -144,16 +144,17 @@
     align-items: center;
     width: 177px;
     height: 44px;
-    border: 2px solid #106FDF;
     border-radius: 24px;
     font-size: 14px;
+    border: none;
     line-height: 36px;
-    color: #106FDF;
-    background-color: #ffffff;
+    color: #fff;
+    background-color: #106FDF;
 }
 .ButtonForKeepPlan:hover {
-    color: #ffffff;
-    background-color: #106FDF;
+    color: #106FDF;
+    background-color: #ffffff;
+    border: 2px solid #106FDF;
     cursor: pointer;
 }
 
@@ -163,13 +164,13 @@
     align-items: center;
     width: 177px;
     height: 44px;
-    border: 2px solid #BCC8D6;
+    border: none;
     border-radius: 24px;
     font-weight: 600;
     font-size: 14px;
     line-height: 36px;
-    color: #BCC8D6;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #BCC8D6;
 }
 .hidden {
     display: none;
@@ -223,7 +224,9 @@
 }
 
 .ButtonForProposeNewPlan:hover {
-    background: #5286c0;
+    color: #106FDF;
+    background-color: #ffffff;
+    border: 2px solid #106FDF;
     cursor: pointer;
 }
 

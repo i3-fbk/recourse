@@ -229,7 +229,7 @@ const Item = styled(Paper)(({ theme }) => ({
                       <div key={index} className="PlanData">
                       <span className="dataTitle">{item.name}</span>
                           <div className="innerDisplayNewPlan">
-                              <span><ArrowUpwardRoundedIcon fontSize="large" className={item.valueInc ? "upwardArrow" : "downward"} /></span> 
+                              {/* <span><ArrowUpwardRoundedIcon fontSize="large" className={item.valueInc ? "upwardArrow" : "downward"} /></span>  */}
                               <span className="dataAmount">{item.valueBefore}</span>
                               <span><ArrowRightAltIcon /></span>
                               <span className="dataAmount">{item.valueAfter}</span>
@@ -317,6 +317,5 @@ const Item = styled(Paper)(({ theme }) => ({
                     </div>  
          </Grid>
     }
-
 
 export default Welcome;
