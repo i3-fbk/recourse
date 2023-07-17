@@ -11,7 +11,14 @@ class EnsembleBlackBox:
         self.model_names = model_names
         self.preprocessors = preprocessors
         self.models = models
+
+        self.complete = {
+           name: model for name, model in zip(self.model_names, self.models)
+        }
     
+    def get_model(self, k: str):
+        return self.complete.get(k)
+
     def predict(self, x: dict) -> bool:
 
         outputs = []

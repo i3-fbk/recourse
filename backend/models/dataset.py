@@ -23,9 +23,12 @@ class JointDataset:
         self.datasets[dataset_name] = self.datasets[dataset_name][self.datasets[dataset_name].predicted <= 0.5]
         self.datasets[dataset_name].drop(columns="predicted", inplace=True)
 
-
-
     def sample(self) -> dict:
         return {
             k: x.sample(1) for k,x in self.datasets.items()
+        }
+
+    def get_feature_names(self) -> list:
+        return {
+            k: x.columns.tolist() for k,x in self.datasets.items()
         }

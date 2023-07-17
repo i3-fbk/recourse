@@ -8,7 +8,7 @@ from itertools import product
 
 
 def convert_plans_into_json(plans: dict, current_state: dict, user_preferences: dict={}, max_recourse_plans: int=5):
-    
+
     json_response = {
         "userId": "#",
         "plans": [],
@@ -18,9 +18,10 @@ def convert_plans_into_json(plans: dict, current_state: dict, user_preferences: 
 
     # We want to generate the cartesian product between plans
     plans_datasets = [k for k,v in plans.items()]
-    all_plans = product(*[v for k,v in plans.items()])
+    all_plans = product(*[v[0] for k,v in plans.items()])
+    all_interventions = product(*[v[1] for k,v in plans.items()])
 
-    for k,plan in enumerate(all_plans):
+    for k,(plan,intervention) in enumerate(zip(all_plans,all_interventions)):
 
         # TODO: check that with this way, we are really returning the cheapest plans
         # If we have generated too many recourse plans, return
@@ -29,7 +30,8 @@ def convert_plans_into_json(plans: dict, current_state: dict, user_preferences: 
         
         new_plan = {
             "planId": k+1,
-            "features": {d:[] for d in plans_datasets}
+            "features": {d:[] for d in plans_datasets},
+            "interventions": {d: intervention[idx] for idx, d in enumerate(plans_datasets)}
         }
 
         for dataset, subplan in zip(plans_datasets, plan):
