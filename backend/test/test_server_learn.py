@@ -90,7 +90,11 @@ cookies = {'RecourseInteractiveWeights23':
            str({
                'lendingclub': {k.get("name"): 1 for k in myobj_lending},
                'adult': {'age': 1, 'workclass': 1, 'education': 1, 'marital_status': 1, 'occupation': 1, 'relationship': 1, 'race': 1, 'sex': 1, 'capital_gain': 1, 'capital_loss': 1, 'hours_per_week': 1, 'native_country': 1}}),
-            'RecoursePreviousPlans': str(previous_recourse_plans)
+            'RecoursePreviousPlans': str(previous_recourse_plans),
+            'PreviousUserPreferences': str(
+                {"hour_per_week": {"max_value": 41, "min_value": 25},
+                "annual_inc": {"min_value": 100}}
+            )
 }
 
 preferences = {"hour_per_week": {"max_value": 41, "min_value": 0},

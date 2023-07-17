@@ -225,6 +225,11 @@ def extract_features_and_preferences():
     if request.cookies.get("RecoursePreviousPlans", None):
         recourse_previous_plans = eval(request.cookies.get("RecoursePreviousPlans", None), {})
 
+    # Extract previous preferences
+    previous_user_preferences = {}
+    if request.cookies.get("PreviousUserPreferences", None):
+        previous_user_preferences = eval(request.cookies.get("PreviousUserPreferences", None), {})
+
     if user_data_and_preferences is None:
         user_data = dataset.sample()
         user_preferences = {}
@@ -235,6 +240,9 @@ def extract_features_and_preferences():
         for dataset_type in user_data_and_preferences.get("features"):
             current_features = user_data_and_preferences.get("features").get(dataset_type)
             user_data[dataset_type] = pd.DataFrame.from_records([{v.get("name"):v.get("value") for v in current_features}])
+
+    # Merge previous user preferences
+    user_preferences = merge_user_preferences(user_preferences, previous_user_preferences)
 
     if user_current_weights is None:
         user_current_weights = {k: np.random.randint(1,100, size=len(user_data.get(k).columns)) for k,v in user_data.items()}
@@ -295,6 +303,39 @@ def get_recourse_and_learn():
         potential_interventions[k] = (temp_potential_interventions, temp_full_plans)
 
     return convert_plans_into_json(potential_interventions, {k:v.to_dict('records')[0] for k,v in user_data.items()}, user_preferences)
+
+
+def merge_user_preferences(previous_preferences: dict, new_preferences: dict):
+
+    updated_preferences = previous_preferences.copy()
+
+    # Add new preferences if they were never specified before
+    for k in new_preferences.keys():
+        if k not in updated_preferences:
+            updated_preferences[k] = new_preferences.get(k)
+
+    # Update previous values
+    for k in previous_preferences.keys():
+        # Check if in the preferences exist
+        if k in new_preferences:
+
+            # If this is numerical, then extend the range if it exist:
+            if "max_value" in new_preferences.get(k):
+
+                updated_preferences[k]["max_value"] = min(
+                    updated_preferences[k]["max_value"],
+                    new_preferences.get(k).get("max_value")
+                )
+
+                updated_preferences[k]["min_value"] = max(
+                    updated_preferences[k]["min_value"],
+                    new_preferences.get(k).get("min_value")
+                )
+
+            else:
+                updated_preferences[k]["acceptable_values"] = new_preferences.get(k).get("acceptable_values")
+
+    return updated_preferences
 
 def improve_weights(X: dict, previous_w: dict, previous_plans: dict):
     
