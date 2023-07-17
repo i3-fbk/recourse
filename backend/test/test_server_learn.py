@@ -47,7 +47,7 @@ previous_recourse_plans = [
                                          'Exec-managerial'],
                                         ['CHANGE_HOURS', 1],
                                         ['STOP', 0]],
-            'lendingclub': [['annual_inc', 0.0],
+            'lendingclub': [
                             ['acc_now_delinq', 1.0],
                             ['hardship_flag', 'Y'],
                             ['home_ownership', 'ANY'],
@@ -62,7 +62,7 @@ previous_recourse_plans = [
                                         ['CHANGE_OCCUPATION',
                                          'Exec-managerial'],
                                         ['STOP', 0]],
-            'lendingclub': [['annual_inc', 0.0],
+            'lendingclub': [
                             ['acc_now_delinq', 1.0],
                             ['hardship_flag', 'Y'],
                             ['home_ownership', 'ANY'],
@@ -77,7 +77,7 @@ previous_recourse_plans = [
                                         ['CHANGE_OCCUPATION',
                                          'Exec-managerial'],
                                         ['STOP', 0]],
-                'lendingclub': [['annual_inc', 0.0],
+                'lendingclub': [
                                 ['acc_now_delinq', 1.0],
                                 ['hardship_flag', 'Y'],
                                 ['STOP', 0]]

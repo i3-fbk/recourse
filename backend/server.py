@@ -271,7 +271,9 @@ def get_recourse_and_learn():
         previous_solutions = []
         current_traces = []
 
-        for _ in range(0,3):
+        for int_idx in range(0,3):
+
+            print(f"generating id {int_idx}, {k}")
             
             df_cfs, Y_full, competitor_traces, costs_efare, root_node = recourse_method.get(k).predict(v,
                                                                                                     new_weights.get(k),

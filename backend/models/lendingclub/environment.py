@@ -147,7 +147,7 @@ class LendingClubEnvironment(EnvironmentWeights):
             sorted(
                 {
                     "NONE": [0],
-                    "annual_inc": list(np.linspace(0.0, 300622.49678082764, num=100)),
+                    "annual_inc": list(np.linspace(1.0, 300622.49678082764, num=100)),
                     "loan_amnt": list(np.arange(1000, 40000, step=780.0)) + list(np.arange(-1000, -40000, step=-780.0)),
                     "term": ['60 months', '36 months'],
                     "installment": list(np.linspace(30.12, 1719.83, num=50)) + list(np.linspace(-30.12, -1719.83, num=50)),
@@ -382,9 +382,9 @@ class LendingClubEnvironment(EnvironmentWeights):
 
         return self.features.get(feature_name) != argument and argument in preferred_list
 
-    def _check_user_continuous_constraints(self, feature_name: str, argument: str):
+    def _check_user_continuous_constraints(self, feature_name: str, argument):
 
         max_value = self.user_constraints.get(feature_name, {}).get("max_value", np.inf)
         min_value = self.user_constraints.get(feature_name, {}).get("min_value", 0)
 
-        return min_value <= self.features.get(feature_name)+argument <= max_value
+        return min_value <= self.features.get(feature_name)+argument <= max_value and argument != 0.0

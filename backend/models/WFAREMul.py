@@ -17,7 +17,8 @@ class WFAREMul(WFARE):
                 mcts_only :bool=False, skip_expectation_step:bool=False,
                 mcts_steps: int=5, noise: float=0.2,
                 previous_solutions: list=[],
-                user_constraints: dict={}):
+                user_constraints: dict={},
+                max_intervention_depth: int=None):
         """Generate counterfactual interventions given FARE.
 
         :param X: the dataset
@@ -69,6 +70,10 @@ class WFAREMul(WFARE):
                 costs.append(cost)
                 root_nodes.append(None)
                 continue
+
+            # Override the intervention depth if needed
+            if max_intervention_depth:
+                env_validation.max_intervention_depth = max_intervention_depth
 
             mcts_validation = MCTSMul(
                 env_validation, self.policy,
