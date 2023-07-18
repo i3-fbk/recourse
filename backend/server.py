@@ -280,6 +280,10 @@ def improve_weights(X: dict, previous_w: dict, previous_plans: dict) -> dict:
     :return: new user weights
     :rtype: dict
     """
+
+    # If no previous plan is available, return the previous weights
+    if not previous_plans:
+        return previous_w
     
     previous_plans = sorted(previous_plans, key=lambda x: x.get("overall_satisfaction"), reverse=True)
     constraints = {}
