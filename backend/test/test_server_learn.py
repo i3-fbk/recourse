@@ -1,5 +1,6 @@
 import requests
 import pprint
+import json
 
 """ 
 EXAMPLE OF POST JSON REQUEST: 
@@ -109,7 +110,29 @@ print()
 # Send the request to the API
 x = requests.post(url, json = {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences}, cookies=cookies)
 
+# Save the dictionary to files
+json.dump(
+    {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences},
+    open("request.json", "w"),
+    indent=4, separators=(", ", ": "), sort_keys=True
+)
+
+# Save cookies to file
+json.dump(
+    cookies,
+    open("cookies.json", "w"),
+    indent=4, separators=(", ", ": "), sort_keys=True
+)
+
+
+
 # Print the answer
 print("[*] POST ANSWER")
 print(pprint.pformat(x.json()))
 print()
+
+json.dump(
+    x.json(),
+    open("response.json", "w"),
+    indent=4, separators=(", ", ": "), sort_keys=True
+)
