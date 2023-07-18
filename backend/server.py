@@ -112,7 +112,6 @@ def get_recourse_and_learn():
 
     # Compute the new weights
     new_weights = improve_weights(user_data, user_current_weights, recourse_previous_plans)
-    new_weights = {k: pd.DataFrame([new_weights.get(k)], columns=user_data.get(k).columns) for k,v in user_data.items()}
 
     # Potential interventions
     potential_interventions = generate_interventions(user_data, new_weights, user_preferences)
@@ -316,4 +315,6 @@ def improve_weights(X: dict, previous_w: dict, previous_plans: dict) -> dict:
         constraints, envs
     )
 
-    return new_particles
+    new_weights = {k: pd.DataFrame([new_particles.get(k)], columns=X.get(k).columns) for k,v in X.items()}
+
+    return new_weights
