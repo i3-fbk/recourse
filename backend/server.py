@@ -114,7 +114,7 @@ def get_recourse_and_learn():
     new_weights = improve_weights(user_data, user_current_weights, recourse_previous_plans)
 
     # Potential interventions
-    potential_interventions = generate_interventions(user_data, new_weights, user_preferences)
+    potential_interventions = generate_interventions(user_data, new_weights, user_preferences, max_recourse_plans=1)
 
     return convert_plans_into_json(potential_interventions, {k:v.to_dict('records')[0] for k,v in user_data.items()}, user_preferences)
 
@@ -164,7 +164,7 @@ def extract_features_and_preferences():
     return user_data, user_preferences, user_current_weights, recourse_previous_plans
 
 
-def generate_interventions(user_data: dict, user_weights: dict, user_preferences: dict) -> dict:
+def generate_interventions(user_data: dict, user_weights: dict, user_preferences: dict, max_recourse_plans: int=MAX_RECOURSE_PLANS) -> dict:
     """Generate recourse plans.
 
     :param user_data: user features 
@@ -213,8 +213,8 @@ def generate_interventions(user_data: dict, user_weights: dict, user_preferences
 
         # Pick only the MAX_RECOURSE_PLANS plans with the lowest cost
         temp_potential_interventions = sorted(temp_potential_interventions, key=lambda x: x[1])
-        temp_full_plans = [x[0] for x in temp_potential_interventions[0:MAX_RECOURSE_PLANS]]
-        temp_potential_interventions = [x[2] for x in temp_potential_interventions[0:MAX_RECOURSE_PLANS]]
+        temp_full_plans = [x[0] for x in temp_potential_interventions[0:max_recourse_plans]]
+        temp_potential_interventions = [x[2] for x in temp_potential_interventions[0:max_recourse_plans]]
 
         # Save the top interventions there
         potential_interventions[k] = (temp_potential_interventions, temp_full_plans)
