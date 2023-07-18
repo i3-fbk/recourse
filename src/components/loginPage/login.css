@@ -43,14 +43,14 @@
   max-width: 100%;
 }
 
-.login-button {
+.login-button-active {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100px;
   height: 44px;
   margin-top: 20px;
-  /* background: #106FDF; */
+  background: #106FDF;
   border-radius: 50px;
   color: #ffffff;
   border: 1px #ffffff solid;
@@ -60,10 +60,28 @@
   margin-right: 20px;
 }
 
-.login-button:hover {
-  background-color: #0c4da2;
+.login-button-active:hover {
+  background-color: #ffffff;
+  color: #0c4da2;
+  border: 2px solid #0c4da2;
+  cursor: pointer;
 }
-
+.login-button-deactive {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 44px;
+  margin-top: 20px;
+  background: #BCC8D6;
+  border-radius: 50px;
+  color: #ffffff;
+  border: 1px #ffffff solid;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 20px;
+}
 .consentContainer {
 display: flex;
 flex-direction: column;
@@ -88,4 +106,3 @@ width: 450px;
 .textFieldinputForLoing {
 width: 300px !important;
 }
-

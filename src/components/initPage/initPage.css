@@ -133,10 +133,10 @@ margin-top: 40px;
     text-decoration: none;
     margin-bottom: 40px;
 }
-.GotoRecourseButton:hover {
-    color: #106FDF;
-    background-color: #ffffff;
+.GotoRecourseButton:hover{
+    background-color: transparent;
     border: 2px solid #106FDF;
+    color: #106FDF;
     cursor: pointer;
 }
 .loanApproavalDropDown {
