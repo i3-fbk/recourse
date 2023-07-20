@@ -19,6 +19,7 @@ import CONFIG from "../../config.json";
 
 function AdditionalInsight(props) {
   const { plans, isdefault, handleOptionChange, selectedOptions,handleMinMaxChange, formData } = props;
+  
   const configuration = CONFIG.loan_approval_task.features;
 
   const initialScalers = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; // Initial scalers array
@@ -88,11 +89,11 @@ function AdditionalInsight(props) {
     }
   };
 
-  useEffect(() => {
-    if (props?.feedback != null) {
-      setFeatureList(props?.feedback.feedback.features);
-    }
-  }, [props?.feedback]);
+  // useEffect(() => {
+  //   if (props?.feedback != null) {
+  //     setFeatureList(props?.feedback.feedback.features);
+  //   }
+  // }, [props?.feedback]);
 
   // const handleInputChange = (index, event) => {
   //   const newValues = [...inputValues];
@@ -180,16 +181,15 @@ function AdditionalInsight(props) {
                     ) : (
                       <Select
                         multiple
+                        key={planIndex}
                         value={selectedOptions[planIndex] || []}
-                        onChange={(event) =>
-                          handleOptionChange(planIndex, event, item.name)
-                        }
-                        renderValue={(selected) => selected.join(", ")}
+                        onChange={(event) => handleOptionChange(event,planIndex,item.name)}
+                        renderValue={(selected) => selected.join(', ')}
                         style={{ maxWidth: 340 }}
                       >
                         {configuration[item.name].values.map(
                           (option, index) => (
-                            <MenuItem key={index} value={option}>
+                            <MenuItem key={option} value={option}>
                               <Checkbox
                                 checked={
                                   (selectedOptions[planIndex] || []).indexOf(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { styled } from "@mui/material/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
@@ -71,8 +71,12 @@ function Welcome() {
   const [preferences, setPreferences] = useState({});
   const [plans, setPlans] = useState([]);
   const [formData, setFormData] = useState({});
+  const [error, setError] = useState('')
+  const [plan_id, setplan_id] = useState(1)
   let adult = location.state.init.features.adult;
   let lending = location.state.init.features.lendingclub;
+console.log('location',location.state.data.plans)
+console.log('plans',plans)
 
   useEffect(() => {
     if (location.state.init) {
@@ -90,13 +94,15 @@ function Welcome() {
           features: mergedFeatures,
         };
       });
-
+      console.log('mergedArray',mergedArray)
       setPlans(mergedArray);
-    }
+    } 
   }, []);
 
   useEffect(() => {
-    const mergedArray = location.state.data.plans.map((item) => {
+   
+   if (feedback !== null) {
+    const mergedArray = feedback.plans.map((item) => {
       const mergedFeatures = [
         ...item.features.adult,
         ...item.features.lendingclub,
@@ -112,8 +118,10 @@ function Welcome() {
 
     const newList = [...discardedPlans];
     setDiscardedPlans(newList);
-  }, [feedback])
-  
+    setplan_id(plan_id+1)
+   }
+    
+  }, [feedback]);
 
   // const updateUserPrefrences = () => {
   //    // This function will update user prefrences with new values othervise will sent default values.
@@ -145,7 +153,6 @@ function Welcome() {
   //   })
   // }
 
-  
   const handleClick = (divId, index, plansDetails) => {
     setSelectedDiv(divId);
     setValue(true);
@@ -164,8 +171,6 @@ function Welcome() {
     logEvent(userID, "smily_interaction", logDetails);
   };
 
- 
-
   useEffect(() => {
     // Handling the drop down for additional insights
     if (value) {
@@ -177,10 +182,12 @@ function Welcome() {
   }, [value]);
 
   const handleMinMaxChange = (event) => {
-     const { name, value } = event.target;
-     const [title, type] = name.split('-');
+    // for handling numeric values in additional insight.
 
-     setFormData((prevData) => ({
+    const { name, value } = event.target;
+    const [title, type] = name.split("-");
+
+    setFormData((prevData) => ({
       ...prevData,
       [title]: {
         ...prevData[title],
@@ -188,31 +195,44 @@ function Welcome() {
       },
     }));
 
-
     setPreferences((prevPreferences) => ({ ...prevPreferences, ...formData }));
-
   };
 
-  function sendJsonToServer() {
+  const handleOptionChange = (event, index, title) => {
+    // for handling categorical values in additional insight.
+  
+    const newSelectedValues = [...selectedOptions];
+     newSelectedValues[index] = event.target.value
+     setSelectedOptions(newSelectedValues);
 
+    setPreferences((prevData) => ({
+      ...prevData,
+      [title] : {
+        ...prevData[title],
+        acceptable_values:  event.target.value
+      }
+    }))
+    
+  };
+
+
+  function sendJsonToServer() {
     setIsLoading(true);
 
     const info = {
       features: {
         adult: adult,
-        lendingclub: lending
+        lendingclub: lending,
       },
       preferences: preferences,
-      overalSatisfication: overalSatisfication
+      overalSatisfication: overalSatisfication,
     };
 
- 
-
     axios
-      .post("http://127.0.0.1:5000/get_recourse_v2",info)
+      .post("http://127.0.0.1:5000/get_recourse_v2", info)
       .then((res) => {
         setIsLoading(false);
-        setFeedback(res.data.plans);
+        setFeedback(res.data);
         console.log(`Server responded with status code ${res.status}`);
       })
       .catch((err) => {
@@ -223,7 +243,6 @@ function Welcome() {
     setActiveButton(false);
     setValue(false);
     setSelectedDiv(null);
-    
   }
 
   const handleOpenModal = () => {
@@ -263,24 +282,6 @@ function Welcome() {
     }
   }
 
-  const handleOptionChange = (planIndex,event, title) => {
-
-    const newSelectedOptions = [...selectedOptions];
-    newSelectedOptions[planIndex] = event.target.value;
-    setSelectedOptions(newSelectedOptions);
-
-
-    setPreferences({
-      ...preferences,
-      [title]: {
-        "acceptable_values": newSelectedOptions
-      }
-    })
-
-   
-   
-  };
-  
   return (
     <Grid>
       <div className="planGoal">
@@ -300,16 +301,14 @@ function Welcome() {
           <span className="loader"></span>
         </div>
       ) : null}
-      {plans &&
-        plans.length > 0 &&
-        plans.map((outerItem, outerIndex) => (
+      
+      {plans && plans.map((outerItem, outerIndex) => (
           <Grid key={outerIndex} className="layout">
             <div className="planTitle">
-              {" "}
-              {generatePlanName(outerItem.planId)}
+              {generatePlanName(plan_id)}
             </div>
             <Grid container spacing={1} className="innerLayout">
-              {location.state.data.plans && 
+              {location.state.data.plans &&
                 outerItem?.features.map((item, index) => (
                   <div key={index} className="PlanData">
                     <span className="dataTitle">{item.name}</span>
@@ -347,7 +346,6 @@ function Welcome() {
               handleMinMaxChange={handleMinMaxChange}
               selectedOptions={selectedOptions}
               formData={formData}
-             
             />
 
             {value && (
@@ -371,12 +369,16 @@ function Welcome() {
             </div>
           </Grid>
         ))}
+
+
+
+        {/* {error !== '' && <div className="errors">{error}</div>} */}
       <div className="SecondButtonContainer">
         <button
           className={
             activeButton ? "ButtonForProposeNewPlan" : "disabledButton"
           }
-           onClick={sendJsonToServer}
+          onClick={sendJsonToServer}
         >
           PROPOSE NEW PLAN
         </button>
@@ -393,7 +395,6 @@ function Welcome() {
 
       <div className="RejectingButtonContainer">
         <button className="RejectingButton" onClick={handleOpenModal}>
-          {" "}
           Quit Recourse Page
         </button>
         <Modal

@@ -49,22 +49,18 @@ function InitPage() {
       },
       preferences: {},
     };
-    // logEvent(userID, "request_plans_button", "clicked");
+   
     axios
       .post("http://127.0.0.1:5000/get_recourse_v2", info)
       .then((res) => {
         console.log('res',res)
-        if (res.status == 200) {
-          setIsLoading(false);
-
-          const dataUserInfo = {
+         const dataUserInfo = {
             data: res.data,
             init: info,
             preferences: {}
           };
-
           navigate("/recourse", { state: dataUserInfo });
-        }
+          setIsLoading(false);
       })
       .catch((err) => {
         console.error("Error:", err);
