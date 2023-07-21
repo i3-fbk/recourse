@@ -11,6 +11,7 @@ import { logEvent } from "../../logger.js";
 import { useSelector } from "react-redux";
 import CONFIG from "../../config.json";
 import "./initPage.css";
+import Cookies from 'js-cookie';
 
 function InitPage() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function InitPage() {
   let adult = initJson?.adult;
   let lending = initJson?.lendingclub;
   let mergedDataset = { ...adult, ...lending };
-
+  const stringToSave = "Hello, this is a saved string!";
  
 
   const GotoRecourseHandler = () => {
@@ -53,7 +54,7 @@ function InitPage() {
     axios
       .post("http://127.0.0.1:5000/get_recourse_v2", info)
       .then((res) => {
-        console.log('res',res)
+        Cookies.set('mySavedString', stringToSave, { expires: 1 });
          const dataUserInfo = {
             data: res.data,
             init: info,

@@ -306,6 +306,7 @@ console.log('plans',plans)
           <Grid key={outerIndex} className="layout">
             <div className="planTitle">
               {generatePlanName(plan_id)}
+              
             </div>
             <Grid container spacing={1} className="innerLayout">
               {location.state.data.plans &&
