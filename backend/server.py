@@ -221,10 +221,11 @@ def generate_interventions(user_data: dict, user_weights: dict, user_preferences
         # Pick only the MAX_RECOURSE_PLANS plans with the lowest cost
         temp_potential_interventions = sorted(temp_potential_interventions, key=lambda x: x[1])
         temp_full_plans = [x[0] for x in temp_potential_interventions[0:max_recourse_plans]]
+        temp_cost_plans = [x[1] for x in temp_potential_interventions[0:max_recourse_plans]]
         temp_potential_interventions = [x[2] for x in temp_potential_interventions[0:max_recourse_plans]]
 
         # Save the top interventions there
-        potential_interventions[k] = (temp_potential_interventions, temp_full_plans)
+        potential_interventions[k] = (temp_potential_interventions, temp_full_plans, temp_cost_plans)
 
     return potential_interventions
 

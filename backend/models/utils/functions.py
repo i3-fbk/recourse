@@ -20,8 +20,16 @@ def convert_plans_into_json(plans: dict, current_state: dict, user_preferences: 
     plans_datasets = [k for k,v in plans.items()]
     all_plans = product(*[v[0] for k,v in plans.items()])
     all_interventions = product(*[v[1] for k,v in plans.items()])
+    all_costs = product(*[v[2] for k,v in plans.items()])
 
-    for k,(plan,intervention) in enumerate(zip(all_plans,all_interventions)):
+    # Summ the costs
+    all_costs = [sum(cst) for cst in all_costs]
+
+    # Order the interventions from the least expensive to the most expensive
+    plan_intervention_cost = list(zip(all_plans,all_interventions,all_costs))
+    plan_intervention_cost = sorted(plan_intervention_cost, key=lambda x: x[2])
+
+    for k,(plan,intervention, _) in enumerate(plan_intervention_cost):
 
         # TODO: check that with this way, we are really returning the cheapest plans
         # If we have generated too many recourse plans, return
