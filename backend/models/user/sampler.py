@@ -99,7 +99,7 @@ class Sampler():
         particle_mean = np.mean(particles_likelihood, axis=0).tolist()
         return {k:v for k,v in zip(self.nodes.get(dataset), particle_mean)} 
 
-    def sample(self, constraints, envs, keep=False):
+    def sample(self, constraints, envs, user_difficulty=None, keep=False):
 
         new_particles = {}
 
@@ -119,6 +119,14 @@ class Sampler():
                 max_retries = 100
                 while(len(self.current_particles) < self.nparticles and max_retries > 0):
                     w_current = self.prior.get(dataset).rvs(self.nparticles)
+                    
+                    # Rescale the weights if the user specified some difficulty
+                    if user_difficulty:
+                        w_current = {k: v for k, v in zip(self.nodes.get(dataset), w_current)}
+                        for k in user_difficulty.get(dataset, {}):
+                            w_current[k] = w_current.get(k)*user_difficulty.get(dataset).get(k)
+                        w_current = [v for k,v in w_current.items()]
+
                     w_current = list(filter(
                         lambda wx: np.isfinite(self.logpost(wx, self.constraints, copy.deepcopy(env), dataset)),
                         tqdm(w_current)

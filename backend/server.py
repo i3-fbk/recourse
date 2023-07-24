@@ -99,7 +99,7 @@ def get_recourse():
 
     # Get user data, preferences, current_weights and plans
     # In this case, we discard the previous plans
-    user_data, user_preferences, user_current_weights, _ = extract_features_and_preferences()
+    user_data, user_preferences, user_current_weights, _, _ = extract_features_and_preferences()
 
     # Potential interventions
     potential_interventions = generate_interventions(user_data, user_current_weights, user_preferences)
@@ -111,10 +111,10 @@ def get_recourse():
 def get_recourse_and_learn():
 
     # Get user data, preferences, current_weights and plans
-    user_data, user_preferences, user_current_weights, recourse_previous_plans = extract_features_and_preferences()
+    user_data, user_preferences, user_current_weights, recourse_previous_plans, user_difficulty = extract_features_and_preferences()
 
     # Compute the new weights
-    new_weights = improve_weights(user_data, user_current_weights, recourse_previous_plans)
+    new_weights = improve_weights(user_data, user_current_weights, recourse_previous_plans, user_difficulty)
 
     # Potential interventions
     potential_interventions = generate_interventions(user_data, new_weights, user_preferences, max_recourse_plans=1, break_prematurely=True)
@@ -144,6 +144,11 @@ def extract_features_and_preferences():
     previous_user_preferences = {}
     if request.cookies.get("PreviousUserPreferences", None):
         previous_user_preferences = eval(request.cookies.get("PreviousUserPreferences", None), {})
+    
+    # Extract previous preferences
+    user_difficulty = {}
+    if request.cookies.get("PreviousUserDifficulty", None):
+        user_difficulty = eval(request.cookies.get("PreviousUserDifficulty", None), {})
 
     if user_data_and_preferences is None:
         user_data = dataset.sample()
@@ -151,6 +156,7 @@ def extract_features_and_preferences():
     else:
         # Convert the user and get its preferences
         user_preferences = user_data_and_preferences.get("preferences", {})
+        user_difficulty = user_data_and_preferences.get("difficulty", {})
         user_data = {}
         for dataset_type in user_data_and_preferences.get("features"):
             current_features = user_data_and_preferences.get("features").get(dataset_type)
@@ -164,7 +170,14 @@ def extract_features_and_preferences():
     
     user_current_weights = {k: pd.DataFrame([user_current_weights.get(k)], columns=user_data.get(k).columns) for k,v in user_data.items()}
 
-    return user_data, user_preferences, user_current_weights, recourse_previous_plans
+    # Rescale the user weights given the difficulty specified in the current setting
+    for k in user_difficulty:
+        weights_as_dict = user_current_weights.get(k).to_dict('records')[0]
+        for pref_k in user_difficulty.get(k):
+            weights_as_dict[pref_k] = weights_as_dict.get(pref_k)*user_difficulty.get(k).get(pref_k)
+        user_current_weights[k] = pd.DataFrame.from_records([weights_as_dict])
+
+    return user_data, user_preferences, user_current_weights, recourse_previous_plans, user_difficulty
 
 
 def generate_interventions(user_data: dict, user_weights: dict, user_preferences: dict, max_recourse_plans: int=MAX_RECOURSE_PLANS, break_prematurely: bool=False) -> dict:
@@ -275,7 +288,7 @@ def merge_user_preferences(previous_preferences: dict, new_preferences: dict) ->
 
     return updated_preferences
 
-def improve_weights(X: dict, previous_w: dict, previous_plans: dict) -> dict:
+def improve_weights(X: dict, previous_w: dict, previous_plans: dict, user_difficulty: dict) -> dict:
     """Update the current user weights given new interaction
 
     :param X: user features
@@ -320,7 +333,7 @@ def improve_weights(X: dict, previous_w: dict, previous_plans: dict) -> dict:
         envs[k] = env 
 
     new_particles = sampler.sample(
-        constraints, envs
+        constraints, envs, user_difficulty
     )
 
     new_weights = {k: pd.DataFrame([new_particles.get(k)], columns=X.get(k).columns) for k,v in X.items()}
