@@ -100,7 +100,7 @@ function Welcome() {
           features: mergedFeatures,
         };
       });
-   
+
       setPlans(mergedArray);
     }
   }, []);
@@ -136,25 +136,20 @@ function Welcome() {
     }
   }, [feedback]);
 
-
   const set_local = async () => {
-      localStorage.setItem(
-        "planHistory",
-        await JSON.stringify({'RecoursePreviousPlans': discardedPlans}),
-        { expires: 1 }
-      )
-    
-  }
+    localStorage.setItem(
+      "planHistory",
+      await JSON.stringify({ RecoursePreviousPlans: discardedPlans }),
+      { expires: 1 }
+    );
+  };
 
   useEffect(() => {
-    if(discardedPlans.length > 0) {
-       set_local();
+    if (discardedPlans.length > 0) {
+      set_local();
     }
+  }, [discardedPlans]);
 
-  }, [discardedPlans])
-  
-
-  
   const handleClick = (divId, index, plansDetails) => {
     setSelectedDiv(divId);
     setValue(true);
@@ -285,16 +280,25 @@ function Welcome() {
   return (
     <Grid>
       <div className="planGoal">
-        <h2 className="">Recourse Page</h2>
+        <h2 className="">Recourse plans</h2>
       </div>
       <div className="topMessage">
         <Grid item className="userName">
           <div className="GeneralTitle">Message</div>
           <div className="GeneralSubTitle">
-            Oops! your loan approaval has been rejected, check recourses below.{" "}
+            Your loan approaval has been rejected, check recours plans.
           </div>
         </Grid>
       </div>
+      {plans.length === 0 &&
+      <div className="topMessageError">
+         <Grid item className="userName">
+          <div className="GeneralTitle">Error!</div>
+          <div className="GeneralSubTitle">
+            sorry, there is no plan, please try again. 
+          </div>
+        </Grid>
+        </div>}
 
       {isLoading ? (
         <div className="overlay">
@@ -313,7 +317,7 @@ function Welcome() {
                   <div className="innerDisplayNewPlan">
                     {/* <span><ArrowUpwardRoundedIcon fontSize="large" className={item.valueInc ? "upwardArrow" : "downward"} /></span>  */}
                     <span className="dataAmount">{item.valueBefore}</span>
-                    <span>
+                    <span style={{'padding':'0px 10px'}}>
                       <ArrowRightAltIcon />
                     </span>
                     <span className="dataAmount">{item.valueAfter}</span>
@@ -368,7 +372,7 @@ function Welcome() {
           </Grid>
         ))}
 
-      {/* {error !== '' && <div className="errors">{error}</div>} */}
+      
       <div className="SecondButtonContainer">
         <button
           className={
@@ -379,21 +383,11 @@ function Welcome() {
           PROPOSE NEW PLAN
         </button>
       </div>
-      <h2 className="discardedPlansText">History</h2>
-      {/* {activeDiscardedPlan ? (
-        <DiscardedPlans
-          overalSatisfication={overalSatisfication}
-          discardedPlans={discardedPlans}
-          
-        />
-      ) : (
-        <p className="emptyMessage">The history list is empty!</p>
-      )} */}
-        <DiscardedPlans
-          overalSatisfication={overalSatisfication}
-          discardedPlans={discardedPlans}
-          
-        />
+      <h3 className="discardedPlansText">History of plans</h3>
+      <DiscardedPlans
+        overalSatisfication={overalSatisfication}
+        discardedPlans={discardedPlans}
+      />
 
       <div className="RejectingButtonContainer">
         <button className="RejectingButton" onClick={handleOpenModal}>

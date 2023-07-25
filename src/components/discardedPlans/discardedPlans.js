@@ -77,7 +77,7 @@ console.log('History',History)
 
   return (
     <div>
-      {History.length > 0 &&
+      {History.length > 0 ?
         History.map((plans, index) => (
           <Grid key={index} className="layoutDiscard">
             <Grid item xs={4} className="HistoryinnerLayout">
@@ -105,7 +105,7 @@ console.log('History',History)
               </div>
             </Grid>
           </Grid>
-        ))}
+        )):  <p className="emptyMessage">The history list is empty!</p>}
     </div>
   );
 }
