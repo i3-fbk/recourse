@@ -10,6 +10,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .discardedPlansStatus {
@@ -18,4 +19,41 @@
     border-radius: 16px;
     padding: 5px;
     width: 100px;
+}
+.PlanData {
+    width: 320px;
+    height: 70px; 
+    /* box-shadow: 0px 0px 3px rgba(32, 38, 46, 0.3); */
+    box-shadow: 0px 0px 6px rgba(32, 38, 46, 0.2);
+    background-color: #ffffff;
+    margin: 16px 8px;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column !important;
+    text-align: left;
+}
+.innerDisplayNewPlan {
+    display: flex;
+    align-items: center;
+}
+.HistoryinnerLayout {
+  
+    display: flex;
+    flex-direction: column !important;
+   
+
+}
+.innerHistory {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.historyDetails {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }

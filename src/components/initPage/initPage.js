@@ -24,24 +24,30 @@ function InitPage() {
   let adult = initJson?.adult;
   let lending = initJson?.lendingclub;
   let mergedDataset = { ...adult, ...lending };
-  const stringToSave = "Hello, this is a saved string!";
+  const cookieToSave = {
+    "PreviousUserPreferences" : {},
+    "RecourseInteractiveWeights23": {
+      "adult":adult,
+      "lendingclub":lending
+    },
+    "RecoursePreviousPlans": [
+     { "overall_satisfaction": 1,
+      "plan": {
+        "adulut":[],
+        "lendingClub":[]
+      }}
+    ]
+  }
+  const stringCookie = JSON.stringify(cookieToSave)
  
 
-  const GotoRecourseHandler = () => {
+  const GotoRecourseHandler = async() => {
     setIsLoading(true);
-    let adultArr = [{ name: "", value: "" }];
-    let lendingArr = [{ name: "", value: "" }];
 
+      // Convert adult and lending objects to arrays of key-value pairs
+    let adultArr = Object.entries(adult).map(([name, value]) => ({ name, value }));
+    let lendingArr = Object.entries(lending).map(([name, value]) => ({ name, value }));
 
-    Object.keys(adult).map((item) => {
-      adultArr.push({ name: item, value: adult[item] });
-    });
-    Object.keys(lending).map((item) => {
-      lendingArr.push({ name: item, value: lending[item] });
-    });
-
-    adultArr.splice(0, 1);
-    lendingArr.splice(0, 1);
 
     const info = {
       features: {
@@ -50,22 +56,23 @@ function InitPage() {
       },
       preferences: {},
     };
-   
-    axios
-      .post("http://127.0.0.1:5000/get_recourse_v2", info)
-      .then((res) => {
-        Cookies.set('mySavedString', stringToSave, { expires: 1 });
-         const dataUserInfo = {
-            data: res.data,
-            init: info,
-            preferences: {}
-          };
-          navigate("/recourse", { state: dataUserInfo });
-          setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-      });
+      Cookies.set('cookie', stringCookie, { expires: 1 });
+    try {
+      const res = await axios.post("http://127.0.0.1:5000/get_recourse_v2", info);
+  console.log('ressss',res)
+      const dataUserInfo = {
+        data: res.data,
+        init: info,
+        preferences: {}
+      };
+  
+      navigate("/recourse", { state: dataUserInfo });
+    } catch (err) {
+      console.error("Error:", err);
+      // Handle the error here or throw it to be handled at a higher level.
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

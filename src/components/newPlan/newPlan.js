@@ -51,6 +51,8 @@ const modalStyles = {
 
 function Welcome() {
   const location = useLocation();
+  let adult = location?.state.init.features.adult;
+  let lending = location?.state.init.features.lendingclub;
   const navigate = useNavigate();
   const userID = useSelector((state) => state.rootReducer.id);
   const [value, setValue] = useState(false);
@@ -60,7 +62,7 @@ function Welcome() {
   const [feedback, setFeedback] = useState(null);
   const [activeButton, setActiveButton] = useState(false);
   const [featureList, setFeatureList] = useState(data.features);
-  const [discardedPlans, setDiscardedPlans] = useState(data.features);
+
   const [isLoading, setIsLoading] = useState(false);
   const [overalSatisfication, setOveralSatisfication] = useState(null);
   const inputValue = useSelector((state) => state.rootReducer.inputValue);
@@ -71,18 +73,22 @@ function Welcome() {
   const [preferences, setPreferences] = useState({});
   const [plans, setPlans] = useState([]);
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState('')
-  const [plan_id, setplan_id] = useState(1)
-  let adult = location.state.init.features.adult;
-  let lending = location.state.init.features.lendingclub;
-console.log('location',location.state.data.plans)
-console.log('plans',plans)
+  const [error, setError] = useState("");
+  const [plan_id, setplan_id] = useState(1);
+  const [discardedPlans, setDiscardedPlans] = useState([]);
+  const [interventions, seinterventions] = useState({});
+  // const [cookie, setCookie] = useState({
+  //   PreviousUserPreferences: preferences,
+  //   RecoursePreviousPlans: [
+  //     { overall_satisfaction: overalSatisfication, plan: interventions },
+  //   ],
+  // });
 
   useEffect(() => {
     if (location.state.init) {
       setUserInfo(location.state.init);
     }
-    if (location.state.data.plans && location.state.data.plans.length > 0) {
+    if (location.state.data.plans) {
       const mergedArray = location.state.data.plans.map((item) => {
         const mergedFeatures = [
           ...item.features.adult,
@@ -94,65 +100,61 @@ console.log('plans',plans)
           features: mergedFeatures,
         };
       });
-      console.log('mergedArray',mergedArray)
+   
       setPlans(mergedArray);
-    } 
+    }
   }, []);
 
   useEffect(() => {
-   
-   if (feedback !== null) {
-    const mergedArray = feedback.plans.map((item) => {
-      const mergedFeatures = [
-        ...item.features.adult,
-        ...item.features.lendingclub,
-      ];
+    if (feedback !== null) {
+      const mergedArray = feedback.plans.map((item) => {
+        const mergedFeatures = [
+          ...item.features.adult,
+          ...item.features.lendingclub,
+        ];
+        return {
+          ...item,
+          features: mergedFeatures,
+        };
+      });
 
-      return {
-        ...item,
-        features: mergedFeatures,
-      };
-    });
+      setPlans(mergedArray);
 
-    setPlans(mergedArray);
+      // const updatedCookie = {
+      //   ...cookie,
+      //   PreviousUserPreferences: preferences,
+      //   RecoursePreviousPlans: [
+      //     {
+      //       overall_satisfaction: overalSatisfication,
+      //       plan: mergedArray,
+      //     },
+      //   ],
+      // };
 
-    const newList = [...discardedPlans];
-    setDiscardedPlans(newList);
-    setplan_id(plan_id+1)
-   }
-    
+      setDiscardedPlans((prevHistory) => [...prevHistory, plans]);
+      setplan_id(plan_id + 1);
+    }
   }, [feedback]);
 
-  // const updateUserPrefrences = () => {
-  //    // This function will update user prefrences with new values othervise will sent default values.
 
-  //    // update prefrence value based on inputes.
-  //    inputValue && inputValue.map((newValue,index) => {
-  //         setRecourseData((prevData) => {
-  //         const updatedConfig = [...prevData.newConfig];
-  //         updatedConfig[index].newValue = newValue;
+  const set_local = async () => {
+      localStorage.setItem(
+        "planHistory",
+        await JSON.stringify({'RecoursePreviousPlans': discardedPlans}),
+        { expires: 1 }
+      )
+    
+  }
 
-  //         return {
-  //           ...prevData,
-  //           newConfig: updatedConfig,
-  //         };
-  //       });
-  //     })
+  useEffect(() => {
+    if(discardedPlans.length > 0) {
+       set_local();
+    }
 
-  //   // update level of difficulty based on scaler.
-  //   scalerValue && scalerValue.map((value,index) => {
-  //     setRecourseData((prevData) => {
-  //         const updatedConfig = [...prevData.newConfig];
-  //         updatedConfig[index].levelOfDifficulty = value;
+  }, [discardedPlans])
+  
 
-  //         return {
-  //           ...prevData,
-  //           newConfig: updatedConfig,
-  //         };
-  //       });
-  //   })
-  // }
-
+  
   const handleClick = (divId, index, plansDetails) => {
     setSelectedDiv(divId);
     setValue(true);
@@ -200,21 +202,19 @@ console.log('plans',plans)
 
   const handleOptionChange = (event, index, title) => {
     // for handling categorical values in additional insight.
-  
+
     const newSelectedValues = [...selectedOptions];
-     newSelectedValues[index] = event.target.value
-     setSelectedOptions(newSelectedValues);
+    newSelectedValues[index] = event.target.value;
+    setSelectedOptions(newSelectedValues);
 
     setPreferences((prevData) => ({
       ...prevData,
-      [title] : {
+      [title]: {
         ...prevData[title],
-        acceptable_values:  event.target.value
-      }
-    }))
-    
+        acceptable_values: event.target.value,
+      },
+    }));
   };
-
 
   function sendJsonToServer() {
     setIsLoading(true);
@@ -301,28 +301,25 @@ console.log('plans',plans)
           <span className="loader"></span>
         </div>
       ) : null}
-      
-      {plans && plans.map((outerItem, outerIndex) => (
+
+      {plans &&
+        plans.map((outerItem, outerIndex) => (
           <Grid key={outerIndex} className="layout">
-            <div className="planTitle">
-              {generatePlanName(plan_id)}
-              
-            </div>
+            <div className="planTitle">{generatePlanName(plan_id)}</div>
             <Grid container spacing={1} className="innerLayout">
-              {location.state.data.plans &&
-                outerItem?.features.map((item, index) => (
-                  <div key={index} className="PlanData">
-                    <span className="dataTitle">{item.name}</span>
-                    <div className="innerDisplayNewPlan">
-                      {/* <span><ArrowUpwardRoundedIcon fontSize="large" className={item.valueInc ? "upwardArrow" : "downward"} /></span>  */}
-                      <span className="dataAmount">{item.valueBefore}</span>
-                      <span>
-                        <ArrowRightAltIcon />
-                      </span>
-                      <span className="dataAmount">{item.valueAfter}</span>
-                    </div>
+              {outerItem?.features.map((item, index) => (
+                <div key={index} className="PlanData">
+                  <span className="dataTitle">{item.name}</span>
+                  <div className="innerDisplayNewPlan">
+                    {/* <span><ArrowUpwardRoundedIcon fontSize="large" className={item.valueInc ? "upwardArrow" : "downward"} /></span>  */}
+                    <span className="dataAmount">{item.valueBefore}</span>
+                    <span>
+                      <ArrowRightAltIcon />
+                    </span>
+                    <span className="dataAmount">{item.valueAfter}</span>
                   </div>
-                ))}
+                </div>
+              ))}
             </Grid>
 
             <p className="moodScalerQuestion">
@@ -331,7 +328,7 @@ console.log('plans',plans)
 
             <MoodScaler
               className="moodScaler"
-              key={outerIndex}
+              // key={outerIndex}
               index={outerIndex}
               selectedDiv={selectedDiv}
               handleClick={handleClick}
@@ -371,9 +368,7 @@ console.log('plans',plans)
           </Grid>
         ))}
 
-
-
-        {/* {error !== '' && <div className="errors">{error}</div>} */}
+      {/* {error !== '' && <div className="errors">{error}</div>} */}
       <div className="SecondButtonContainer">
         <button
           className={
@@ -384,15 +379,21 @@ console.log('plans',plans)
           PROPOSE NEW PLAN
         </button>
       </div>
-      <p className="discardedPlansText">Discarded plans</p>
-      {activeDiscardedPlan ? (
+      <h2 className="discardedPlansText">History</h2>
+      {/* {activeDiscardedPlan ? (
         <DiscardedPlans
           overalSatisfication={overalSatisfication}
           discardedPlans={discardedPlans}
+          
         />
       ) : (
         <p className="emptyMessage">The history list is empty!</p>
-      )}
+      )} */}
+        <DiscardedPlans
+          overalSatisfication={overalSatisfication}
+          discardedPlans={discardedPlans}
+          
+        />
 
       <div className="RejectingButtonContainer">
         <button className="RejectingButton" onClick={handleOpenModal}>

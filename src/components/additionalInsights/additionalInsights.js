@@ -131,17 +131,16 @@ function AdditionalInsight(props) {
                 <hr className="seperateLine" />
 
                 <p className="bodyText">
-                  1) How much is it achievable for you?{" "}
+                  1) How much is it achievable for you?
                 </p>
                 <div className="sclaerContainer">
                   <small>very difficult</small>
-                  <Box sx={{ width: 300 }}>
+                  <Box sx={{ width: 300 }}  key={planIndex}>
                     <Slider
                       aria-label="Temperature"
                       // defaultValue={}
                       value={scalers[planIndex]}
                       onChange={(event) => handleScalerChange(event, planIndex)}
-                      key={planIndex}
                       valueLabelDisplay="auto"
                       step={1}
                       marks
@@ -153,11 +152,11 @@ function AdditionalInsight(props) {
                   <small>very easy</small>
                 </div>
 
-                <p className="bodyTextSecondQuestion">
+                <div className="bodyTextSecondQuestion">
                   2) Choose your prefred options:
                   <div className="input-container">
                     {item.type === "numeric" ? (
-                      <div className="minAndMaxContainer"  key={planIndex}>
+                      <div className="minAndMaxContainer" >
                         <TextField
                           className="min"
                           label="Minimum Value"
@@ -181,20 +180,17 @@ function AdditionalInsight(props) {
                     ) : (
                       <Select
                         multiple
-                        key={planIndex}
                         value={selectedOptions[planIndex] || []}
                         onChange={(event) => handleOptionChange(event,planIndex,item.name)}
                         renderValue={(selected) => selected.join(', ')}
                         style={{ maxWidth: 340 }}
                       >
                         {configuration[item.name].values.map(
-                          (option, index) => (
+                          (option) => (
                             <MenuItem key={option} value={option}>
                               <Checkbox
                                 checked={
-                                  (selectedOptions[planIndex] || []).indexOf(
-                                    option
-                                  ) > -1
+                                  (selectedOptions[planIndex] || []).indexOf(option) > -1
                                 }
                               />
                               <ListItemText primary={option} />
@@ -204,7 +200,7 @@ function AdditionalInsight(props) {
                       </Select>
                     )}
                   </div>
-                </p>
+                </div>
               </div>
             ))}
         </div>

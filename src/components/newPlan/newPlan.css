@@ -284,6 +284,10 @@
     background-color: transparent; 
    
 }
+.historyDetails{
+    display: flex;
+    flex-direction: row;
+}
 .RejectingButton:hover {
     color: #ffffff;
     background-color: #106FDF;

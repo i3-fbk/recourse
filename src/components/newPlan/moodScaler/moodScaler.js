@@ -7,9 +7,7 @@ function MoodScaler(props) {
   return (
     <div key={index} className="moodScalerLayout">
       <div
-        className={
-            selectedDiv === 1 ? "withBorder" : "innerMoodScalerLayout"
-        }
+        className={selectedDiv === 1 ? "withBorder" : "innerMoodScalerLayout"}
         onClick={() => handleClick(1, index, plansDetails)}
         style={{
           cursor: "pointer",
