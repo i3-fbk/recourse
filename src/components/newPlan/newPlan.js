@@ -84,6 +84,9 @@ function Welcome() {
   //   ],
   // });
 
+  const [difficulty, setDifficulty] = useState({})
+
+
   useEffect(() => {
     if (location.state.init) {
       setUserInfo(location.state.init);
@@ -120,16 +123,7 @@ function Welcome() {
 
       setPlans(mergedArray);
 
-      // const updatedCookie = {
-      //   ...cookie,
-      //   PreviousUserPreferences: preferences,
-      //   RecoursePreviousPlans: [
-      //     {
-      //       overall_satisfaction: overalSatisfication,
-      //       plan: mergedArray,
-      //     },
-      //   ],
-      // };
+    
 
       setDiscardedPlans((prevHistory) => [...prevHistory, plans]);
       setplan_id(plan_id + 1);
@@ -215,6 +209,7 @@ function Welcome() {
     setIsLoading(true);
 
     const info = {
+      difficulty: difficulty,
       features: {
         adult: adult,
         lendingclub: lending,
@@ -348,6 +343,7 @@ function Welcome() {
               handleMinMaxChange={handleMinMaxChange}
               selectedOptions={selectedOptions}
               formData={formData}
+              setDifficulty={setDifficulty}
             />
 
             {value && (

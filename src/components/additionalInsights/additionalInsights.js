@@ -18,8 +18,16 @@ import Select from "@mui/material/Select";
 import CONFIG from "../../config.json";
 
 function AdditionalInsight(props) {
-  const { plans, isdefault, handleOptionChange, selectedOptions,handleMinMaxChange, formData } = props;
-  
+  const {
+    plans,
+    isdefault,
+    handleOptionChange,
+    selectedOptions,
+    handleMinMaxChange,
+    formData,
+    setDifficulty,
+  } = props;
+
   const configuration = CONFIG.loan_approval_task.features;
 
   const initialScalers = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; // Initial scalers array
@@ -30,20 +38,28 @@ function AdditionalInsight(props) {
   const [inputValues, setInputValues] = useState(
     Array(data.features.length).fill("")
   );
-  const [featureList, setFeatureList] = useState(data.features);
+
   const dispatch = useDispatch(); // to save values in redux store
 
-  // Function to handle scaler change for a specific index
-  const handleScalerChange = (event, index) => {
-    const newScaler = parseInt(event.target.value);
-
-    // Create a new copy of the scalers array and update the scaler at the given index
+  const handleScalerChange = (event, index, dataset) => {
+    const { value, name } = event.target;
+    const newScaler = parseInt(value);
     const updatedScalers = [...scalers];
     updatedScalers[index] = newScaler;
     setScalers(updatedScalers);
 
     // Update the status for the given index
     updateStatus(newScaler, index);
+
+   
+    setDifficulty((prevDifficulty) => ({
+      ...prevDifficulty,
+      [dataset]: {
+        [name]: updatedScalers[index],
+        ...prevDifficulty[dataset]
+      }
+    }));
+    
   };
 
   // Function to update the status based on the scaler value for a specific index
@@ -135,12 +151,13 @@ function AdditionalInsight(props) {
                 </p>
                 <div className="sclaerContainer">
                   <small>very difficult</small>
-                  <Box sx={{ width: 300 }}  key={planIndex}>
+                  <Box sx={{ width: 300 }} key={planIndex}>
                     <Slider
                       aria-label="Temperature"
                       // defaultValue={}
                       value={scalers[planIndex]}
-                      onChange={(event) => handleScalerChange(event, planIndex)}
+                      name={item.name}
+                      onChange={(event) => handleScalerChange(event, planIndex, configuration[item.name].dataset)}
                       valueLabelDisplay="auto"
                       step={1}
                       marks
@@ -156,13 +173,13 @@ function AdditionalInsight(props) {
                   2) Choose your prefred options:
                   <div className="input-container">
                     {item.type === "numeric" ? (
-                      <div className="minAndMaxContainer" >
+                      <div className="minAndMaxContainer">
                         <TextField
                           className="min"
                           label="Minimum Value"
                           variant="outlined"
                           name={`${item.name}-min_value`}
-                          value={formData[item.name]?.min_value || ''}
+                          value={formData[item.name]?.min_value || ""}
                           onChange={(event) => handleMinMaxChange(event)}
                           margin="normal"
                         />
@@ -170,10 +187,12 @@ function AdditionalInsight(props) {
                         <TextField
                           className="max"
                           name={`${item.name}-max_value`}
-                          value={formData[item.name]?.max_value || ''}
+                          value={formData[item.name]?.max_value || ""}
                           label="Maximum Value"
                           variant="outlined"
-                          onChange={(event) => handleMinMaxChange(event,item.name)}
+                          onChange={(event) =>
+                            handleMinMaxChange(event, item.name)
+                          }
                           margin="normal"
                         />
                       </div>
@@ -181,22 +200,24 @@ function AdditionalInsight(props) {
                       <Select
                         multiple
                         value={selectedOptions[planIndex] || []}
-                        onChange={(event) => handleOptionChange(event,planIndex,item.name)}
-                        renderValue={(selected) => selected.join(', ')}
+                        onChange={(event) =>
+                          handleOptionChange(event, planIndex, item.name)
+                        }
+                        renderValue={(selected) => selected.join(", ")}
                         style={{ maxWidth: 340 }}
                       >
-                        {configuration[item.name].values.map(
-                          (option) => (
-                            <MenuItem key={option} value={option}>
-                              <Checkbox
-                                checked={
-                                  (selectedOptions[planIndex] || []).indexOf(option) > -1
-                                }
-                              />
-                              <ListItemText primary={option} />
-                            </MenuItem>
-                          )
-                        )}
+                        {configuration[item.name].values.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            <Checkbox
+                              checked={
+                                (selectedOptions[planIndex] || []).indexOf(
+                                  option
+                                ) > -1
+                              }
+                            />
+                            <ListItemText primary={option} />
+                          </MenuItem>
+                        ))}
                       </Select>
                     )}
                   </div>
