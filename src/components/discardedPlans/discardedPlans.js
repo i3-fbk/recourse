@@ -10,28 +10,45 @@ import "./discardedPlans.css";
 function DiscardedPlans(props) {
   const { overalSatisfication,discardedPlans } = props;
   const [History, setHistory] = useState([])
+  const [status, setStatus] = useState(null)
 const retrievedData = localStorage.getItem("planHistory");
 
 console.log('History',History)
+
   useEffect(() => {
     try {
-      
       if (retrievedData !== null) {
-
         const saved = JSON.parse(retrievedData);
-        setHistory(saved?.RecoursePreviousPlans)
+       
+        setHistory(saved?.RecoursePreviousPlans?.plan)
+        setStatus(saved?.RecoursePreviousPlans?.overalSatisfication)
       }
     } catch (error) {
       // Handle any potential errors
       console.error("Error retrieving data from Local Storage:", error);
     }
+  }, [ ]);
 
+
+  // useEffect(() => {
+  //   try {
+      
+  //     if (retrievedData !== null) {
+
+  //       const saved = JSON.parse(retrievedData);
+  //       setHistory(saved?.RecoursePreviousPlans)
+        
+  //     }
+  //   } catch (error) {
+  //     // Handle any potential errors
+  //     console.error("Error retrieving data from Local Storage:", error);
+  //   }
     
-  }, [retrievedData]);
+  // }, [retrievedData]);
 
   const statusGenerator = () => {
-    if (overalSatisfication) {
-      switch (overalSatisfication) {
+    if (status) {
+      switch (status) {
         case 1:
           return "😣 Terrible";
 
@@ -77,7 +94,7 @@ console.log('History',History)
 
   return (
     <div>
-      {History.length > 0 ?
+      {History !== undefined && History.length > 0 ?
         History.map((plans, index) => (
           <Grid key={index} className="layoutDiscard">
             <Grid item xs={4} className="HistoryinnerLayout">
@@ -86,8 +103,8 @@ console.log('History',History)
                 <div className="discardedPlansStatus">{statusGenerator()}</div>
               </div>
               <div className="historyDetails">
-                {plans.map((item) =>
-                  item.features.map((element,inx) => (
+                {plans?.map((item) =>
+                  item?.features?.map((element,inx) => (
                     <div key={inx} className="PlanData">
                       <span className="dataTitle">{element.name}</span>
                       <div className="innerDisplayNewPlan">

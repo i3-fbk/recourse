@@ -62,7 +62,6 @@ function Welcome() {
   const [feedback, setFeedback] = useState(null);
   const [activeButton, setActiveButton] = useState(false);
   const [featureList, setFeatureList] = useState(data.features);
-
   const [isLoading, setIsLoading] = useState(false);
   const [overalSatisfication, setOveralSatisfication] = useState(null);
   const inputValue = useSelector((state) => state.rootReducer.inputValue);
@@ -83,7 +82,7 @@ function Welcome() {
   //     { overall_satisfaction: overalSatisfication, plan: interventions },
   //   ],
   // });
-
+  const [saveToLocalStoraga, setSaveToLocalStoraga] = useState({})
   const [difficulty, setDifficulty] = useState({})
 
 
@@ -108,8 +107,14 @@ function Welcome() {
     }
   }, []);
 
+  
   useEffect(() => {
     if (feedback !== null) {
+
+      setDiscardedPlans((prevHistory) => [...prevHistory, plans]);
+      setplan_id(plan_id + 1);
+    
+
       const mergedArray = feedback.plans.map((item) => {
         const mergedFeatures = [
           ...item.features.adult,
@@ -122,23 +127,20 @@ function Welcome() {
       });
 
       setPlans(mergedArray);
-
-    
-
-      setDiscardedPlans((prevHistory) => [...prevHistory, plans]);
-      setplan_id(plan_id + 1);
+     
     }
   }, [feedback]);
 
   const set_local = async () => {
     localStorage.setItem(
       "planHistory",
-      await JSON.stringify({ RecoursePreviousPlans: discardedPlans }),
+      await JSON.stringify({RecoursePreviousPlans : {plan: discardedPlans, overalSatisfication: overalSatisfication}}),
       { expires: 1 }
     );
   };
 
   useEffect(() => {
+
     if (discardedPlans.length > 0) {
       set_local();
     }
