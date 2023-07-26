@@ -179,12 +179,11 @@ function Welcome() {
 
     const { name, value } = event.target;
     const [title, type] = name.split("-");
-
     setFormData((prevData) => ({
       ...prevData,
       [title]: {
         ...prevData[title],
-        [type]: value,
+        [type]: parseFloat(value),
       },
     }));
 
@@ -209,7 +208,8 @@ function Welcome() {
 
   function sendJsonToServer() {
     setIsLoading(true);
-
+    setError('')
+    
     const info = {
       difficulty: difficulty,
       features: {
@@ -229,6 +229,8 @@ function Welcome() {
       })
       .catch((err) => {
         console.error("Error:", err);
+        setIsLoading(false);
+        setError(err.message)
       });
 
     setActiveDiscardedPlan(true);
@@ -294,8 +296,21 @@ function Welcome() {
           <div className="GeneralSubTitle">
             sorry, there is no plan, please try again. 
           </div>
+          
         </Grid>
         </div>}
+        {
+          error !== '' &&
+          <div className="topMessageError">
+         <Grid item className="userName">
+          <div className="GeneralTitle">Error!</div>
+          <div className="GeneralSubTitle">
+            {error}
+          </div>
+          
+        </Grid>
+        </div>
+        }
 
       {isLoading ? (
         <div className="overlay">

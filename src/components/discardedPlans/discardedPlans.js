@@ -13,7 +13,6 @@ function DiscardedPlans(props) {
   const [status, setStatus] = useState(null)
 const retrievedData = localStorage.getItem("planHistory");
 
-console.log('History',History)
 
   useEffect(() => {
     try {
@@ -27,24 +26,9 @@ console.log('History',History)
       // Handle any potential errors
       console.error("Error retrieving data from Local Storage:", error);
     }
-  }, [ ]);
+  }, []);
 
 
-  // useEffect(() => {
-  //   try {
-      
-  //     if (retrievedData !== null) {
-
-  //       const saved = JSON.parse(retrievedData);
-  //       setHistory(saved?.RecoursePreviousPlans)
-        
-  //     }
-  //   } catch (error) {
-  //     // Handle any potential errors
-  //     console.error("Error retrieving data from Local Storage:", error);
-  //   }
-    
-  // }, [retrievedData]);
 
   const statusGenerator = () => {
     if (status) {

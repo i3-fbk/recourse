@@ -29,7 +29,6 @@ function AdditionalInsight(props) {
   } = props;
 
   const configuration = CONFIG.loan_approval_task.features;
-
   const initialScalers = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; // Initial scalers array
   const [scalers, setScalers] = useState(initialScalers);
   const [statuses, setStatuses] = useState(
@@ -175,19 +174,21 @@ function AdditionalInsight(props) {
                     {item.type === "numeric" ? (
                       <div className="minAndMaxContainer">
                         <TextField
+                          type="number"
                           className="min"
                           label="Minimum Value"
                           variant="outlined"
                           name={`${item.name}-min_value`}
-                          value={formData[item.name]?.min_value || ""}
+                          value={formData[item.name]?.min_value || 0}
                           onChange={(event) => handleMinMaxChange(event)}
                           margin="normal"
                         />
 
                         <TextField
+                          type="number"
                           className="max"
                           name={`${item.name}-max_value`}
-                          value={formData[item.name]?.max_value || ""}
+                          value={formData[item.name]?.max_value || 0}
                           label="Maximum Value"
                           variant="outlined"
                           onChange={(event) =>
