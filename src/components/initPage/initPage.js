@@ -24,26 +24,12 @@ function InitPage() {
   let adult = initJson?.adult;
   let lending = initJson?.lendingclub;
   let mergedDataset = { ...adult, ...lending };
-  const cookieToSave = {
-    "PreviousUserPreferences" : {},
-    "RecourseInteractiveWeights23": {
-      "adult":adult,
-      "lendingclub":lending
-    },
-    "RecoursePreviousPlans": [
-     { "overall_satisfaction": 1,
-      "plan": {
-        "adulut":[],
-        "lendingClub":[]
-      }}
-    ]
-  }
-  const stringCookie = JSON.stringify(cookieToSave)
+  
  
 
   const GotoRecourseHandler = async() => {
     setIsLoading(true);
-
+    logEvent(userID, 'go_to_recourse_btn', 'clicked')
       // Convert adult and lending objects to arrays of key-value pairs
     let adultArr = Object.entries(adult).map(([name, value]) => ({ name, value }));
     let lendingArr = Object.entries(lending).map(([name, value]) => ({ name, value }));
@@ -56,10 +42,10 @@ function InitPage() {
       },
       preferences: {},
     };
-      Cookies.set('cookie', stringCookie, { expires: 1 });
+     
     try {
       const res = await axios.post("http://127.0.0.1:5000/get_recourse_v2", info);
-  console.log('ressss',res)
+  
       const dataUserInfo = {
         data: res.data,
         init: info,

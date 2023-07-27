@@ -75,14 +75,6 @@ function Welcome() {
   const [error, setError] = useState("");
   const [plan_id, setplan_id] = useState(1);
   const [discardedPlans, setDiscardedPlans] = useState([]);
-  const [interventions, seinterventions] = useState({});
-  // const [cookie, setCookie] = useState({
-  //   PreviousUserPreferences: preferences,
-  //   RecoursePreviousPlans: [
-  //     { overall_satisfaction: overalSatisfication, plan: interventions },
-  //   ],
-  // });
-  const [saveToLocalStoraga, setSaveToLocalStoraga] = useState({})
   const [difficulty, setDifficulty] = useState({})
 
 
@@ -157,11 +149,11 @@ function Welcome() {
     logDetails = plansDetails?.features
       .map(
         (item) =>
-          `#${item.name}#${item.valueBefore}#${item.valueAfter}#smily_value#${index}`
+          `#${item.name}#${item.valueBefore}#${item.valueAfter}`
       )
       .join("");
 
-    logEvent(userID, "smily_interaction", logDetails);
+    logEvent(userID, `smily_interaction#${divId}`, logDetails);
   };
 
   useEffect(() => {
@@ -188,6 +180,7 @@ function Welcome() {
     }));
 
     setPreferences((prevPreferences) => ({ ...prevPreferences, ...formData }));
+    logEvent(userID, 'change_min_and_max_value', `${title}#${type}#${value}` )
   };
 
   const handleOptionChange = (event, index, title) => {
@@ -206,10 +199,23 @@ function Welcome() {
     }));
   };
 
+  function keepThePlan() {
+    let logDetails = ``;
+
+    logDetails = plans[0]?.features
+      .map((item) => `#${item.name}#${item.valueBefore}#${item.valueAfter}`)
+      .join("");
+
+    logEvent(userID, "keep_plan_button", logDetails);
+   
+    navigate("/recourse/keepThePlan/", { state: plans[0]?.features });
+  }
+
+
   function sendJsonToServer() {
     setIsLoading(true);
     setError('')
-    
+
     const info = {
       difficulty: difficulty,
       features: {
@@ -219,7 +225,7 @@ function Welcome() {
       preferences: preferences,
       overalSatisfication: overalSatisfication,
     };
-
+  
     axios
       .post("http://127.0.0.1:5000/get_recourse_v2", info)
       .then((res) => {
@@ -227,12 +233,23 @@ function Welcome() {
         setFeedback(res.data);
         console.log(`Server responded with status code ${res.status}`);
       })
+      
       .catch((err) => {
         console.error("Error:", err);
         setIsLoading(false);
         setError(err.message)
       });
 
+      let logDetails = ``;
+
+      logDetails = plans[0]?.features
+        .map(
+          (item) =>
+            `#${item.name}#${item.valueBefore}#${item.valueAfter}`
+        )
+        .join("");
+
+    logEvent(userID, "propose_new_plan_btn", `${logDetails}#overalSatisfication${overalSatisfication}`);
     setActiveDiscardedPlan(true);
     setActiveButton(false);
     setValue(false);
@@ -241,17 +258,20 @@ function Welcome() {
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
+    logEvent(userID,'Quit_recourse_page_btn', 'clicked')
   };
 
   const handleConfirm = () => {
     // Perform actions when "Yes" button is clicked
     setIsModalOpen(false);
     navigate("/quit");
+    logEvent(userID,'Quit_recourse_page_YES_btn', 'clicked')
   };
 
   const handleCancel = () => {
     // Perform actions when "No" button is clicked
     setIsModalOpen(false);
+    logEvent(userID,'Quit_recourse_page_NO_btn', 'clicked')
   };
 
   function generatePlanName(number) {
@@ -276,6 +296,8 @@ function Welcome() {
     }
   }
 
+
+ 
   return (
     <Grid>
       <div className="planGoal">
@@ -361,6 +383,7 @@ function Welcome() {
               selectedOptions={selectedOptions}
               formData={formData}
               setDifficulty={setDifficulty}
+              userID={userID}
             />
 
             {value && (
@@ -378,6 +401,7 @@ function Welcome() {
                     ? "ButtonForKeepPlan"
                     : "DisabledButtonForKeepPlan"
                 }
+                onClick={keepThePlan}
               >
                 KEEP THE PLAN
               </button>

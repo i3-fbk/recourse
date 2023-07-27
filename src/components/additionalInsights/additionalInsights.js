@@ -15,6 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
+import { logEvent } from "../../logger";
 import CONFIG from "../../config.json";
 
 function AdditionalInsight(props) {
@@ -26,6 +27,7 @@ function AdditionalInsight(props) {
     handleMinMaxChange,
     formData,
     setDifficulty,
+    userID
   } = props;
 
   const configuration = CONFIG.loan_approval_task.features;
@@ -58,7 +60,7 @@ function AdditionalInsight(props) {
         ...prevDifficulty[dataset]
       }
     }));
-    
+    logEvent(userID, 'level_of_difficulty', `${name}#${updatedScalers[index]}`)
   };
 
   // Function to update the status based on the scaler value for a specific index
