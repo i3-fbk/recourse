@@ -13,7 +13,7 @@ function DiscardedPlans(props) {
   const [status, setStatus] = useState(null)
 const retrievedData = localStorage.getItem("planHistory");
 
-
+ console.log('History',History)
   useEffect(() => {
     try {
       if (retrievedData !== null) {
@@ -76,9 +76,10 @@ const retrievedData = localStorage.getItem("planHistory");
     }
   }
 
+  
   return (
     <div>
-      {History !== undefined && History.length > 0 ?
+      {History.length > 0 ?
         History.map((plans, index) => (
           <Grid key={index} className="layoutDiscard">
             <Grid item xs={4} className="HistoryinnerLayout">
@@ -110,5 +111,6 @@ const retrievedData = localStorage.getItem("planHistory");
     </div>
   );
 }
+
 
 export default DiscardedPlans;

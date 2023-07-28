@@ -13,6 +13,7 @@ import axios, * as others from "axios";
 // the "data" that has imported below is a sample json named "RecoursePlan.json", and you can replace it with desired json.
 // and this json is to show the first plan (Plan A)
 import data from "./RecoursePlan.json";
+import CONFIG from '../../config.json'
 import DiscardedPlans from "../discardedPlans/discardedPlans.js";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useSelector } from "react-redux";
@@ -51,6 +52,7 @@ const modalStyles = {
 
 function Welcome() {
   const location = useLocation();
+  const dataset = CONFIG.loan_approval_task.features;
   let adult = location?.state.init.features.adult;
   let lending = location?.state.init.features.lendingclub;
   const navigate = useNavigate();
@@ -102,10 +104,10 @@ function Welcome() {
   
   useEffect(() => {
     if (feedback !== null) {
-
+ 
       setDiscardedPlans((prevHistory) => [...prevHistory, plans]);
       setplan_id(plan_id + 1);
-    
+  
 
       const mergedArray = feedback.plans.map((item) => {
         const mergedFeatures = [
@@ -126,7 +128,7 @@ function Welcome() {
   const set_local = async () => {
     localStorage.setItem(
       "planHistory",
-      await JSON.stringify({RecoursePreviousPlans : {plan: discardedPlans, overalSatisfication: overalSatisfication}}),
+      await JSON.stringify({RecoursePreviousPlans : {plan: discardedPlans}}),
       { expires: 1 }
     );
   };
@@ -347,7 +349,7 @@ function Welcome() {
             <Grid container spacing={1} className="innerLayout">
               {outerItem?.features.map((item, index) => (
                 <div key={index} className="PlanData">
-                  <span className="dataTitle">{item.name}</span>
+                  <span className="dataTitle">{dataset[item.name].display_name}</span>
                   <div className="innerDisplayNewPlan">
                     {/* <span><ArrowUpwardRoundedIcon fontSize="large" className={item.valueInc ? "upwardArrow" : "downward"} /></span>  */}
                     <span className="dataAmount">{item.valueBefore}</span>

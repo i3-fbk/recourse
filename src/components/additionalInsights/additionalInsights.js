@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
 import "./additionalInsights.css";
-import statusesData from "../../components/statuses.json";
-import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import data from "../newPlan/RecoursePlan.json";
@@ -95,7 +91,6 @@ function AdditionalInsight(props) {
         statusClass = "";
     }
 
-    // Create a new copy of the statuses array and update the status at the given index
     const updatedStatuses = [...statuses];
     updatedStatuses[index] = newStatus;
     setStatuses(updatedStatuses);
@@ -106,17 +101,6 @@ function AdditionalInsight(props) {
     }
   };
 
-  // useEffect(() => {
-  //   if (props?.feedback != null) {
-  //     setFeatureList(props?.feedback.feedback.features);
-  //   }
-  // }, [props?.feedback]);
-
-  // const handleInputChange = (index, event) => {
-  //   const newValues = [...inputValues];
-  //   newValues[index] = event.target.value;
-  //   setInputValues(newValues);
-  // };
 
   useEffect(() => {
     // saving prefrences values and level of difficulty values in redux store
@@ -127,7 +111,7 @@ function AdditionalInsight(props) {
   return (
     <div className="AiOuterLayout">
       {isdefault ? (
-        <div className="AiTittle">Additional Insights (optional)</div>
+        <h3 className="AiTittle">Additional Insights (optional)</h3>
       ) : null}
       {isdefault ? (
         <div className="AiLayout">
@@ -136,7 +120,7 @@ function AdditionalInsight(props) {
               <div className="AiBox" key={planIndex}>
                 <div className="AiTitleOfBox">
                   <div>
-                    {item.name}
+                    {configuration[item.name].display_name}
                     <small className="differencesAmount">
                       {item.valueDiff}
                     </small>
@@ -155,7 +139,6 @@ function AdditionalInsight(props) {
                   <Box sx={{ width: 300 }} key={planIndex}>
                     <Slider
                       aria-label="Temperature"
-                      // defaultValue={}
                       value={scalers[planIndex]}
                       name={item.name}
                       onChange={(event) => handleScalerChange(event, planIndex, configuration[item.name].dataset)}
