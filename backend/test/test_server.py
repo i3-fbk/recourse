@@ -55,7 +55,7 @@ difficulties = {
 
 print("[*] POST REQUEST")
 print(pprint.pformat(
-    {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences}
+    {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences, "difficulty": difficulties}
 ))
 print()
 

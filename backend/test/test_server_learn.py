@@ -113,15 +113,15 @@ print(pprint.pformat(
 ))
 print()
 
-# Send the request to the API
-x = requests.post(url, json = {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences, "difficulty": difficulties}, cookies=cookies)
-
 # Save the dictionary to files
 json.dump(
-    {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences},
+    {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences, "difficulty": difficulties},
     open("request.json", "w"),
     indent=4, separators=(", ", ": "), sort_keys=True
 )
+
+# Send the request to the API
+x = requests.post(url, json = {"features": {"adult": myobj, "lendingclub": myobj_lending}, "preferences": preferences, "difficulty": difficulties}, cookies=cookies)
 
 # Save cookies to file
 json.dump(
