@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import "../newPlan/newPlan.css";
 import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import AdditionalInsight from "../additionalInsights/additionalInsights";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
@@ -13,7 +14,7 @@ import axios, * as others from "axios";
 // the "data" that has imported below is a sample json named "RecoursePlan.json", and you can replace it with desired json.
 // and this json is to show the first plan (Plan A)
 import data from "./RecoursePlan.json";
-import CONFIG from '../../config.json'
+import CONFIG from "../../config.json";
 import DiscardedPlans from "../discardedPlans/discardedPlans.js";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useSelector } from "react-redux";
@@ -77,8 +78,9 @@ function Welcome() {
   const [error, setError] = useState("");
   const [plan_id, setplan_id] = useState(1);
   const [discardedPlans, setDiscardedPlans] = useState([]);
-  const [difficulty, setDifficulty] = useState({})
-
+  const [difficulty, setDifficulty] = useState({});
+  const [test, setTest] = useState([]);
+  
 
   useEffect(() => {
     if (location.state.init) {
@@ -98,16 +100,14 @@ function Welcome() {
       });
 
       setPlans(mergedArray);
+      setTest((prevArray) => [...prevArray, mergedArray]);
     }
   }, []);
 
-  
   useEffect(() => {
     if (feedback !== null) {
- 
       setDiscardedPlans((prevHistory) => [...prevHistory, plans]);
       setplan_id(plan_id + 1);
-  
 
       const mergedArray = feedback.plans.map((item) => {
         const mergedFeatures = [
@@ -121,20 +121,51 @@ function Welcome() {
       });
 
       setPlans(mergedArray);
-     
+      mergedArray.length > 0 &&
+        setTest((prevArray) => [...prevArray, mergedArray]);
     }
   }, [feedback]);
+
+  useEffect(() => {
+    if (feedback && plans.length === 0) {
+      setError("Sorry there is no more plans, check the following plan.");
+      test && test.length > 0 && setPlans(test[test.length - 1]);
+    }
+  }, [plans]);
 
   const set_local = async () => {
     localStorage.setItem(
       "planHistory",
-      await JSON.stringify({RecoursePreviousPlans : {plan: discardedPlans}}),
+      await JSON.stringify({
+        RecoursePreviousPlans: {
+          plan: discardedPlans
+        },
+      }),
       { expires: 1 }
     );
+    let old = localStorage.getItem("status");
+    if (old === null) {
+      localStorage.setItem(
+        "status",
+        JSON.stringify([overalSatisfication])
+      );
+    } else {
+      old = await JSON.parse(old);
+      localStorage.setItem(
+        "status",
+        JSON.stringify([...old,overalSatisfication])
+      );
+    }
+
+
+    // localStorage.setItem(
+    //   "status",
+    //   await JSON.stringify({ overallsatisfaction: overalSatisfication }),
+    //   { expires: 1 }
+    // );
   };
 
   useEffect(() => {
-
     if (discardedPlans.length > 0) {
       set_local();
     }
@@ -149,10 +180,7 @@ function Welcome() {
     let logDetails = ``;
 
     logDetails = plansDetails?.features
-      .map(
-        (item) =>
-          `#${item.name}#${item.valueBefore}#${item.valueAfter}`
-      )
+      .map((item) => `#${item.name}#${item.valueBefore}#${item.valueAfter}`)
       .join("");
 
     logEvent(userID, `smily_interaction#${divId}`, logDetails);
@@ -182,7 +210,7 @@ function Welcome() {
     }));
 
     setPreferences((prevPreferences) => ({ ...prevPreferences, ...formData }));
-    logEvent(userID, 'change_min_and_max_value', `${title}#${type}#${value}` )
+    logEvent(userID, "change_min_and_max_value", `${title}#${type}#${value}`);
   };
 
   const handleOptionChange = (event, index, title) => {
@@ -191,7 +219,7 @@ function Welcome() {
     const newSelectedValues = [...selectedOptions];
     newSelectedValues[index] = event.target.value;
     setSelectedOptions(newSelectedValues);
-
+    
     setPreferences((prevData) => ({
       ...prevData,
       [title]: {
@@ -209,14 +237,13 @@ function Welcome() {
       .join("");
 
     logEvent(userID, "keep_plan_button", logDetails);
-   
+
     navigate("/recourse/keepThePlan/", { state: plans[0]?.features });
   }
 
-
   function sendJsonToServer() {
     setIsLoading(true);
-    setError('')
+    setError("");
 
     const info = {
       difficulty: difficulty,
@@ -227,7 +254,7 @@ function Welcome() {
       preferences: preferences,
       overalSatisfication: overalSatisfication,
     };
-  
+
     axios
       .post("http://127.0.0.1:5000/get_recourse_v2", info)
       .then((res) => {
@@ -235,23 +262,24 @@ function Welcome() {
         setFeedback(res.data);
         console.log(`Server responded with status code ${res.status}`);
       })
-      
+
       .catch((err) => {
         console.error("Error:", err);
         setIsLoading(false);
-        setError(err.message)
+        setError(err.message);
       });
 
-      let logDetails = ``;
+    let logDetails = ``;
 
-      logDetails = plans[0]?.features
-        .map(
-          (item) =>
-            `#${item.name}#${item.valueBefore}#${item.valueAfter}`
-        )
-        .join("");
+    logDetails = plans[0]?.features
+      .map((item) => `#${item.name}#${item.valueBefore}#${item.valueAfter}`)
+      .join("");
 
-    logEvent(userID, "propose_new_plan_btn", `${logDetails}#overalSatisfication${overalSatisfication}`);
+    logEvent(
+      userID,
+      "propose_new_plan_btn",
+      `${logDetails}#overalSatisfication${overalSatisfication}`
+    );
     setActiveDiscardedPlan(true);
     setActiveButton(false);
     setValue(false);
@@ -260,20 +288,20 @@ function Welcome() {
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
-    logEvent(userID,'Quit_recourse_page_btn', 'clicked')
+    logEvent(userID, "Quit_recourse_page_btn", "clicked");
   };
 
   const handleConfirm = () => {
     // Perform actions when "Yes" button is clicked
     setIsModalOpen(false);
     navigate("/quit");
-    logEvent(userID,'Quit_recourse_page_YES_btn', 'clicked')
+    logEvent(userID, "Quit_recourse_page_YES_btn", "clicked");
   };
 
   const handleCancel = () => {
     // Perform actions when "No" button is clicked
     setIsModalOpen(false);
-    logEvent(userID,'Quit_recourse_page_NO_btn', 'clicked')
+    logEvent(userID, "Quit_recourse_page_NO_btn", "clicked");
   };
 
   function generatePlanName(number) {
@@ -298,8 +326,15 @@ function Welcome() {
     }
   }
 
+  console.log(preferences)
+  function resetValues() {
+    setFormData({})
+    setSelectedOptions([])
+    setPreferences({})
+  }
 
- 
+
+
   return (
     <Grid>
       <div className="planGoal">
@@ -313,28 +348,24 @@ function Welcome() {
           </div>
         </Grid>
       </div>
-      {plans.length === 0 &&
-      <div className="topMessageError">
-         <Grid item className="userName">
-          <div className="GeneralTitle">Error!</div>
-          <div className="GeneralSubTitle">
-            sorry, there is no plan, please try again. 
-          </div>
-          
-        </Grid>
-        </div>}
-        {
-          error !== '' &&
-          <div className="topMessageError">
-         <Grid item className="userName">
-          <div className="GeneralTitle">Error!</div>
-          <div className="GeneralSubTitle">
-            {error}
-          </div>
-          
-        </Grid>
+      {plans.length === 0 && (
+        <div className="topMessageError">
+          <Grid item className="userName">
+            <div className="GeneralTitle">Error!</div>
+            <div className="GeneralSubTitle">
+              sorry, there is no plan, please try again.
+            </div>
+          </Grid>
         </div>
-        }
+      )}
+      {error !== "" && (
+        <div className="topMessageError">
+          <Grid item className="userName">
+            <div className="GeneralTitle">Message!</div>
+            <div className="GeneralSubTitle">{error}</div>
+          </Grid>
+        </div>
+      )}
 
       {isLoading ? (
         <div className="overlay">
@@ -345,15 +376,20 @@ function Welcome() {
       {plans &&
         plans.map((outerItem, outerIndex) => (
           <Grid key={outerIndex} className="layout">
-            <div className="planTitle">{generatePlanName(plan_id)}</div>
+            <div className="planTitle">
+              New plan
+              {/* {generatePlanName(plan_id)} */}
+              </div>
             <Grid container spacing={1} className="innerLayout">
               {outerItem?.features.map((item, index) => (
                 <div key={index} className="PlanData">
-                  <span className="dataTitle">{dataset[item.name].display_name}</span>
+                  <span className="dataTitle">
+                    {dataset[item.name].display_name}
+                  </span>
                   <div className="innerDisplayNewPlan">
                     {/* <span><ArrowUpwardRoundedIcon fontSize="large" className={item.valueInc ? "upwardArrow" : "downward"} /></span>  */}
                     <span className="dataAmount">{item.valueBefore}</span>
-                    <span style={{'padding':'0px 10px'}}>
+                    <span style={{ padding: "0px 10px" }}>
                       <ArrowRightAltIcon />
                     </span>
                     <span className="dataAmount">{item.valueAfter}</span>
@@ -386,16 +422,23 @@ function Welcome() {
               formData={formData}
               setDifficulty={setDifficulty}
               userID={userID}
+              preferences={preferences}
             />
 
             {value && (
-              <Tooltip title="close additional insights">
+              <div className="iconsContainer">
+                   <Tooltip title="close additional insights">
                 <CloseFullscreenIcon
                   className="CloseFullscreenIcon"
                   onClick={(e) => setValue(false)}
                 />
-              </Tooltip>
+              </Tooltip> 
+              <Tooltip  title="Reset all changes">
+               <RestartAltIcon onClick={resetValues} style={{ color: '#106FDF', cursor: 'pointer'}}/>
+             </Tooltip>
+              </div>
             )}
+           
             <div className="button-container-keep">
               <button
                 className={
@@ -408,10 +451,10 @@ function Welcome() {
                 KEEP THE PLAN
               </button>
             </div>
+            
           </Grid>
         ))}
 
-      
       <div className="SecondButtonContainer">
         <button
           className={
@@ -423,11 +466,9 @@ function Welcome() {
         </button>
       </div>
       <h3 className="discardedPlansText">History of plans</h3>
-      <DiscardedPlans
-        overalSatisfication={overalSatisfication}
-        discardedPlans={discardedPlans}
-      />
-
+      
+      <DiscardedPlans />
+ 
       <div className="RejectingButtonContainer">
         <button className="RejectingButton" onClick={handleOpenModal}>
           Quit Recourse Page

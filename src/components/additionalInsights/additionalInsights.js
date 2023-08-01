@@ -23,7 +23,8 @@ function AdditionalInsight(props) {
     handleMinMaxChange,
     formData,
     setDifficulty,
-    userID
+    userID,
+    preferences
   } = props;
 
   const configuration = CONFIG.loan_approval_task.features;
@@ -35,7 +36,7 @@ function AdditionalInsight(props) {
   const [inputValues, setInputValues] = useState(
     Array(data.features.length).fill("")
   );
-
+console.log('preferences',preferences)
   const dispatch = useDispatch(); // to save values in redux store
 
   const handleScalerChange = (event, index, dataset) => {

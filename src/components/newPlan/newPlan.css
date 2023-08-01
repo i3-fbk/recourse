@@ -235,7 +235,13 @@
     color: #ffffff;
     cursor: pointer;
 }
-
+.iconsContainer {
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1a0px;
+}
 .ButtonForProposeNewPlan:hover {
     color: #106FDF;
     background-color: #ffffff;
@@ -251,7 +257,7 @@
     border-radius: 16px;
 }
 .CloseFullscreenIcon {
-    color: #5286c0;
+    color: #106FDF;
     display: flex !important;
     justify-content: flex-start;
 

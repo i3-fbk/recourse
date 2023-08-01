@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import "./discardedPlans.css";
 
-function DiscardedPlans(props) {
-  const { overalSatisfication,discardedPlans } = props;
+function DiscardedPlans() {
   const [History, setHistory] = useState([])
-  const [status, setStatus] = useState(null)
-const retrievedData = localStorage.getItem("planHistory");
+  const [status, setStatus] = useState([])
 
- console.log('History',History)
+ 
   useEffect(() => {
+    const retrievedData = localStorage.getItem("planHistory");
+    let planStatus = localStorage.getItem("status");
+    
     try {
       if (retrievedData !== null) {
         const saved = JSON.parse(retrievedData);
-       
         setHistory(saved?.RecoursePreviousPlans?.plan)
-        setStatus(saved?.RecoursePreviousPlans?.overalSatisfication)
+
+        planStatus = planStatus && JSON.parse(planStatus)
+        setStatus(planStatus)
       }
     } catch (error) {
       // Handle any potential errors
@@ -30,7 +28,7 @@ const retrievedData = localStorage.getItem("planHistory");
 
 
 
-  const statusGenerator = () => {
+  const statusGenerator = (status) => {
     if (status) {
       switch (status) {
         case 1:
@@ -55,6 +53,7 @@ const retrievedData = localStorage.getItem("planHistory");
   };
 
   function generatePlanName(number) {
+
     switch (number) {
       case 0:
         return "Plan A";
@@ -76,7 +75,7 @@ const retrievedData = localStorage.getItem("planHistory");
     }
   }
 
-  
+
   return (
     <div>
       {History.length > 0 ?
@@ -85,7 +84,7 @@ const retrievedData = localStorage.getItem("planHistory");
             <Grid item xs={4} className="HistoryinnerLayout">
               <div className="discardedPlansTitle">
                 <div className="planTitle">{generatePlanName(index)}</div>
-                <div className="discardedPlansStatus">{statusGenerator()}</div>
+                <div className="discardedPlansStatus">{statusGenerator(status[index])}</div>
               </div>
               <div className="historyDetails">
                 {plans?.map((item) =>
