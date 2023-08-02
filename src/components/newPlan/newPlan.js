@@ -126,7 +126,7 @@ function Welcome() {
       mergedArray.length > 0 &&
         setTest((prevArray) => [...prevArray, mergedArray]);
     }
-    window.scrollTo(0, 0)
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth' })
   }, [feedback]);
 
   useEffect(() => {
