@@ -126,6 +126,7 @@ function Welcome() {
       mergedArray.length > 0 &&
         setTest((prevArray) => [...prevArray, mergedArray]);
     }
+    window.scrollTo(0, 0)
   }, [feedback]);
 
   useEffect(() => {
@@ -305,6 +306,7 @@ function Welcome() {
     setActiveButton(false);
     setValue(false);
     setSelectedDiv(null);
+
   }
 
   const handleOpenModal = () => {
