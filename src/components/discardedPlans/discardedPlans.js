@@ -3,54 +3,10 @@ import Grid from "@mui/material/Grid";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import "./discardedPlans.css";
 
-function DiscardedPlans() {
-  const [History, setHistory] = useState([])
-  const [status, setStatus] = useState([])
+function DiscardedPlans(props) {
+  const {History, statusGenerator, status} = props
+  
 
- 
-  useEffect(() => {
-    const retrievedData = localStorage.getItem("planHistory");
-    let planStatus = localStorage.getItem("status");
-    
-    try {
-      if (retrievedData !== null) {
-        const saved = JSON.parse(retrievedData);
-        setHistory(saved?.RecoursePreviousPlans?.plan)
-
-        planStatus = planStatus && JSON.parse(planStatus)
-        setStatus(planStatus)
-      }
-    } catch (error) {
-      // Handle any potential errors
-      console.error("Error retrieving data from Local Storage:", error);
-    }
-  }, []);
-
-
-
-  const statusGenerator = (status) => {
-    if (status) {
-      switch (status) {
-        case 1:
-          return "😣 Terrible";
-
-        case 2:
-          return "🙁 Bad";
-
-        case 3:
-          return "😶 Neutral";
-
-        case 4:
-          return "😃 Good";
-
-        case 5:
-          return "😍 Great";
-
-        default:
-          break;
-      }
-    }
-  };
 
   function generatePlanName(number) {
 

@@ -80,6 +80,8 @@ function Welcome() {
   const [discardedPlans, setDiscardedPlans] = useState([]);
   const [difficulty, setDifficulty] = useState({});
   const [test, setTest] = useState([]);
+  const [History, setHistory] = useState([])
+  const [status, setStatus] = useState([])
   
 
   useEffect(() => {
@@ -157,19 +159,38 @@ function Welcome() {
       );
     }
 
-
-    // localStorage.setItem(
-    //   "status",
-    //   await JSON.stringify({ overallsatisfaction: overalSatisfication }),
-    //   { expires: 1 }
-    // );
+    ReadTheLocalStorage()
   };
+
+
 
   useEffect(() => {
     if (discardedPlans.length > 0) {
       set_local();
     }
   }, [discardedPlans]);
+
+
+ function ReadTheLocalStorage() {
+  const retrievedData = localStorage.getItem("planHistory");
+  let planStatus = localStorage.getItem("status");
+ 
+  try {
+    if (retrievedData !== null && planStatus !== null) {
+      const saved = JSON.parse(retrievedData);
+      setHistory(saved?.RecoursePreviousPlans?.plan)
+
+      planStatus = planStatus && JSON.parse(planStatus)
+      setStatus(planStatus)
+     
+
+    }
+  } catch (error) {
+    // Handle any potential errors
+    console.error("Error retrieving data from Local Storage:", error);
+  }
+ }
+
 
   const handleClick = (divId, index, plansDetails) => {
     setSelectedDiv(divId);
@@ -334,6 +355,29 @@ function Welcome() {
   }
 
 
+  const statusGenerator = (status) => {
+    if (status) {
+      switch (status) {
+        case 1:
+          return "😣 Terrible";
+
+        case 2:
+          return "🙁 Bad";
+
+        case 3:
+          return "😶 Neutral";
+
+        case 4:
+          return "😃 Good";
+
+        case 5:
+          return "😍 Great";
+
+        default:
+          break;
+      }
+    }
+  };
 
   return (
     <Grid>
@@ -373,7 +417,7 @@ function Welcome() {
         </div>
       ) : null}
 
-      {plans &&
+      {plans.length > 0 &&
         plans.map((outerItem, outerIndex) => (
           <Grid key={outerIndex} className="layout">
             <div className="planTitle">
@@ -467,7 +511,7 @@ function Welcome() {
       </div>
       <h3 className="discardedPlansText">History of plans</h3>
       
-      <DiscardedPlans />
+     <DiscardedPlans History={History} statusGenerator={statusGenerator} status={status} />
  
       <div className="RejectingButtonContainer">
         <button className="RejectingButton" onClick={handleOpenModal}>
