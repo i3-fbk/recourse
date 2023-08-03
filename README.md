@@ -1,16 +1,17 @@
 # Recourse
-This is a financial planning system that generates custom plans to help users achieve their financial goals, such as getting a loan approval from a bank. It uses data analysis and machine learning techniques to provide tailored solutions.
+This is a financial planning system that generates custom plans to help users achieve their financial goals, such as getting a loan approval from a bank. It uses  machine learning techniques to provide tailored AI based solutions.
 
-## Description `Short Instruction - Running the App`
+## Description `short Instruction - How Run the App`
+### For running the frontend
 It requires NodeJS >= 14.0.
 To run the code, you can follow these instructions:
 
-1. clone the repository by command: ``` git clone https://github.com/delaramesfahani/Recourse.git ```
-2. n the root directory of the application you can serve the app with the following commands:
-- For installing the node package: ``` npm i ```
-- To serve the application on port http://localhost:5001: ``` node server.js ```
+- Clone the repository by command: ``` git clone https://github.com/delaramesfahani/Recourse.git ```
+- In the root directory of the application you can serve the app with the following commands:
+- For installing the node packages: ``` npm install ``` or ``` npm i ```
+- To start the Front end : ``` npm start ```
 
-# Install the backend
+### For running the backend
 ```bash
 conda create --name recourse python=3.7
 pip install -r requirements.txt
@@ -26,95 +27,43 @@ export PYTHONPATH=.
 flask --app backend/server.py run
 ```
 
-### JSON File: `initData.json`
+### JSON File: `Config.json`
 
-The initData.json file encompasses an array of objects, where each object serves as a data entry. Within the file, there are two distinct types of objects: Actionable and Non-Actionable features. These types categorize the nature of the features and define the user's ability to modify their values.
-
-Actionable features encompass the information that users can modify, such as details pertaining to their bank account. These features provide the flexibility for users to update and alter the values as needed.
-
-On the other hand, Non-Actionable features consist of attributes that remain unchangeable by the user, including their age. These features are inherently fixed and cannot be modified through user interaction.
-
-The presence of both Actionable and Non-Actionable features within the initData.json file allows for the management of dynamic and static user data, providing a comprehensive representation of the dataset.
+The configuration file is a JSON file designed to be compatible with various datasets having a similar structure. Currently, it includes features from the "Adult Census Income" and "Lending Clubs". However, due to its flexible design, this file can seamlessly integrate with other datasets sharing the same structure.
 
 Here's an example of the file structure:
 
-
-
 ```json
-[
-   {
-       "name" : "Username",
-       "value" : "joe",
-       "actionable" : false
-   },
-   {
-       "name" : "Age",
-       "value" : "30",
-       "actionable" : false
-   },
-   {
-       "name" : "Annual income",
-       "value" : 61000,
-       "actionable" : true
-   }
-]
-
+ "features": {
+            "education": {
+                "dataset": "adult",
+                "display_name": "Education",
+                "description": "Level of education of the user (e.g., Bachelor)",
+                "type": "categorical",
+                "actionable": true,
+                "values": ["Preschool", "1st-4th", "5th-6th"]
+            },
+            "capital_gain": {
+                "dataset": "adult",
+                "display_name": "Income",
+                "description": "Self-reported yearly income",
+                "type": "numerical",
+                "actionable": true,
+                "min_value": 0,
+                "max_value": 10000
+            },
 ```
 
-#### File structure: `initData.json`
+- dataset: The source dataset for this feature (Adult Census Income).
+- display_name: Human-readable display name (Education).
+- description: A brief description of the feature (Level of education of the user).
+- type: The type of data (categorical or numerical).
+- actionable: Indicates if this feature is actionable (true).
+- values: An array of possible values (["Preschool", "1st-4th", ..., "Prof-school"]).
 
-The Json file can easily accommodate different data format and types. And additional fields can added as needed without affecting compatibility with existing datasets.
+Actionable features encompass the information that users can modify, such as details pertaining to their bank account. These features provide the flexibility for users to update and alter the values as needed.
 
-The following fields are used in the initData.json file:
+On the other hand, Non-Actionable (```"actionable": false```) features consist of attributes that remain unchangeable by the user, like their age. These features are inherently fixed and cannot be modified through user interaction.
 
-- Name (string): represents a name of the entry feature.
-- Value (number or string): stores the value of the feature.
-- Actionable (boolean) : represent this fact that this feature is flexible to modify by user or not.
+The presence of both Actionable and Non-Actionable features within the config.json file allows for the management of dynamic and static user data, providing a comprehensive representation of the dataset.
 
-Actionable features are denoted by the attribute "actionable": true. These features serve as essential inputs for the AI algorithm to propose a customized plan tailored to the user's specific needs and requirements. Users have the capability to modify the values associated with these features, allowing for dynamic adjustments to be incorporated into the plan.
-
-### JSON file: `RecoursePlan.json`
-
-The RecoursePlan.json file is a JSON file generated by the AI model based on the initial information. This file serves as a resource plan that contains the following key components:
-
-- UserId: A unique identifier assigned to each user.
-- PlanId: An identifier assigned to each resource plan.
-- features: An array that includes the resources recommended by the AI model.
-- UserPreferences: Initially, the user preferences in the resource plan are empty (null). These preferences can be filled when it is rated by the user, ranging from terrible to great, as the user interacts with the resources.
-
- Here's an example of the file structure:
-
-```json
-{
-   "userId": "#",
-   "planId": "01",
-   "features" : [{
-       "name" : "FICO score",
-       "valueBefore": 600,
-       "valueAfter": 800,
-       "valueDiff": 200,
-       "valueInc": true,
-       "type": "numeric"
-      },
-      {
-      "name" : "Credit utilisation",
-      "valueBefore": 90.1,
-      "valueAfter": 63.5,
-      "valueDiff": 26,
-      "valueInc": false,
-      "type": "numeric"
-      },
-      {
-      "name" : "Loan amount",
-      "valueBefore": "25K",
-      "valueAfter": "40K",
-      "valueDiff": "15K",
-      "valueInc": true,
-      "type": "string"
-      }], 
-
-
-     "overalSatisfication": null,
-     "UserPreferences": {}   
-}
-```
