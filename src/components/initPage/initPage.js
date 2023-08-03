@@ -11,7 +11,7 @@ import { logEvent } from "../../logger.js";
 import { useSelector } from "react-redux";
 import CONFIG from "../../config.json";
 import "./initPage.css";
-import Cookies from 'js-cookie';
+
 
 function InitPage() {
   const navigate = useNavigate();
