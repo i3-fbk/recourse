@@ -390,7 +390,7 @@ function Welcome() {
         <Grid item className="userName">
           <div className="GeneralTitle">Message</div>
           <div className="GeneralSubTitle">
-            Your loan approaval has been rejected, check recours plans.
+            Your loan approaval has been rejected, check recourse plans.
           </div>
         </Grid>
       </div>
