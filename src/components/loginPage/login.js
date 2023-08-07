@@ -52,16 +52,24 @@ function LoginPage() {
 
   return (
     <div className="page-container">
-      <div className="">
-        <h1 className="login-heading">Welcome to Recourse plan #1</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+     <div style={{ margin:' 10px 60px'}}>
+        <h1 className="login-heading">Welcome to Recourse plan <span style={{fontSize: '14px'}}>( version 1 )</span> </h1>
+        <p style={{textAlign: 'justify'}}>
+          <h3>What is this platform?</h3>
+          Our platform is designed to assist people to achieve their financial
+          goals. Sometimes only small changes in financial factors can lead to
+          rejection or approval. Picture this scenario: You apply for a loan
+          from a financial institution, but unfortunately, your request gets
+          rejected. That's where our platform steps in to help. By analyzing
+          your information, we offer tailored plans for you to choose from,
+          increasing your chances of securing that much-needed loan approval.
+          <h3>Participation</h3>
+          At Recourse Plan, your interactions with us are entirely anonymous,
+          ensuring your personal information remains protected. Should you
+          choose to give your consent, you have the option to actively
+          participate in improving our services. Your participation is
+          incredibly valuable to us as it drives the continual improvement and
+          enhancement of our platform.
         </p>
 
         <div className="consentContainer">
