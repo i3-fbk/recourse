@@ -249,6 +249,9 @@ function Welcome() {
         acceptable_values: event.target.value,
       },
     }));
+
+    // logEvent(userID, "change_acceptable_values",`${title}#${newSelectedValues}`);
+
   };
 
   function keepThePlan() {

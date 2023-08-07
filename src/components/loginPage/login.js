@@ -54,8 +54,9 @@ function LoginPage() {
     <div className="page-container">
      <div style={{ margin:' 10px 60px'}}>
         <h1 className="login-heading">Welcome to Recourse plan <span style={{fontSize: '14px'}}>( version 1 )</span> </h1>
+        <span style={{fontSize: '21px'}}>What is this platform?</span>
         <p style={{textAlign: 'justify'}}>
-          <h3>What is this platform?</h3>
+         
           Our platform is designed to assist people to achieve their financial
           goals. Sometimes only small changes in financial factors can lead to
           rejection or approval. Picture this scenario: You apply for a loan
@@ -63,7 +64,10 @@ function LoginPage() {
           rejected. That's where our platform steps in to help. By analyzing
           your information, we offer tailored plans for you to choose from,
           increasing your chances of securing that much-needed loan approval.
-          <h3>Participation</h3>
+          <br />
+          </p>
+          <span style={{fontSize: '21px'}}>Participation</span>
+         <p>
           At Recourse Plan, your interactions with us are entirely anonymous,
           ensuring your personal information remains protected. Should you
           choose to give your consent, you have the option to actively
