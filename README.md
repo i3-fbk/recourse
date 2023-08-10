@@ -14,6 +14,7 @@ To run the code, you can follow these instructions:
 ### For running the backend
 ```bash
 conda create --name recourse python=3.7
+conda activate recourse
 pip install -r requirements.txt
 git clone https://github.com/unitn-sml/recourse-fare.git
 cd recourse-fare
@@ -23,8 +24,11 @@ cd ..
 ```
 The backend can then be run as:
 ```bash
+git clone https://github.com/geektoni/RecourseBackend
+cd RecourseBackend
+conda activate recourse
 export PYTHONPATH=.
-flask --app backend/server.py run
+flask --app server.py run
 ```
 
 ### JSON File: `Config.json`
