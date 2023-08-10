@@ -202,7 +202,7 @@ function Welcome() {
     let logDetails = ``;
 
     logDetails = plansDetails?.features
-      .map((item) => `#${item.name}#${item.valueBefore}#${item.valueAfter}`)
+      .map((item) => `@${item.name}#${item.valueBefore}#${item.valueAfter}`)
       .join("");
 
     logEvent(userID, `smily_interaction#${divId}`, logDetails);
@@ -258,7 +258,7 @@ function Welcome() {
     let logDetails = ``;
 
     logDetails = plans[0]?.features
-      .map((item) => `#${item.name}#${item.valueBefore}#${item.valueAfter}`)
+      .map((item) => `@${item.name}#${item.valueBefore}#${item.valueAfter}`)
       .join("");
 
     logEvent(userID, "keep_plan_button", logDetails);
@@ -297,13 +297,13 @@ function Welcome() {
     let logDetails = ``;
 
     logDetails = plans[0]?.features
-      .map((item) => `#${item.name}#${item.valueBefore}#${item.valueAfter}`)
+      .map((item) => `@${item.name}#${item.valueBefore}#${item.valueAfter}`)
       .join("");
 
     logEvent(
       userID,
       "propose_new_plan_btn",
-      `${logDetails}#overalSatisfication${overalSatisfication}`
+      `${logDetails}@overalSatisfication${overalSatisfication}`
     );
     setActiveDiscardedPlan(true);
     setActiveButton(false);

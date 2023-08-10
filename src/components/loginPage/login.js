@@ -35,6 +35,7 @@ function LoginPage() {
   function handleLogin() {
     logEvent(userID, 'session_started', `clicked#${userID}`)
 
+
     axios
       .get("http://127.0.0.1:5000/get_user", { user_id: userID })
       .then((res) => {
