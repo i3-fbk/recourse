@@ -250,7 +250,7 @@ function Welcome() {
       },
     }));
 
-    // logEvent(userID, "change_acceptable_values",`${title}#${newSelectedValues}`);
+     logEvent(userID, "change_acceptable_values",`${title}#${event.target.value}`);
 
   };
 
@@ -352,11 +352,12 @@ function Welcome() {
     }
   }
 
-  console.log(preferences)
+  
   function resetValues() {
     setFormData({})
     setSelectedOptions([])
     setPreferences({})
+    logEvent(userID, 'reset_changes', 'clicked')
   }
 
 

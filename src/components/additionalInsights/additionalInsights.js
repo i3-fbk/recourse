@@ -36,7 +36,7 @@ function AdditionalInsight(props) {
   const [inputValues, setInputValues] = useState(
     Array(data.features.length).fill("")
   );
-console.log('preferences',preferences)
+
   const dispatch = useDispatch(); // to save values in redux store
 
   const handleScalerChange = (event, index, dataset) => {
