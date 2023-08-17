@@ -1,0 +1,139 @@
+image: docker
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - backend-container-build
+  - frontend-container-build
+  - deploy-dev
+  - deploy-prod
+  - test
+  - container-scan
+
+include:
+  - template: Security/Container-Scanning.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+
+variables:
+  SECURE_LOG_LEVEL: info
+  DOCKER_DRIVER: overlay
+  CONTAINER_LOGGER_IMAGE: smartcommunitylab/i3-recourse-logger:$CI_COMMIT_SHORT_SHA
+  CONTAINER_LOGGER_IMAGE_LATEST: smartcommunitylab/i3-recourse-logger:latest
+  CONTAINER_FARE_IMAGE: smartcommunitylab/i3-recourse-fare:$CI_COMMIT_SHORT_SHA
+  CONTAINER_FARE_IMAGE_LATEST: smartcommunitylab/i3-recourse-fare:latest
+  CONTAINER_FRONTEND_V1_IMAGE: smartcommunitylab/i3-recourse-frontend:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
+  CONTAINER_FRONTEND_V1_IMAGE_LATEST: smartcommunitylab/i3-recourse-frontend:$CI_COMMIT_REF_NAME-latest
+  CONTAINER_FRONTEND_V2_IMAGE: smartcommunitylab/i3-recourse-frontend:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
+  CONTAINER_FRONTEND_V2_IMAGE_LATEST: smartcommunitylab/i3-recourse-frontend:$CI_COMMIT_REF_NAME-latest
+
+fare-container-build:
+  stage: build
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  script:
+    - docker login -u $DHUB_USER -p $DHUB_PASS
+    - cd RecourseBackend
+    - docker build -t $CONTAINER_FARE_IMAGE -t $CONTAINER_FARE_IMAGE_LATEST .
+    - docker push $CONTAINER_FARE_IMAGE
+    - docker push $CONTAINER_FARE_IMAGE_LATEST
+  only:
+    - deploy-v1
+    - deploy-v2
+  artifacts:
+    expire_in: 1 week
+
+logger-container-build:
+  stage: build
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  script:
+    - docker login -u $DHUB_USER -p $DHUB_PASS
+    - cd logsBackend
+    - docker build -t $CONTAINER_LOGGER_IMAGE -t $CONTAINER_LOGGER_IMAGE_LATEST .
+    - docker push $CONTAINER_LOGGER_IMAGE
+    - docker push $CONTAINER_LOGGER_IMAGE_LATEST
+  only:
+    - deploy-v1
+    - deploy-v2
+  artifacts:
+    expire_in: 1 week
+
+frontend-v1-container-build:
+  stage: build
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  script:
+    - docker login -u $DHUB_USER -p $DHUB_PASS
+    - cd frontendApp
+    - docker build --build-arg RECOURSE_ENDPOINT=http://i3-recourse-fare:5000 --build-arg RECOURSE_LOG_ENDPOINT=http://i3-recourse-logger:3004 -t $CONTAINER_FRONTEND_V1_IMAGE -t $CONTAINER_FRONTEND_V1_IMAGE_LATEST .
+    - docker push $CONTAINER_FRONTEND_V1_IMAGE
+    - docker push $CONTAINER_FRONTEND_V1_IMAGE_LATEST
+  only:
+    - deploy-v1
+  artifacts:
+    expire_in: 1 week
+
+frontend-v2-container-build:
+  stage: build
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  script:
+    - docker login -u $DHUB_USER -p $DHUB_PASS
+    - cd frontendApp
+    - docker build --build-arg RECOURSE_ENDPOINT=http://i3-recourse-fare:5000 --build-arg RECOURSE_LOG_ENDPOINT=http://i3-recourse-logger:3004 -t $CONTAINER_FRONTEND_V2_IMAGE -t $CONTAINER_FRONTEND_V2_IMAGE_LATEST .
+    - docker push $CONTAINER_FRONTEND_V2_IMAGE
+    - docker push $CONTAINER_FRONTEND_V2_IMAGE_LATEST
+  only:
+    - deploy-v2
+  artifacts:
+    expire_in: 1 week
+    
+deploy-dev:
+  stage: deploy-dev
+  image: 
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  environment:
+    name: platform-new
+  script:
+    - echo "deploy fare"
+    - kubectl -n i3-recourse set image deployments/i3-recourse-fare i3-recourse-fare=$CONTAINER_FARE_IMAGE --record=true
+    - kubectl -n i3-recourse rollout status deployment i3-recourse-fare
+    - echo "deploy logger"
+    - kubectl -n i3-recourse set image deployments/i3-recourse-logger i3-recourse-logger=$CONTAINER_LOGGER_IMAGE --record=true
+    - kubectl -n i3-recourse rollout status deployment i3-recourse-logger
+    - echo "deploy frontend v1"
+    - kubectl -n i3-recourse set image deployments/i3-recourse-frontend-v1 i3-recourse-frontend-v1=$CONTAINER_FRONTEND_V1_IMAGE --record=true
+    - kubectl -n i3-recourse rollout status deployment i3-recourse-frontend-v1
+    - echo "deploy frontend v2"
+    - kubectl -n i3-recourse set image deployments/i3-recourse-frontend-v2 i3-recourse-frontend-v2=$CONTAINER_FRONTEND_V2_IMAGE --record=true
+    - kubectl -n i3-recourse rollout status deployment i3-recourse-frontend-v2
+  only:
+    - deploy-v1
+    - deploy-v2
+
+container_scanning:
+  stage: container-scan
+  variables:
+    DOCKER_IMAGE: $CONTAINER_FRONTEND_V1_IMAGE
+  artifacts:
+    expire_in: 1 week
+
+container_scanning_frontend_v2:
+  extends: container_scanning
+  variables:
+    DOCKER_IMAGE: $CONTAINER_FRONTEND_V2_IMAGE
+
+container_scanning_logger:
+  extends: container_scanning
+  variables:
+    DOCKER_IMAGE: $CONTAINER_LOGGER_IMAGE
+
+container_scanning_fare:
+  extends: container_scanning
+  variables:
+    DOCKER_IMAGE: $CONTAINER_FARE_IMAGE
