@@ -25,10 +25,10 @@ variables:
   CONTAINER_LOGGER_IMAGE_LATEST: smartcommunitylab/i3-recourse-logger:latest
   CONTAINER_FARE_IMAGE: smartcommunitylab/i3-recourse-fare:$CI_COMMIT_SHORT_SHA
   CONTAINER_FARE_IMAGE_LATEST: smartcommunitylab/i3-recourse-fare:latest
-  CONTAINER_FRONTEND_V1_IMAGE: smartcommunitylab/i3-recourse-frontend:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
-  CONTAINER_FRONTEND_V1_IMAGE_LATEST: smartcommunitylab/i3-recourse-frontend:$CI_COMMIT_REF_NAME-latest
-  CONTAINER_FRONTEND_V2_IMAGE: smartcommunitylab/i3-recourse-frontend:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
-  CONTAINER_FRONTEND_V2_IMAGE_LATEST: smartcommunitylab/i3-recourse-frontend:$CI_COMMIT_REF_NAME-latest
+  CONTAINER_FRONTEND_V1_IMAGE: smartcommunitylab/i3-recourse-frontend-v1:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
+  CONTAINER_FRONTEND_V1_IMAGE_LATEST: smartcommunitylab/i3-recourse-frontend-v1:$CI_COMMIT_REF_NAME-latest
+  CONTAINER_FRONTEND_V2_IMAGE: smartcommunitylab/i3-recourse-frontend-v2:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
+  CONTAINER_FRONTEND_V2_IMAGE_LATEST: smartcommunitylab/i3-recourse-frontend-v2:$CI_COMMIT_REF_NAME-latest
 
 fare-container-build:
   stage: build
@@ -69,7 +69,7 @@ frontend-v1-container-build:
   script:
     - docker login -u $DHUB_USER -p $DHUB_PASS
     - cd frontendApp
-    - docker build --build-arg RECOURSE_ENDPOINT=http://i3-recourse-fare:5000 --build-arg RECOURSE_LOG_ENDPOINT=http://i3-recourse-logger:3004 -t $CONTAINER_FRONTEND_V1_IMAGE -t $CONTAINER_FRONTEND_V1_IMAGE_LATEST .
+    - docker build --build-arg RECOURSE_ENDPOINT=https://i3-recourse-fare.platform.smartcommunitylab.it --build-arg RECOURSE_LOG_ENDPOINT=https://i3-recourse-logger.platform.smartcommunitylab.it -t $CONTAINER_FRONTEND_V1_IMAGE -t $CONTAINER_FRONTEND_V1_IMAGE_LATEST .
     - docker push $CONTAINER_FRONTEND_V1_IMAGE
     - docker push $CONTAINER_FRONTEND_V1_IMAGE_LATEST
   only:
@@ -84,7 +84,7 @@ frontend-v2-container-build:
   script:
     - docker login -u $DHUB_USER -p $DHUB_PASS
     - cd frontendApp
-    - docker build --build-arg RECOURSE_ENDPOINT=http://i3-recourse-fare:5000 --build-arg RECOURSE_LOG_ENDPOINT=http://i3-recourse-logger:3004 -t $CONTAINER_FRONTEND_V2_IMAGE -t $CONTAINER_FRONTEND_V2_IMAGE_LATEST .
+    - docker build --build-arg RECOURSE_ENDPOINT=https://i3-recourse-fare.platform.smartcommunitylab.it --build-arg RECOURSE_LOG_ENDPOINT=https://i3-recourse-logger.platform.smartcommunitylab.it -t $CONTAINER_FRONTEND_V2_IMAGE -t $CONTAINER_FRONTEND_V2_IMAGE_LATEST .
     - docker push $CONTAINER_FRONTEND_V2_IMAGE
     - docker push $CONTAINER_FRONTEND_V2_IMAGE_LATEST
   only:
