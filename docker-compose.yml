@@ -1,0 +1,78 @@
+services:
+  backend:
+    build:
+      context: ./RecourseBackend
+      dockerfile: Dockerfile
+    image: i3group/recourse-backend
+    container_name: recoursebackend
+    user: 1030:1030
+    ports:
+      - "5000:5000"
+    networks:
+      - recourse_net
+    deploy:
+      resources:
+        reservations:
+          cpus: '1.25'
+          memory: 4G
+
+  logger:
+    build:
+      context: ./logsBackend
+      dockerfile: Dockerfile
+    image: i3group/recourse-logger
+    container_name: recourse-logs-container
+    env_file: ./logsBackend/.env
+    user: 1030:1030
+    ports:
+      - "3004:3004"
+    networks:
+      - recourse_net
+  
+
+  frontend-v1:
+    build:
+      context: ./frontendApp-v1
+      dockerfile: Dockerfile
+      args:
+          - RECOURSE_ENDPOINT=http://localhost:5000
+          - RECOURSE_LOG_ENDPOINT=http://localhost:3004
+        # - RECOURSE_ENDPOINT=http://192.168.31.58:5000
+    image: i3group/recourse-webapp-v1
+    user: 1030:1030
+    container_name: recoursefrontend-v2
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+      - logger
+    networks:
+      - recourse_net
+
+  frontend-v2:
+    build:
+      context: ./frontendApp-v2
+      dockerfile: Dockerfile
+      args:
+          - RECOURSE_ENDPOINT=http://localhost:5000
+          - RECOURSE_LOG_ENDPOINT=http://localhost:3004
+        # - RECOURSE_ENDPOINT=http://192.168.31.58:5000
+    image: i3group/recourse-webapp-v2
+    user: 1030:1030
+    container_name: recoursefrontend-v2
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+      - logger
+    networks:
+      - recourse_net
+
+
+networks:
+  recourse_net:
+    driver: bridge  
+
+
+
+

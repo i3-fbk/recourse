@@ -1,0 +1,394 @@
+{
+    "adult": [
+    {
+    "name": "age",
+    "value": 28
+    },
+    {
+    "name": "capital_gain",
+    "value": 0
+    },
+    {
+    "name": "capital_loss",
+    "value": 0
+    },
+    {
+    "name": "education",
+    "value": "Bachelors"
+    },
+    {
+    "name": "hours_per_week",
+    "value": 50
+    },
+    {
+    "name": "marital_status",
+    "value": "Never-married"
+    },
+    {
+    "name": "native_country",
+    "value": "United-States"
+    },
+    {
+    "name": "occupation",
+    "value": "Prof-specialty"
+    },
+    {
+    "name": "race",
+    "value": "Black"
+    },
+    {
+    "name": "relationship",
+    "value": "Not-in-family"
+    },
+    {
+    "name": "sex",
+    "value": "Male"
+    },
+    {
+    "name": "workclass",
+    "value": "Self-emp-not-inc"
+    }
+    ],
+    "lendingclub": [
+    {
+    "name": "acc_now_delinq",
+    "value": 0
+    },
+    {
+    "name": "acc_open_past_24mths",
+    "value": 2
+    },
+    {
+    "name": "all_util",
+    "value": 69
+    },
+    {
+    "name": "annual_inc",
+    "value": 82000
+    },
+    {
+    "name": "application_type",
+    "value": "Individual"
+    },
+    {
+    "name": "avg_cur_bal",
+    "value": 4054
+    },
+    {
+    "name": "bc_open_to_buy",
+    "value": 248
+    },
+    {
+    "name": "bc_util",
+    "value": 97.7
+    },
+    {
+    "name": "chargeoff_within_12_mths",
+    "value": 0
+    },
+    {
+    "name": "collections_12_mths_ex_med",
+    "value": 0
+    },
+    {
+    "name": "debt_settlement_flag",
+    "value": "N"
+    },
+    {
+    "name": "delinq_2yrs",
+    "value": 0
+    },
+    {
+    "name": "delinq_amnt",
+    "value": 0
+    },
+    {
+    "name": "dti",
+    "value": 19.51
+    },
+    {
+    "name": "emp_length",
+    "value": "4 years"
+    },
+    {
+    "name": "fico_range_high",
+    "value": 669
+    },
+    {
+    "name": "fico_range_low",
+    "value": 665
+    },
+    {
+    "name": "grade",
+    "value": "E"
+    },
+    {
+    "name": "hardship_flag",
+    "value": "N"
+    },
+    {
+    "name": "home_ownership",
+    "value": "RENT"
+    },
+    {
+    "name": "il_util",
+    "value": 60
+    },
+    {
+    "name": "initial_list_status",
+    "value": "w"
+    },
+    {
+    "name": "inq_fi",
+    "value": 0
+    },
+    {
+    "name": "inq_last_12m",
+    "value": 0
+    },
+    {
+    "name": "inq_last_6mths",
+    "value": 0
+    },
+    {
+    "name": "installment",
+    "value": 903.55
+    },
+    {
+    "name": "int_rate",
+    "value": 26.3
+    },
+    {
+    "name": "last_fico_range_high",
+    "value": 634
+    },
+    {
+    "name": "last_fico_range_low",
+    "value": 630
+    },
+    {
+    "name": "loan_amnt",
+    "value": 30000
+    },
+    {
+    "name": "max_bal_bc",
+    "value": 4912
+    },
+    {
+    "name": "mo_sin_old_il_acct",
+    "value": 149
+    },
+    {
+    "name": "mo_sin_old_rev_tl_op",
+    "value": 142
+    },
+    {
+    "name": "mo_sin_rcnt_rev_tl_op",
+    "value": 32
+    },
+    {
+    "name": "mo_sin_rcnt_tl",
+    "value": 14
+    },
+    {
+    "name": "mort_acc",
+    "value": 0
+    },
+    {
+    "name": "mths_since_last_delinq",
+    "value": 28
+    },
+    {
+    "name": "mths_since_last_major_derog",
+    "value": 66.125
+    },
+    {
+    "name": "mths_since_rcnt_il",
+    "value": 14
+    },
+    {
+    "name": "mths_since_recent_bc",
+    "value": 32
+    },
+    {
+    "name": "mths_since_recent_inq",
+    "value": 14
+    },
+    {
+    "name": "mths_since_recent_revol_delinq",
+    "value": 37.333333333333336
+    },
+    {
+    "name": "num_accts_ever_120_pd",
+    "value": 0
+    },
+    {
+    "name": "num_actv_bc_tl",
+    "value": 4
+    },
+    {
+    "name": "num_actv_rev_tl",
+    "value": 4
+    },
+    {
+    "name": "num_bc_sats",
+    "value": 4
+    },
+    {
+    "name": "num_bc_tl",
+    "value": 10
+    },
+    {
+    "name": "num_il_tl",
+    "value": 6
+    },
+    {
+    "name": "num_op_rev_tl",
+    "value": 5
+    },
+    {
+    "name": "num_rev_accts",
+    "value": 13
+    },
+    {
+    "name": "num_rev_tl_bal_gt_0",
+    "value": 4
+    },
+    {
+    "name": "num_sats",
+    "value": 7
+    },
+    {
+    "name": "num_tl_120dpd_2m",
+    "value": 0
+    },
+    {
+    "name": "num_tl_30dpd",
+    "value": 0
+    },
+    {
+    "name": "num_tl_90g_dpd_24m",
+    "value": 0
+    },
+    {
+    "name": "num_tl_op_past_12m",
+    "value": 0
+    },
+    {
+    "name": "open_acc",
+    "value": 7
+    },
+    {
+    "name": "open_acc_6m",
+    "value": 0
+    },
+    {
+    "name": "open_act_il",
+    "value": 2
+    },
+    {
+    "name": "open_il_12m",
+    "value": 0
+    },
+    {
+    "name": "open_il_24m",
+    "value": 2
+    },
+    {
+    "name": "open_rv_12m",
+    "value": 0
+    },
+    {
+    "name": "open_rv_24m",
+    "value": 0
+    },
+    {
+    "name": "pct_tl_nvr_dlq",
+    "value": 94.7
+    },
+    {
+    "name": "percent_bc_gt_75",
+    "value": 100
+    },
+    {
+    "name": "policy_code",
+    "value": 1
+    },
+    {
+    "name": "pub_rec",
+    "value": 0
+    },
+    {
+    "name": "pub_rec_bankruptcies",
+    "value": 0
+    },
+    {
+    "name": "purpose",
+    "value": "debt_consolidation"
+    },
+    {
+    "name": "pymnt_plan",
+    "value": "n"
+    },
+    {
+    "name": "revol_bal",
+    "value": 10752
+    },
+    {
+    "name": "revol_util",
+    "value": 91.1
+    },
+    {
+    "name": "sub_grade",
+    "value": "E5"
+    },
+    {
+    "name": "tax_liens",
+    "value": 0
+    },
+    {
+    "name": "term",
+    "value": "60 months"
+    },
+    {
+    "name": "tot_coll_amt",
+    "value": 1958
+    },
+    {
+    "name": "tot_cur_bal",
+    "value": 28375
+    },
+    {
+    "name": "tot_hi_cred_lim",
+    "value": 41078
+    },
+    {
+    "name": "total_acc",
+    "value": 19
+    },
+    {
+    "name": "total_bal_ex_mort",
+    "value": 28375
+    },
+    {
+    "name": "total_bal_il",
+    "value": 17623
+    },
+    {
+    "name": "total_bc_limit",
+    "value": 11000
+    },
+    {
+    "name": "total_cu_tl",
+    "value": 0
+    },
+    {
+    "name": "total_il_high_credit_limit",
+    "value": 29278
+    },
+    {
+    "name": "verification_status",
+    "value": "Source Verified"
+    }
+    ]
+   }

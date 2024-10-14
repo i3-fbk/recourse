@@ -1,0 +1,418 @@
+.layout {
+    margin: 20px 80px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.topMessage {
+    background-color: #ffffff;
+    margin: 20px 80px;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.topMessage-v2{
+    background-color: #ffffff;
+    margin: 20px 80px;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 1px solid #106FDF;
+}
+.innerLayout {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+.titleContainer {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.moodScalerLayout {
+    background-color: #F8F9FD;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-items: center;
+    margin: 20px 0px;
+}
+.info{
+    display: flex;
+    margin-left: 80px;
+    color: #BCC8D6;
+    text-align: left;
+}
+.innerMoodScalerLayout {
+    height: 88px;
+    width: 76px;
+    /* background-color: blueviolet; */
+    border: 1px solid rgba(178, 178, 178, 0.2);
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(192, 194, 197, 0.2);
+    margin: 20px;
+
+}
+.moodScalerLayout :hover {
+    background-color: rgba(192, 194, 197, 0.2);
+    cursor: pointer;
+}
+
+.withBorder {
+    height: 88px;
+    width: 76px;
+    /* background-color: blueviolet; */
+    border: 1px solid rgba(178, 178, 178, 0.2);
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(192, 194, 197, 0.2);
+    margin: 20px;
+    border: 1px solid #106FDF;
+}
+
+.userName2 {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: flex-start !important;
+    margin-top: 20px !important;
+}
+.returnButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #106FDF
+}
+
+.PlanDataV2 {
+    width: 360px;
+    height: 70px; 
+    /* box-shadow: 0px 0px 3px rgba(32, 38, 46, 0.3); */
+    box-shadow: 0px 0px 6px rgba(32, 38, 46, 0.2);
+    background-color: #ffffff;
+    margin: 16px 8px;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column !important;
+    text-align: left;
+    /* margin-top: 20px; */
+}
+
+.innerDisplayNewPlan {
+    display: flex;
+    align-items: center;
+}
+
+.dataTitle {
+    color: rgba(32, 38, 46, 0.7);
+    font-size: 16px;
+}
+.dataAmountV2 {
+    color: #20262E;
+    font-size: 18px;
+}
+
+.upwardArrow {
+    color: #198754;
+}
+.downward {
+    color: #DC3545;
+    transform: rotateZ(180deg);
+}
+
+.planTitle {
+    display: flex;
+}
+.moodScalerQuestion {
+    display: flex;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Loan approval text  */
+.planGoal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 80px;
+    margin-left: 80px;
+    margin-top: 60px;
+}
+
+/* Style of button that suppose to Keep the plan */
+
+.MainButtonContainer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin: 40px 0px 20px 0px;
+    background-color: none;
+}
+
+.ButtonForKeepPlan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    padding: 0 20px;
+    height: 44px;
+    border: none;
+    border-radius: 24px;
+    /* font-weight: 600; */
+    font-size: 14px;
+    line-height: 36px;
+    color: #fff;
+    background-color: #106FDF;
+}
+.ButtonForKeepPlan:hover {
+    color: #106FDF;
+    background-color: #ffffff;
+    border: 2px solid #106FDF;
+    cursor: pointer;
+}
+.ButtonForModifyPlan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    padding: 0 20px;
+    height: 44px;
+    border: none;
+    border-radius: 24px;
+    /* font-weight: 600; */
+    font-size: 14px;
+    line-height: 36px;
+    color: #fff;
+    background-color: #106FDF;
+    margin-left: 20px;
+}
+.ButtonForModifyPlan:hover {
+    color: #106FDF;
+    background-color: #ffffff;
+    border: 2px solid #106FDF;
+    cursor: pointer;
+}
+.RejectingButtonContainer{
+
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 80px;
+    margin-bottom: 100px;
+
+}
+.RejectingButton {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: auto;
+    padding: 0 20px;
+    height: 44px;
+    border: 2px solid #106FDF;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 36px;
+    color: #106FDF;
+    background-color: transparent; 
+   
+}
+.RejectingButton:hover {
+    color: #ffffff;
+    background-color: #106FDF;
+    cursor: pointer; 
+
+}
+.moodscalerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.moodScaler {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+   
+}
+
+.confirmToExit {
+    width: 196px;
+    height: 44px;
+    background: #ffffff;
+    border-radius: 24px;
+    color: #106FDF;
+    border: 1px #106FDF solid;
+}
+.confirmToExit:hover {
+    background: #106FDF;
+    color: #ffffff;
+    cursor: pointer;
+}
+.rejectToExit {
+    width: 196px;
+    height: 44px;
+    background: #ffffff;
+    border-radius: 24px;
+    color: #106FDF;
+    border: 1px #106FDF solid;
+    margin-top: 20px;
+}
+.rejectToExit:hover {
+    background: #106FDF;
+    color: #ffffff;
+    cursor: pointer;
+}
+.DisabledButtonForKeepPlan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 44px;
+    padding: 0 20px;
+    border: 2px solid #BCC8D6;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 36px;
+    color: #ffffff;
+    background-color: #BCC8D6;
+    cursor: not-allowed;
+}
+
+.DisabledButtonForModifyPlan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 44px;
+    padding: 0 20px;
+    border: 2px solid #BCC8D6;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 36px;
+    color: #ffffff;
+    background-color: #BCC8D6;
+    margin-left: 20px;
+    cursor: not-allowed;
+}
+
+.bottonsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+}
+
+/* Style of button that suppose to Propose or generate a new plan located outside of layout */
+.SecondButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 40px 100px 0px 20px ;
+}
+
+.ButtonForProposeNewPlan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 196px;
+    height: 44px;
+    background: #106FDF;
+    border-radius: 24px;
+    color: #ffffff;
+    border: 1px #ffffff solid;
+}
+
+.ButtonForProposeNewPlan:hover {
+    background: #5286c0;
+    cursor: pointer;
+}
+
+.CloseFullscreenIcon {
+    color: #20262E;
+}
+.CloseFullscreenIcon:hover {
+    cursor: pointer;
+}
+
+.discardedPlansText {
+    display: flex;
+    margin-left: 80px;
+}
+.emptyMessage {
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    justify-content: left;
+    color: #BCC8D6;
+    margin: 0px 80px 40px 80px;
+    border-radius: 8px;
+}
+
+.disabledButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 196px;
+    height: 44px;
+    background: #BCC8D6;
+    border-radius: 24px;
+    color: #ffffff;
+    border: 1px #ffffff solid;
+}
+
+/* loader designing */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    /* background-color: #BCC8D6; */
+    opacity: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color:#106FDF #0000 #fff #0000;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: 1s rotate linear infinite;
+ }
+ .loader:before , .loader:after{
+    content: '';
+    top: 0;
+    left: 0;
+    position: absolute;
+    border: 10px solid transparent;
+    border-bottom-color:#fff;
+    transform: translate(-10px, 19px) rotate(-35deg);
+  }
+ .loader:after {
+    border-color: #106FDF #0000 #0000 #0000 ;
+    transform: translate(32px, 3px) rotate(-35deg);
+  }
+   @keyframes rotate {
+    100%{    transform: rotate(360deg)}
+  }

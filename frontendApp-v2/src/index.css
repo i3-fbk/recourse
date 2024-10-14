@@ -1,0 +1,22 @@
+@font-face {
+  font-family: Nunito-medium;
+  src: url(../public/font/Nunito-Medium.ttf);
+}
+
+body {
+  background-color: #F3F5F9;
+  margin: 0;
+  /* font-family: 
+  -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
+  font-family: Nunito-medium;
+}
+
+code {
+  font-family: Nunito-medium
+  /* source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace; */
+}

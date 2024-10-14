@@ -1,0 +1,111 @@
+.card {
+    width: 300px;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    margin: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: height 0.3s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .Innercard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+  }
+  .subtitleForMaintitle {
+    display: flex;
+    justify-content: flex-start;
+    color: #BCC8D6;
+    margin-left: 80px;
+    text-decoration: none;
+    font-weight: 200;
+    font-size: 14px;
+}
+  .Innercard.expanded{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .card.expanded {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
+  }
+
+
+
+
+  .modifyingSection {
+    width: 90%;
+    margin-top: 20px;
+  }
+  .CategoricalBox {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .feature-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .featuresTitle {
+      color: #63676D;
+      text-align: left;
+    
+  }
+
+  .dropDownTitle {
+    color: #a7a8a9;
+  }
+
+  .featureValue {
+    color: #20262E;
+  }
+  .helpAndCardContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+  }
+  .resubmitButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 44px;
+    background: #106FDF;
+    border-radius: 24px;
+    color: #ffffff;
+    border: 1px #ffffff solid;
+    text-decoration: none;
+    margin-bottom: 40px;
+  }
+  .resubmitButton:hover {
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid #106FDF;
+    color: #106FDF;
+  }
+
+ 
+  

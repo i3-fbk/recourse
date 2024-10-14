@@ -1,0 +1,90 @@
+{
+    "loan_approval_task": {   
+        "features": {
+            "education": {
+                "dataset": "adult",
+                "display-name": "Education",
+                "description": "Level of education of the user (e.g., Bachelor)",
+                "type": "categorical",
+                "actionable": true,
+                "values": ["Preschool", "1st-4th", "5th-6th", "7th-8th", "9th", "10th", "11th", "12th", "HS-grad", "Some-college", "Bachelors", "Masters", "Doctorate", "Assoc-acdm", "Assoc-voc", "Prof-school"]
+            },
+            "capital_gain": {
+                "dataset": "adult",
+                "display-name": "Capital gain",
+                "description": "Profit earned on the sale of an asset which has increased in value over the holding period. An asset may include tangible property, a car, a business, or intangible property such as shares.",
+                "type": "numerical",
+                "actionable": true,
+                "min-value": 0,
+                "max-value": 10000
+            },
+            "workclass": {
+                "dataset": "adult",
+                "display-name": "Workclass",
+                "description": "Job category (e.g. Self-employed, Government officer)",
+                "type": "categorical",
+                "actionable": true,
+                "values": ["Never-worked", "Without-pay", "Self-emp-not-inc", "Self-emp-inc","Private", "Local-gov", "State-gov", "Federal-gov"]
+            },
+            "occupation": {
+                "dataset": "adult",
+                "display-name": "Job",
+                "description": "Job type (e.g. Tech-support, Craft-repair)",
+                "type": "categorical",
+                "actionable": true,
+                "values": ["Tech-support", "Craft-repair", "Other-service", "Sales", "Exec-managerial", "Prof-specialty", "Handlers-cleaners", "Machine-op-inspct", "Adm-clerical", "Farming-fishing", "Transport-moving", "Priv-house-serv", "Protective-serv", "Armed-Forces"]
+            },
+            "capital_loss": {
+                "dataset": "adult",
+                "display-name": "Captital Loss",
+                "description": "Monthly expenditure",
+                "type": "numerical",
+                "actionable": true,
+                "min-value": 0,
+                "max-value": 10000
+            },
+            "native_country": {
+                "dataset": "adult",
+                "display-name": "Native Country",
+                "description": "Country where you were born.",
+                "type": "categorical",
+                "actionable": false
+            },
+            "relationship": {
+                "dataset": "adult",
+                "display-name": "Relationship",
+                "description": "Status of your current relationship.",
+                "type": "categorical",
+                "actionable": false
+            },
+            "martial-status": {
+                "dataset": "adult",
+                "display-name": "Marital Status",
+                "description": "If you are married or not.",
+                "type": "categorical",
+                "actionable": false
+            },
+            "sex": {
+                "dataset": "adult",
+                "display-name": "Gender",
+                "description": "Your Gender",
+                "type": "categorical",
+                "actionable": false
+            },
+            "race": {
+                "dataset": "adult",
+                "display-name": "Race",
+                "description": "Race",
+                "type": "categorical",
+                "actionable": false
+            },
+            "age": {
+                "dataset": "adult",
+                "display-name": "Age",
+                "description": "Your current age.",
+                "type": "numerical",
+                "actionable": false
+            }
+        }
+    }
+}

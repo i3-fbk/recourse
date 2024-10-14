@@ -1,0 +1,35 @@
+{
+    "userId" : "#",
+    "planId" : "01",
+    "planName": "Plan A",
+    "features" : [{
+        "name" : "FICO score",
+        "valueBefore": 600,
+        "valueAfter": 800,
+        "valueDiff": 200,
+        "valueInc": true,
+        "type": "numeric",
+        "min" : 0,
+        "max" : 1000
+       },
+       {
+       "name" : "Credit utilisation",
+       "valueBefore": 90.1,
+       "valueAfter": 63.5,
+       "valueDiff": 26,
+       "valueInc": false,
+       "type": "numeric",
+       "min" : 0,
+       "max" : 100
+       },
+       {
+       "name" : "Loan amount",
+       "valueBefore": 25000,
+       "valueAfter": 40000,
+       "valueDiff": 15000,
+       "valueInc": true,
+       "type": "string",
+       "min" : 10000,
+       "max" : 100000
+       }]
+}

@@ -1,0 +1,384 @@
+{
+    "adult": [
+    {
+    "name": "age",
+    "value": 28
+    },
+    {
+    "name": "capital_gain",
+    "value": 0
+    },
+    {
+    "name": "capital_loss",
+    "value": 0
+    },
+    {
+    "name": "education",
+    "value": "Assoc-voc"
+    },
+    {
+    "name": "hours_per_week",
+    "value": 40
+    },
+    {
+    "name": "marital_status",
+    "value": "Married-civ-spouse"
+    },
+    {
+    "name": "native_country",
+    "value": "United-States"
+    },
+    {
+    "name": "occupation",
+    "value": "Prof-specialty"},
+    {
+    "name": "race",
+    "value": "White"
+    },
+    {
+    "name": "relationship",
+    "value": "Own-child"
+    },
+    {
+    "name": "sex",
+    "value": "Female"
+    },
+    {
+    "name": "workclass",
+    "value": "Private"
+    }
+    ],
+    "lendingclub": [
+    {
+    "name": "acc_now_delinq",
+    "value": 0
+    },
+    {
+    "name": "acc_open_past_24mths",
+    "value": 12
+    },
+    {
+    "name": "all_util",
+    "value": 59
+    },
+    {
+    "name": "annual_inc","value": 89000
+    },
+    {
+    "name": "application_type",
+    "value": "Individual"
+    },
+    {
+    "name": "avg_cur_bal",
+    "value": 8112
+    },
+    {
+    "name": "bc_open_to_buy",
+    "value": 2998
+    },
+    {
+    "name": "bc_util",
+    "value": 3.3
+    },
+    {
+    "name": "chargeoff_within_12_mths",
+    "value": 0
+    },
+    {
+    "name": "collections_12_mths_ex_med",
+    "value": 0
+    },
+    {
+    "name": "debt_settlement_flag",
+    "value": "N"
+    },
+    {
+    "name": "delinq_2yrs",
+    "value": 0},
+    {
+    "name": "delinq_amnt",
+    "value": 0
+    },
+    {
+    "name": "dti",
+    "value": 32.98
+    },
+    {
+    "name": "emp_length",
+    "value": "10+ years"
+    },
+    {
+    "name": "fico_range_high",
+    "value": 739
+    },
+    {
+    "name": "fico_range_low",
+    "value": 735
+    },
+    {
+    "name": "grade",
+    "value": "C"
+    },
+    {
+    "name": "hardship_flag",
+    "value": "N"
+    },
+    {
+    "name": "home_ownership",
+    "value": "RENT"
+    },{
+    "name": "il_util",
+    "value": 76
+    },
+    {
+    "name": "initial_list_status",
+    "value": "w"
+    },
+    {
+    "name": "inq_fi",
+    "value": 3
+    },
+    {
+    "name": "inq_last_12m",
+    "value": 5
+    },
+    {
+    "name": "inq_last_6mths",
+    "value": 0
+    },
+    {
+    "name": "installment",
+    "value": 745.07
+    },
+    {
+    "name": "int_rate",
+    "value": 14.08
+    },
+    {
+    "name": "last_fico_range_high",
+    "value": 654
+    },
+    {"name": "last_fico_range_low",
+    "value": 650
+    },
+    {
+    "name": "loan_amnt",
+    "value": 21775
+    },
+    {
+    "name": "max_bal_bc",
+    "value": 94
+    },
+    {
+    "name": "mo_sin_old_il_acct",
+    "value": 128
+    },
+    {
+    "name": "mo_sin_old_rev_tl_op",
+    "value": 87
+    },
+    {
+    "name": "mo_sin_rcnt_rev_tl_op",
+    "value": 10
+    },
+    {
+    "name": "mo_sin_rcnt_tl",
+    "value": 5
+    },
+    {
+    "name": "mort_acc",
+    "value": 2
+    },
+    {
+    "name": "mths_since_last_delinq","value": 38
+    },
+    {
+    "name": "mths_since_last_major_derog",
+    "value": 45
+    },
+    {
+    "name": "mths_since_rcnt_il",
+    "value": 5
+    },
+    {
+    "name": "mths_since_recent_bc",
+    "value": 46
+    },
+    {
+    "name": "mths_since_recent_inq",
+    "value": 5
+    },
+    {
+    "name":
+    "mths_since_recent_revol_delinq",
+    "value": 38
+    },
+    {
+    "name": "num_accts_ever_120_pd",
+    "value": 0
+    },
+    {
+    "name": "num_actv_bc_tl",
+    "value": 2
+    },
+    {
+    "name": "num_actv_rev_tl","value": 3
+    },
+    {
+    "name": "num_bc_sats",
+    "value": 2
+    },
+    {
+    "name": "num_bc_tl",
+    "value": 3
+    },
+    {
+    "name": "num_il_tl",
+    "value": 15
+    },
+    {
+    "name": "num_op_rev_tl",
+    "value": 6
+    },
+    {
+    "name": "num_rev_accts",
+    "value": 9
+    },
+    {
+    "name": "num_rev_tl_bal_gt_0",
+    "value": 3
+    },
+    {
+    "name": "num_sats",
+    "value": 14
+    },
+    {
+    "name": "num_tl_120dpd_2m",
+    "value": 0},
+    {
+    "name": "num_tl_30dpd",
+    "value": 0
+    },
+    {
+    "name": "num_tl_90g_dpd_24m",
+    "value": 0
+    },
+    {
+    "name": "num_tl_op_past_12m",
+    "value": 3
+    },
+    {
+    "name": "open_acc",
+    "value": 14
+    },
+    {
+    "name": "open_acc_6m",
+    "value": 2
+    },
+    {
+    "name": "open_act_il",
+    "value": 6
+    },
+    {
+    "name": "open_il_12m",
+    "value": 1
+    },
+    {
+    "name": "open_il_24m",
+    "value": 8
+    },{
+    "name": "open_rv_12m",
+    "value": 1
+    },
+    {
+    "name": "open_rv_24m",
+    "value": 3
+    },
+    {
+    "name": "pct_tl_nvr_dlq",
+    "value": 75
+    },
+    {
+    "name": "percent_bc_gt_75",
+    "value": 0
+    },
+    {
+    "name": "policy_code",
+    "value": 1
+    },
+    {
+    "name": "pub_rec",
+    "value": 0
+    },
+    {
+    "name": "pub_rec_bankruptcies",
+    "value": 0
+    },
+    {
+    "name": "purpose",
+    "value": "debt_consolidation"
+    },
+    {"name": "pymnt_plan",
+    "value": "n"
+    },
+    {
+    "name": "revol_bal",
+    "value": 1308
+    },
+    {
+    "name": "revol_util",
+    "value": 6.1
+    },
+    {
+    "name": "sub_grade",
+    "value": "C3"
+    },
+    {
+    "name": "tax_liens",
+    "value": 0
+    },
+    {
+    "name": "term",
+    "value": "36 months"
+    },
+    {
+    "name": "tot_coll_amt",
+    "value": 0
+    },
+    {
+    "name": "tot_cur_bal",
+    "value": 113562
+    },
+    {
+    "name": "tot_hi_cred_lim","value": 165588
+    },
+    {
+    "name": "total_acc",
+    "value": 28
+    },
+    {
+    "name": "total_bal_ex_mort",
+    "value": 113562
+    },
+    {
+    "name": "total_bal_il",
+    "value": 110716
+    },
+    {
+    "name": "total_bc_limit",
+    "value": 3100
+    },
+    {
+    "name": "total_cu_tl",
+    "value": 0
+    },
+    {
+    "name": "total_il_high_credit_limit",
+    "value": 134061
+    },
+    {
+    "name": "verification_status",
+    "value": "Source Verified"
+    }
+    ]
+}

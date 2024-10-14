@@ -41,8 +41,7 @@ fare-container-build:
     - docker push $CONTAINER_FARE_IMAGE
     - docker push $CONTAINER_FARE_IMAGE_LATEST
   only:
-    - deploy-v1
-    - deploy-v2
+    - main_new
   artifacts:
     expire_in: 1 week
 
@@ -57,8 +56,7 @@ logger-container-build:
     - docker push $CONTAINER_LOGGER_IMAGE
     - docker push $CONTAINER_LOGGER_IMAGE_LATEST
   only:
-    - deploy-v1
-    - deploy-v2
+    - main_new
   artifacts:
     expire_in: 1 week
 
@@ -68,12 +66,12 @@ frontend-v1-container-build:
     name: $CI_COMMIT_REF_NAME
   script:
     - docker login -u $DHUB_USER -p $DHUB_PASS
-    - cd frontendApp
+    - cd frontendApp-v1
     - docker build --build-arg RECOURSE_ENDPOINT=https://i3-recourse-fare.platform.smartcommunitylab.it --build-arg RECOURSE_LOG_ENDPOINT=https://i3-recourse-logger.platform.smartcommunitylab.it -t $CONTAINER_FRONTEND_V1_IMAGE -t $CONTAINER_FRONTEND_V1_IMAGE_LATEST .
     - docker push $CONTAINER_FRONTEND_V1_IMAGE
     - docker push $CONTAINER_FRONTEND_V1_IMAGE_LATEST
   only:
-    - deploy-v1
+    - main_new
   artifacts:
     expire_in: 1 week
 
@@ -83,12 +81,12 @@ frontend-v2-container-build:
     name: $CI_COMMIT_REF_NAME
   script:
     - docker login -u $DHUB_USER -p $DHUB_PASS
-    - cd frontendApp
+    - cd frontendApp-v2
     - docker build --build-arg RECOURSE_ENDPOINT=https://i3-recourse-fare.platform.smartcommunitylab.it --build-arg RECOURSE_LOG_ENDPOINT=https://i3-recourse-logger.platform.smartcommunitylab.it -t $CONTAINER_FRONTEND_V2_IMAGE -t $CONTAINER_FRONTEND_V2_IMAGE_LATEST .
     - docker push $CONTAINER_FRONTEND_V2_IMAGE
     - docker push $CONTAINER_FRONTEND_V2_IMAGE_LATEST
   only:
-    - deploy-v2
+    - main_new
   artifacts:
     expire_in: 1 week
     
@@ -113,9 +111,8 @@ deploy-dev:
     - kubectl -n i3-recourse set image deployments/i3-recourse-frontend-v2 i3-recourse-frontend-v2=$CONTAINER_FRONTEND_V2_IMAGE --record=true
     - kubectl -n i3-recourse rollout status deployment i3-recourse-frontend-v2
   only:
-    - deploy-v1
-    - deploy-v2
-
+    - main_new 
+    
 container_scanning:
   stage: container-scan
   variables:

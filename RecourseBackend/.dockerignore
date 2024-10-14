@@ -1,0 +1,3 @@
+nginx.conf
+uwsgi.ini
+start.sh
